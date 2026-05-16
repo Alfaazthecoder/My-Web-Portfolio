@@ -36,11 +36,11 @@ a{text-decoration:none;color:inherit}
 img{display:block;max-width:100%}
 ul{list-style:none}
 
-/* ── Liquid Glass ──────────────────────────────────────── */
+/* ── Liquid Glass (Optimized for Performance) ──────────── */
 .lg{
   background:linear-gradient(145deg,rgba(255,255,255,0.40) 0%,rgba(255,255,255,0.16) 60%,rgba(255,255,255,0.28) 100%);
-  backdrop-filter:blur(44px) saturate(200%);
-  -webkit-backdrop-filter:blur(44px) saturate(200%);
+  backdrop-filter:blur(24px) saturate(160%); /* Reduced blur from 44px to 24px */
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
   border:1px solid rgba(255,255,255,0.72);
   box-shadow:
     0 28px 70px rgba(13,92,74,0.18),
@@ -49,6 +49,7 @@ ul{list-style:none}
     inset 2px 0 0 rgba(255,255,255,0.50),
     inset -2px 0 0 rgba(255,255,255,0.50);
   position:relative;overflow:hidden;
+  transform: translateZ(0); /* Hardware acceleration */
 }
 .lg::before{
   content:'';position:absolute;
@@ -60,10 +61,11 @@ ul{list-style:none}
 
 .lg-card{
   background:rgba(255,255,255,0.62);
-  backdrop-filter:blur(38px) saturate(180%);
-  -webkit-backdrop-filter:blur(38px) saturate(180%);
+  backdrop-filter:blur(16px) saturate(140%); /* Reduced from 38px */
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
   border:1px solid rgba(255,255,255,0.80);
-  box-shadow:0 12px 44px rgba(13,92,74,0.09),inset 0 1.5px 0 rgba(255,255,255,0.98)
+  box-shadow:0 12px 44px rgba(13,92,74,0.09),inset 0 1.5px 0 rgba(255,255,255,0.98);
+  transform: translateZ(0);
 }
 
 /* ── NAV ───────────────────────────────────────────────── */
@@ -71,11 +73,12 @@ ul{list-style:none}
   position:fixed;top:0;left:0;right:0;z-index:200;
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 52px;
-  background:rgba(237,248,244,0.58);
-  backdrop-filter:blur(30px) saturate(170%);
-  -webkit-backdrop-filter:blur(30px) saturate(170%);
+  background:rgba(237,248,244,0.68);
+  backdrop-filter:blur(16px) saturate(150%);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);
   border-bottom:1px solid rgba(255,255,255,0.62);
-  box-shadow:0 1px 0 rgba(255,255,255,0.75),0 4px 20px rgba(13,92,74,0.07)
+  box-shadow:0 1px 0 rgba(255,255,255,0.75),0 4px 20px rgba(13,92,74,0.07);
+  transform: translateZ(0);
 }
 .nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-d);font-weight:700;font-size:1.05rem;color:var(--teal)}
 .nav-icon{
@@ -102,10 +105,14 @@ ul{list-style:none}
     linear-gradient(155deg,#cef2e4 0%,#e2f5f0 38%,#d1edfb 100%)
 }
 
-.blob{position:absolute;border-radius:50%;filter:blur(72px);opacity:0.52;animation:drift 14s ease-in-out infinite alternate;pointer-events:none}
-.b1{width:540px;height:430px;background:rgba(45,189,142,0.32);top:-90px;left:-130px;animation-delay:0s}
-.b2{width:400px;height:400px;background:rgba(79,195,247,0.28);bottom:-70px;right:-90px;animation-delay:-5s}
-.b3{width:280px;height:280px;background:rgba(91,224,179,0.22);top:42%;left:58%;animation-delay:-9s}
+/* PERFORMANCE FIX: 
+  Removed filter: blur() completely. 
+  Using radial gradients visually mimics blur but costs 0 GPU power. 
+*/
+.blob{position:absolute;border-radius:50%;pointer-events:none;will-change:transform;animation:drift 14s ease-in-out infinite alternate;}
+.b1{width:600px;height:600px;background:radial-gradient(circle, rgba(45,189,142,0.20) 0%, transparent 65%);top:-150px;left:-150px;animation-delay:0s}
+.b2{width:500px;height:500px;background:radial-gradient(circle, rgba(79,195,247,0.18) 0%, transparent 65%);bottom:-100px;right:-100px;animation-delay:-5s}
+.b3{width:400px;height:400px;background:radial-gradient(circle, rgba(91,224,179,0.15) 0%, transparent 65%);top:30%;left:50%;animation-delay:-9s}
 @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(28px,18px) scale(1.07)}}
 
 .leaf-d{position:absolute;opacity:0.15;pointer-events:none}
@@ -113,7 +120,6 @@ ul{list-style:none}
 .ld2{width:190px;bottom:7%;left:4%;transform:rotate(-18deg)}
 .ld3{width:140px;top:58%;right:1%;transform:rotate(38deg)}
 
-/* Scaled up floating thumbnails */
 .ft{
   position:absolute;
   border-radius:24px;overflow:hidden;
@@ -122,6 +128,7 @@ ul{list-style:none}
     0 0 0 2px rgba(255,255,255,0.75),
     inset 0 1px 0 rgba(255,255,255,0.90);
   opacity:0;
+  will-change: transform, opacity;
   animation:thumbFloat 7s ease-in-out infinite alternate, thumbFadeIn 0.9s ease forwards;
 }
 .ft img{width:100%;height:100%;object-fit:cover;display:block}
@@ -159,7 +166,6 @@ ul{list-style:none}
 }
 .hero-title em{font-style:italic;color:var(--leaf);display:block}
 
-/* Updated fancy intro text */
 .hero-sub{
   font-family:var(--font-d);
   font-style:italic;
@@ -168,14 +174,14 @@ ul{list-style:none}
   color:var(--teal);
   max-width:640px;
   text-align:center;
-  background:rgba(255,255,255,0.45);
+  background:rgba(255,255,255,0.55);
   padding:24px 34px;
   border-radius:22px;
-  border:1px solid rgba(255,255,255,0.65);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.75);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
   box-shadow: 0 10px 30px rgba(13,92,74,0.05);
-  /* The elegant float animation */
+  will-change: transform;
   animation:fadeUp 1s .28s cubic-bezier(.22,1,.36,1) both, floatSub 6s ease-in-out infinite alternate 1.2s;
 }
 @keyframes floatSub {
@@ -210,7 +216,55 @@ ul{list-style:none}
 .scroll-arrow svg{width:12px;height:12px;stroke:var(--leaf);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 
-/* ── JOURNAL / BLOG ────────────────────────────────────── */
+/* ── VISUAL KNICK KNACKS (PER PAGE) ────────────────────── */
+
+/* Blog Page Decor: Digital Matrix Grid */
+.blog-decor {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: 0.25;
+  background-image: radial-gradient(var(--leaf) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+
+/* About Page Decor: Organic Morphing Topography */
+.about-decor {
+  position: absolute; top: 0; right: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; opacity: 0.5;
+}
+.about-decor::after {
+  content: ''; position: absolute; width: 900px; height: 900px;
+  border: 1px solid rgba(45,189,142,0.6); 
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  top: -250px; right: -250px; 
+  animation: morph 18s linear infinite alternate; 
+  box-shadow: inset 0 0 0 50px rgba(45,189,142,0.03), inset 0 0 0 100px rgba(45,189,142,0.02);
+}
+@keyframes morph {
+  0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: rotate(0deg); }
+  100% { border-radius: 60% 40% 30% 70% / 60% 50% 40% 50%; transform: rotate(90deg); }
+}
+
+/* Contact Page Decor: Emitting Signal Waves */
+.contact-decor {
+  position: absolute; top: 50%; left: 0; pointer-events: none; z-index: 0;
+}
+.signal-ring {
+  position: absolute; width: 100px; height: 100px; border-radius: 50%; 
+  border: 1px solid var(--sky);
+  top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; 
+  animation: signal 5s linear infinite;
+}
+.signal-ring:nth-child(2) { animation-delay: 1.6s; }
+.signal-ring:nth-child(3) { animation-delay: 3.2s; }
+@keyframes signal {
+  0% { width: 0; height: 0; opacity: 0.6; border-width: 2px; }
+  100% { width: 600px; height: 600px; opacity: 0; border-width: 1px; }
+}
+
+/* Wrapper to keep content above decor */
+.content-layer { position: relative; z-index: 1; }
+
+/* ── JOURNAL / BLOG / GRID ─────────────────────────────── */
 .journal{padding:110px 52px 90px;max-width:1320px;margin:0 auto}
 
 .sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px;flex-wrap:wrap;gap:16px}
@@ -238,7 +292,8 @@ ul{list-style:none}
   box-shadow:0 3px 20px rgba(13,92,74,0.07);
   transition:transform .34s cubic-bezier(.22,1,.36,1),box-shadow .34s;
   cursor:pointer;display:flex;flex-direction:column;
-  position:relative
+  position:relative;
+  will-change: transform;
 }
 .card:hover{transform:translateY(-7px);box-shadow:0 20px 56px rgba(13,92,74,0.16)}
 
@@ -279,8 +334,8 @@ ul{list-style:none}
 .modal-overlay{
   position:fixed;inset:0;z-index:999;
   background:rgba(10,46,36,0.45);
-  backdrop-filter:blur(24px) saturate(140%);
-  -webkit-backdrop-filter:blur(24px) saturate(140%);
+  backdrop-filter:blur(12px) saturate(120%); /* Reduced blur */
+  -webkit-backdrop-filter:blur(12px) saturate(120%);
   display:flex;align-items:center;justify-content:center;
   padding:40px;opacity:0;pointer-events:none;
   transition:opacity 0.4s cubic-bezier(.22,1,.36,1)
@@ -293,16 +348,17 @@ ul{list-style:none}
   display:grid;grid-template-columns:1.2fr 1fr;
   transform:translateY(30px) scale(0.96);
   transition:transform 0.4s cubic-bezier(.22,1,.36,1);
+  will-change: transform;
 }
 .modal-overlay.active .modal-window{transform:translateY(0) scale(1)}
 
 .modal-media{position:relative;background:#000;min-height:400px;display:flex;align-items:center;justify-content:center}
 .modal-media img{width:100%;height:100%;object-fit:cover;absolute:inset:0}
-.modal-content-panel{padding:44px 40px;background:rgba(255,255,255,0.85);display:flex;flex-direction:column;gap:20px;overflow-y:auto}
+.modal-content-panel{padding:44px 40px;background:rgba(255,255,255,0.95);display:flex;flex-direction:column;gap:20px;overflow-y:auto}
 
 .modal-close-btn{
   position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;
-  background:rgba(255,255,255,0.7);backdrop-filter:blur(10px);
+  background:rgba(255,255,255,0.85);backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;
   cursor:pointer;z-index:10;transition:background .2s,transform .2s;
 }
@@ -333,7 +389,6 @@ ul{list-style:none}
 }
 .about-card::before{
   content:'';position:absolute;inset:0;
-  /* CHANGE THIS URL to your actual picture */
   background:url('https://picsum.photos/seed/portrait1/1200/800') center/cover no-repeat;
   z-index:0;
 }
@@ -355,10 +410,10 @@ ul{list-style:none}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:24px}
 .inner-card{
   border-radius:20px;padding:30px 34px;
-  background:rgba(255,255,255,0.58);
-  backdrop-filter:blur(32px) saturate(160%);
-  -webkit-backdrop-filter:blur(32px) saturate(160%);
-  border:1px solid rgba(255,255,255,0.75);
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(16px) saturate(140%);
+  -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid rgba(255,255,255,0.85);
   box-shadow:0 8px 32px rgba(13,92,74,0.07),inset 0 1px 0 rgba(255,255,255,0.93)
 }
 .inner-h{font-size:0.95rem;font-weight:600;color:var(--teal);margin-bottom:18px;display:flex;align-items:center;gap:8px}
@@ -380,7 +435,8 @@ ul{list-style:none}
   border-radius:16px;background:white;
   border:1px solid rgba(196,240,226,0.55);
   box-shadow:0 2px 12px rgba(13,92,74,0.06);
-  transition:transform .24s,box-shadow .24s
+  transition:transform .24s,box-shadow .24s;
+  will-change: transform;
 }
 .cc:hover{transform:translateX(4px);box-shadow:0 6px 24px rgba(13,92,74,0.12)}
 .ci{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,rgba(91,224,179,0.20),rgba(79,195,247,0.20));display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -400,7 +456,7 @@ ul{list-style:none}
 .btn-send svg{width:15px;height:15px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* ── FOOTER ────────────────────────────────────────────── */
-footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;position:relative;z-index:10;}
 .f-logo{font-family:var(--font-d);font-weight:700;font-size:0.98rem;color:rgba(255,255,255,0.85)}
 .f-links{display:flex;gap:22px}
 .f-links a{font-size:0.80rem;color:rgba(255,255,255,0.50);transition:color .2s}
@@ -410,7 +466,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 /* ── Page system ───────────────────────────────────────── */
 .page{display:none}
 .page.active{display:block}
-.page-sub{padding-top:80px;min-height:100vh;background:linear-gradient(160deg,#d8f5ec 0%,#eaf7f2 38%,#daeefa 100%)}
+.page-sub{padding-top:80px;min-height:100vh;background:linear-gradient(160deg,#d8f5ec 0%,#eaf7f2 38%,#daeefa 100%);position:relative;overflow:hidden;}
 
 /* ── Responsive ────────────────────────────────────────── */
 @media(max-width:980px){
@@ -436,6 +492,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   .modal-overlay{padding:10px}
   .modal-content-panel{padding:24px 20px}
   .about-card{padding:40px 24px;}
+  .b1,.b2,.b3{display:none;} /* Remove large blobs on mobile for pure speed */
 }
 </style>
 </head>
@@ -487,12 +544,12 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       </svg>
     </div>
 
-    <div class="ft ft1"><img src="https://picsum.photos/seed/alpine1/264/220" alt=""/></div>
-    <div class="ft ft2"><img src="https://picsum.photos/seed/valley7/228/268" alt=""/></div>
-    <div class="ft ft3"><img src="https://picsum.photos/seed/forest3/248/216" alt=""/></div>
-    <div class="ft ft4"><img src="https://picsum.photos/seed/falls9/224/264" alt=""/></div>
+    <div class="ft ft1"><img src="https://picsum.photos/seed/alpine1/264/220" alt="" loading="lazy"/></div>
+    <div class="ft ft2"><img src="https://picsum.photos/seed/valley7/228/268" alt="" loading="lazy"/></div>
+    <div class="ft ft3"><img src="https://picsum.photos/seed/forest3/248/216" alt="" loading="lazy"/></div>
+    <div class="ft ft4"><img src="https://picsum.photos/seed/falls9/224/264" alt="" loading="lazy"/></div>
 
-    <div class="hero-content">
+    <div class="hero-content content-layer">
       <div class="hero-eye">📷 Photo Portfolio</div>
 
       <div class="hero-card lg">
@@ -518,7 +575,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   </section>
 
   <section class="journal">
-    <div class="sec-hd">
+    <div class="sec-hd content-layer">
       <div>
         <div class="sec-label">✦ Recent Stories</div>
         <h2 class="sec-title">From the Journal</h2>
@@ -529,14 +586,16 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       </a>
     </div>
 
-    <div class="grid" id="home-posts-grid">
+    <div class="grid content-layer" id="home-posts-grid">
       </div>
   </section>
 
 </div>
 
 <div class="page page-sub" id="page-blog">
-  <section class="journal">
+  <div class="blog-decor"></div>
+
+  <section class="journal content-layer">
     <div class="sec-hd">
       <div>
         <div class="sec-label">✦ All Media &amp; Thoughts</div>
@@ -549,11 +608,13 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 </div>
 
 <div class="page page-sub" id="page-about">
-  <div style="max-width:1080px;margin:0 auto;padding:80px 52px 20px;text-align:center">
+  <div class="about-decor"></div>
+
+  <div class="content-layer" style="max-width:1080px;margin:0 auto;padding:80px 52px 20px;text-align:center">
     <div class="sec-label" style="justify-content:center">✦ About Me</div>
     <h1 style="font-family:var(--font-d);font-size:clamp(2.3rem,4.5vw,3.8rem);font-weight:900;color:var(--teal);margin-top:10px">Hi, I'm Alfaaz.</h1>
   </div>
-  <div class="about-wrap">
+  <div class="about-wrap content-layer">
     
     <div class="about-card">
       <div class="about-card-content">
@@ -585,20 +646,26 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     </div>
 
     <div class="photo-strip">
-      <div><img src="https://picsum.photos/seed/pstrip1/400/440" alt=""/></div>
-      <div><img src="https://picsum.photos/seed/pstrip2/400/440" alt=""/></div>
-      <div><img src="https://picsum.photos/seed/pstrip3/400/440" alt=""/></div>
+      <div><img src="https://picsum.photos/seed/pstrip1/400/440" alt="" loading="lazy"/></div>
+      <div><img src="https://picsum.photos/seed/pstrip2/400/440" alt="" loading="lazy"/></div>
+      <div><img src="https://picsum.photos/seed/pstrip3/400/440" alt="" loading="lazy"/></div>
     </div>
   </div>
 </div>
 
 <div class="page page-sub" id="page-contact">
-  <div style="max-width:1080px;margin:0 auto;padding:80px 52px 20px;text-align:center">
+  <div class="contact-decor">
+    <div class="signal-ring"></div>
+    <div class="signal-ring"></div>
+    <div class="signal-ring"></div>
+  </div>
+
+  <div class="content-layer" style="max-width:1080px;margin:0 auto;padding:80px 52px 20px;text-align:center">
     <div class="sec-label" style="justify-content:center">🌿 Get In Touch</div>
     <h1 style="font-family:var(--font-d);font-size:clamp(2.1rem,4.5vw,3.5rem);font-weight:900;color:var(--teal);margin-top:10px">Let's Connect</h1>
     <p style="font-size:0.98rem;color:var(--tmid);margin-top:12px;line-height:1.72">Whether it's an academic inquiry, collaboration, or design discussion, feel free to drop a message.</p>
   </div>
-  <div class="contact-grid">
+  <div class="contact-grid content-layer">
     <div>
       <div class="contact-cards">
         <div class="cc">
@@ -632,7 +699,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </div>
     <div class="modal-media">
-      <img id="modal-img" src="" alt=""/>
+      <img id="modal-img" src="" alt="" loading="lazy"/>
     </div>
     <div class="modal-content-panel">
       <span class="m-label" id="modal-label">Solarpunk Observation</span>
@@ -656,7 +723,6 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 </footer>
 
 <script>
-  // Centralized Data Repository for simple updates
   const postDatabase = [
     {
       id: 1,
@@ -750,7 +816,6 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     }
   ];
 
-  // Render Grid Layouts Automatically
   function renderGrids() {
     const homeGrid = document.getElementById('home-posts-grid');
     const blogGrid = document.getElementById('blog-posts-grid');
@@ -759,12 +824,11 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     blogGrid.innerHTML = '';
 
     postDatabase.forEach((post, index) => {
-      // Build standard HTML Template string for the cards
       const isFeat = post.featured ? 'feat' : '';
       const cardHTML = `
         <div class="card ${isFeat}" onclick="openPost(${post.id})">
           <div class="cmedia">
-            <img src="${post.img}" alt="${post.title}"/>
+            <img src="${post.img}" alt="${post.title}" loading="lazy"/>
           </div>
           <div class="cbody">
             <h3 class="ctitle">${post.title}</h3>
@@ -777,16 +841,13 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
         </div>
       `;
       
-      // Update: Render exactly 5 posts on the home page so it fills 2 complete rows flawlessly
       if(index < 5) {
         homeGrid.innerHTML += cardHTML;
       }
-      // Blog page gets all items
       blogGrid.innerHTML += cardHTML;
     });
   }
 
-  // Interactive Deep-Dive Router Logic
   function openPost(id) {
     const post = postDatabase.find(p => p.id === id);
     if(!post) return;
@@ -815,12 +876,10 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     if(e.target.id === 'detail-modal') toggleModal(false);
   }
 
-  // Page switcher navigation framework
   function go(id){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById('page-'+id).classList.add('active');
     window.scrollTo(0,0);
-    // Auto sync nav active tags if switched internally
     const targetNavLink = document.getElementById('nl-'+id);
     if(targetNavLink) act(targetNavLink);
   }
@@ -830,12 +889,10 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     el.classList.add('active');
   }
 
-  // Escape key handler to close glass panel views quickly
   document.addEventListener('keydown', (e) => {
     if(e.key === 'Escape') toggleModal(false);
   });
 
-  // Launch initial compile
   window.onload = renderGrids;
 </script>
 </body>
