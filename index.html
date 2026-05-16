@@ -31,12 +31,12 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--font-b);color:var(--tdark);background:var(--bg);overflow-x:hidden}
+body.modal-open{overflow:hidden}
 a{text-decoration:none;color:inherit}
 img{display:block;max-width:100%}
 ul{list-style:none}
 
 /* ── Liquid Glass ──────────────────────────────────────── */
-/* Core liquid-glass surface: heavy blur + saturate + specular top edge */
 .lg{
   background:linear-gradient(145deg,rgba(255,255,255,0.40) 0%,rgba(255,255,255,0.16) 60%,rgba(255,255,255,0.28) 100%);
   backdrop-filter:blur(44px) saturate(200%);
@@ -50,7 +50,6 @@ ul{list-style:none}
     inset -2px 0 0 rgba(255,255,255,0.50);
   position:relative;overflow:hidden;
 }
-/* Specular sheen sweep */
 .lg::before{
   content:'';position:absolute;
   top:-50%;left:-70%;width:240%;height:90%;
@@ -59,7 +58,6 @@ ul{list-style:none}
 }
 .lg>*{position:relative;z-index:1}
 
-/* Lighter card glass */
 .lg-card{
   background:rgba(255,255,255,0.62);
   backdrop-filter:blur(38px) saturate(180%);
@@ -93,7 +91,7 @@ ul{list-style:none}
 .nav-links a.active::after{content:'';position:absolute;bottom:-5px;left:0;right:0;height:2px;background:var(--leaf);border-radius:2px}
 
 /* ── HERO ──────────────────────────────────────────────── */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding-top:80px}
 
 .hero-bg{
   position:absolute;inset:0;
@@ -115,7 +113,6 @@ ul{list-style:none}
 .ld2{width:190px;bottom:7%;left:4%;transform:rotate(-18deg)}
 .ld3{width:140px;top:58%;right:1%;transform:rotate(38deg)}
 
-/* Floating thumbnails with fade-in stagger */
 .ft{
   position:absolute;
   border-radius:20px;overflow:hidden;
@@ -137,7 +134,7 @@ ul{list-style:none}
 
 .hero-content{
   position:relative;z-index:2;
-  text-align:center;max-width:680px;padding:0 24px;
+  text-align:center;max-width:760px;padding:0 24px;
   display:flex;flex-direction:column;align-items:center;gap:26px;
   animation:fadeUp .9s cubic-bezier(.22,1,.36,1) both
 }
@@ -162,7 +159,9 @@ ul{list-style:none}
 .hero-title em{font-style:italic;color:var(--leaf);display:block}
 
 .hero-sub{
-  font-size:1.02rem;line-height:1.78;color:var(--tmid);max-width:510px;
+  font-size:0.96rem;line-height:1.8;color:var(--tmid);max-width:640px;text-align:justify;
+  background:rgba(255,255,255,0.3);padding:20px;border-radius:18px;
+  border:1px solid rgba(255,255,255,0.4);backdrop-filter:blur(10px);
   animation:fadeUp 1s .28s cubic-bezier(.22,1,.36,1) both
 }
 .hero-cta{
@@ -224,7 +223,6 @@ ul{list-style:none}
 }
 .card:hover{transform:translateY(-7px);box-shadow:0 20px 56px rgba(13,92,74,0.16)}
 
-/* Liquid glass shimmer on hover */
 .card::after{
   content:'';position:absolute;inset:0;border-radius:var(--cr);
   background:linear-gradient(145deg,rgba(255,255,255,0.08),transparent 60%);
@@ -257,6 +255,45 @@ ul{list-style:none}
 .carrow svg{width:11px;height:11px;stroke:var(--g);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .card:hover .carrow{background:var(--leaf);border-color:var(--leaf);transform:translateX(2px)}
 .card:hover .carrow svg{stroke:white}
+
+/* ── MODERN GLASS DETAIL MODAL ─────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:999;
+  background:rgba(10,46,36,0.45);
+  backdrop-filter:blur(24px) saturate(140%);
+  -webkit-backdrop-filter:blur(24px) saturate(140%);
+  display:flex;align-items:center;justify-content:center;
+  padding:40px;opacity:0;pointer-events:none;
+  transition:opacity 0.4s cubic-bezier(.22,1,.36,1)
+}
+.modal-overlay.active{opacity:1;pointer-events:auto}
+
+.modal-window{
+  width:100%;max-width:1020px;max-height:85vh;
+  border-radius:28px;overflow-y:auto;
+  display:grid;grid-template-columns:1.2fr 1fr;
+  transform:translateY(30px) scale(0.96);
+  transition:transform 0.4s cubic-bezier(.22,1,.36,1);
+}
+.modal-overlay.active .modal-window{transform:translateY(0) scale(1)}
+
+.modal-media{position:relative;background:#000;min-height:400px;display:flex;align-items:center;justify-content:center}
+.modal-media img{width:100%;height:100%;object-fit:cover;absolute:inset:0}
+.modal-content-panel{padding:44px 40px;background:rgba(255,255,255,0.85);display:flex;flex-direction:column;gap:20px;overflow-y:auto}
+
+.modal-close-btn{
+  position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,0.7);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:10;transition:background .2s,transform .2s;
+}
+.modal-close-btn:hover{background:white;transform:scale(1.05)}
+.modal-close-btn svg{width:16px;height:16px;stroke:var(--tdark);fill:none;stroke-width:2.5}
+
+.m-label{font-family:var(--font-m);font-size:0.7rem;color:var(--g);letter-spacing:0.15em;text-transform:uppercase}
+.m-title{font-family:var(--font-d);font-size:2rem;font-weight:900;color:var(--teal);line-height:1.2}
+.m-date{font-family:var(--font-m);font-size:0.75rem;color:var(--tsoft)}
+.m-body{font-size:0.93rem;line-height:1.8;color:var(--tdark);text-align:justify}
 
 /* ── ABOUT ─────────────────────────────────────────────── */
 .about-wrap{max-width:1080px;margin:0 auto;padding:30px 52px 80px}
@@ -342,6 +379,8 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   .contact-grid{grid-template-columns:1fr}
   .two-col{grid-template-columns:1fr}
   .ft2,.ft4{display:none}
+  .modal-window{grid-template-columns:1fr;max-height:90vh}
+  .modal-media{min-height:280px}
 }
 @media(max-width:640px){
   .nav{padding:12px 18px}
@@ -353,12 +392,13 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   .ft1,.ft2,.ft3,.ft4{display:none}
   .hero-card{padding:30px 22px}
   .photo-strip{grid-template-columns:1fr}
+  .modal-overlay{padding:10px}
+  .modal-content-panel{padding:24px 20px}
 }
 </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══════════════════════════════════════════════ -->
 <nav class="nav">
   <a class="nav-logo" href="#" onclick="go('home');return false">
     <div class="nav-icon">
@@ -374,17 +414,14 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   </ul>
 </nav>
 
-<!-- ═══ HOME ═══════════════════════════════════════════════ -->
 <div class="page active" id="page-home">
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="blob b1"></div>
     <div class="blob b2"></div>
     <div class="blob b3"></div>
 
-    <!-- Organic leaf shapes -->
     <div class="leaf-d ld1">
       <svg viewBox="0 0 200 310" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M100 8C162 8 195 82 184 165 C173 248 122 298 100 298 C78 298 27 248 16 165 C5 82 38 8 100 8Z" fill="#1a8c6a"/>
@@ -408,30 +445,21 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       </svg>
     </div>
 
-    <!-- Floating thumbnails — seeded Picsum for stable copyright-free images -->
-    <div class="ft ft1">
-      <img src="https://picsum.photos/seed/alpine1/264/220" alt="alpine landscape"/>
-    </div>
-    <div class="ft ft2">
-      <img src="https://picsum.photos/seed/valley7/228/268" alt="green valley"/>
-    </div>
-    <div class="ft ft3">
-      <img src="https://picsum.photos/seed/forest3/248/216" alt="forest path"/>
-    </div>
-    <div class="ft ft4">
-      <img src="https://picsum.photos/seed/falls9/224/264" alt="waterfall"/>
-    </div>
+    <div class="ft ft1"><img src="https://picsum.photos/seed/alpine1/264/220" alt=""/></div>
+    <div class="ft ft2"><img src="https://picsum.photos/seed/valley7/228/268" alt=""/></div>
+    <div class="ft ft3"><img src="https://picsum.photos/seed/forest3/248/216" alt=""/></div>
+    <div class="ft ft4"><img src="https://picsum.photos/seed/falls9/224/264" alt=""/></div>
 
-    <!-- Hero content -->
     <div class="hero-content">
       <div class="hero-eye">📷 Photo Portfolio</div>
 
-      <!-- Liquid-glass card -->
       <div class="hero-card lg">
         <h1 class="hero-title">Light &amp; Life<em>Through My Lens</em></h1>
       </div>
 
-      <p class="hero-sub">I capture the quiet beauty where nature and light collide — from misty mountain valleys to sun-drenched dunes. Welcome to my visual journal.</p>
+      <p class="hero-sub">
+        Welcome to my digital ecosystem. I am a visual storyteller exploring the intricate intersections where nature and human innovation converge. My photography focuses on capturing the hidden beauty of the city—where wildlife, plant ecosystems, and raw structural architecture clash, adapt, and eventually coexist. I am deeply inspired by the philosophies of Solarpunk and Frutiger Aero: visual horizons of a clean, optimistic future where technology doesn’t destroy the natural world, but actively sustains, honors, and elevates it. This blog serves as a living archive of my observations, capturing how the environment and digital advancement can harmoniously live together for the benefit of everything and everyone.
+      </p>
 
       <a class="hero-cta" href="#" onclick="go('blog');act(document.getElementById('nl-blog'));return false">
         <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
@@ -447,7 +475,6 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     </div>
   </section>
 
-  <!-- JOURNAL — 6 posts, no tags -->
   <section class="journal">
     <div class="sec-hd">
       <div>
@@ -460,103 +487,25 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       </a>
     </div>
 
-    <div class="grid">
-      <!-- 1 FEATURED -->
-      <div class="card feat">
-        <div class="cmedia">
-          <img src="https://picsum.photos/seed/arch22/700/480" alt="Living Architecture"/>
-        </div>
-        <div class="cbody">
-          <h3 class="ctitle">The Living Architecture of Tomorrow</h3>
-          <p class="cexcerpt">Exploring how bio-integrated buildings are reshaping our cities with self-healing facades and breathable walls that respond to the environment like a living organism.</p>
-          <div class="cmeta">
-            <span class="cdate">May 10, 2026</span>
-            <div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-          </div>
-        </div>
+    <div class="grid" id="home-posts-grid">
       </div>
-
-      <!-- 2 -->
-      <div class="card">
-        <div class="cmedia"><img src="https://picsum.photos/seed/solar55/500/350" alt="Solar Petals"/></div>
-        <div class="cbody">
-          <h3 class="ctitle">Solar Petals: Energy Harvesting Reimagined</h3>
-          <p class="cexcerpt">How biomimicry is transforming solar technology into something beautiful and efficient.</p>
-          <div class="cmeta"><span class="cdate">May 5, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-        </div>
-      </div>
-
-      <!-- 3 -->
-      <div class="card">
-        <div class="cmedia"><img src="https://picsum.photos/seed/greenhouse8/500/350" alt="Digital Greenhouses"/></div>
-        <div class="cbody">
-          <h3 class="ctitle">Digital Greenhouses: The Convergence</h3>
-          <p class="cexcerpt">Where computational design meets botanical science to create spaces that think and grow.</p>
-          <div class="cmeta"><span class="cdate">Apr 28, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-        </div>
-      </div>
-
-      <!-- 4 -->
-      <div class="card">
-        <div class="cmedia"><img src="https://picsum.photos/seed/mycelium3/500/350" alt="Mycelium Networks"/></div>
-        <div class="cbody">
-          <h3 class="ctitle">Mycelium Networks &amp; Data Flow</h3>
-          <p class="cexcerpt">Underground fungal networks as a model for decentralized communication systems.</p>
-          <div class="cmeta"><span class="cdate">Apr 19, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-        </div>
-      </div>
-
-      <!-- 5 -->
-      <div class="card">
-        <div class="cmedia"><img src="https://picsum.photos/seed/waterfall44/500/350" alt="Waterfalls"/></div>
-        <div class="cbody">
-          <h3 class="ctitle">Chasing Waterfalls in the Desert Mist</h3>
-          <p class="cexcerpt">A two-week expedition into the fog-draped wadis and oases of the UAE interior.</p>
-          <div class="cmeta"><span class="cdate">Apr 11, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-        </div>
-      </div>
-
-      <!-- 6 -->
-      <div class="card">
-        <div class="cmedia"><img src="https://picsum.photos/seed/crystal77/500/350" alt="Crystal Canopy"/></div>
-        <div class="cbody">
-          <h3 class="ctitle">The Crystal Canopy Project</h3>
-          <p class="cexcerpt">Parametric glass structures grown from algorithms inspired by ice crystal geometry.</p>
-          <div class="cmeta"><span class="cdate">Apr 3, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-        </div>
-      </div>
-    </div>
   </section>
 
-</div><!-- /home -->
+</div>
 
-<!-- ═══ BLOG ════════════════════════════════════════════════ -->
 <div class="page page-sub" id="page-blog">
   <section class="journal">
     <div class="sec-hd">
       <div>
-        <div class="sec-label">✦ All Writing</div>
+        <div class="sec-label">✦ All Media &amp; Thoughts</div>
         <h2 class="sec-title">The Full Journal</h2>
       </div>
     </div>
-    <div class="grid">
-      <div class="card feat">
-        <div class="cmedia"><img src="https://picsum.photos/seed/arch22/700/480" alt=""/></div>
-        <div class="cbody"><h3 class="ctitle">The Living Architecture of Tomorrow</h3><p class="cexcerpt">Exploring how bio-integrated buildings are reshaping our cities with self-healing facades and breathable walls that respond to the environment like a living organism.</p><div class="cmeta"><span class="cdate">May 10, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div>
+    <div class="grid" id="blog-posts-grid">
       </div>
-      <div class="card"><div class="cmedia"><img src="https://picsum.photos/seed/solar55/500/350" alt=""/></div><div class="cbody"><h3 class="ctitle">Solar Petals: Energy Harvesting Reimagined</h3><p class="cexcerpt">How biomimicry is transforming solar technology into something beautiful and efficient.</p><div class="cmeta"><span class="cdate">May 5, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-      <div class="card"><div class="cmedia"><img src="https://picsum.photos/seed/greenhouse8/500/350" alt=""/></div><div class="cbody"><h3 class="ctitle">Digital Greenhouses: The Convergence</h3><p class="cexcerpt">Where computational design meets botanical science to create spaces that think and grow.</p><div class="cmeta"><span class="cdate">Apr 28, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-      <div class="card"><div class="cmedia"><img src="https://picsum.photos/seed/mycelium3/500/350" alt=""/></div><div class="cbody"><h3 class="ctitle">Mycelium Networks &amp; Data Flow</h3><p class="cexcerpt">Underground fungal networks as a model for decentralized communication systems.</p><div class="cmeta"><span class="cdate">Apr 19, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-      <div class="card"><div class="cmedia"><img src="https://picsum.photos/seed/waterfall44/500/350" alt=""/></div><div class="cbody"><h3 class="ctitle">Chasing Waterfalls in the Desert Mist</h3><p class="cexcerpt">A two-week expedition into the fog-draped wadis and oases of the UAE interior.</p><div class="cmeta"><span class="cdate">Apr 11, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-      <div class="card"><div class="cmedia"><img src="https://picsum.photos/seed/crystal77/500/350" alt=""/></div><div class="cbody"><h3 class="ctitle">The Crystal Canopy Project</h3><p class="cexcerpt">Parametric glass structures grown from algorithms inspired by ice crystal geometry.</p><div class="cmeta"><span class="cdate">Apr 3, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-      <div class="card"><div class="cmedia"><img src="https://picsum.photos/seed/desert12/500/350" alt=""/></div><div class="cbody"><h3 class="ctitle">Golden Hour Over the Empty Quarter</h3><p class="cexcerpt">Forty-eight hours alone in one of the world's largest sand deserts, chasing the last light.</p><div class="cmeta"><span class="cdate">Mar 22, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-      <div class="card"><div class="cmedia"><img src="https://picsum.photos/seed/mangrove6/500/350" alt=""/></div><div class="cbody"><h3 class="ctitle">Abu Dhabi's Hidden Mangrove Corridors</h3><p class="cexcerpt">A kayak through the tidal forests that shelter hundreds of migratory bird species each winter.</p><div class="cmeta"><span class="cdate">Mar 10, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-      <div class="card"><div class="cmedia"><img src="https://picsum.photos/seed/stars33/500/350" alt=""/></div><div class="cbody"><h3 class="ctitle">Stars Above Jebel Hafeet</h3><p class="cexcerpt">Why the Al Ain mountain road is the region's best-kept secret for astrophotography.</p><div class="cmeta"><span class="cdate">Feb 28, 2026</span><div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div></div></div>
-    </div>
   </section>
 </div>
 
-<!-- ═══ ABOUT ════════════════════════════════════════════════ -->
 <div class="page page-sub" id="page-about">
   <div style="max-width:1080px;margin:0 auto;padding:80px 52px 20px;text-align:center">
     <div class="sec-label" style="justify-content:center">✦ About Me</div>
@@ -569,8 +518,8 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       </div>
       <div>
         <h2 class="ah2">Photographer &amp; Visual Storyteller</h2>
-        <p class="ap">I'm a self-taught photographer based in Abu Dhabi, obsessed with capturing the intersection of desert light, golden coastlines, and the fleeting moments that make the Gulf unique. Every frame is a story waiting to be told.</p>
-        <p class="ap" style="margin-bottom:0">When I'm not behind the lens, I'm writing about the craft — the gear, the process, the philosophy of slowing down to truly see the world around us.</p>
+        <p class="ap">I'm a self-taught photographer based in Abu Dhabi, obsessed with exploring the subtle spaces where concrete structures meet wild biological life. Looking through my lens, I search for instances where technology and nature find a symbiotic balance rather than fighting for dominance.</p>
+        <p class="ap" style="margin-bottom:0">This blog is built to showcase my growth, experiments, and ongoing thoughts as an amateur creator studying the environment and modern digital infrastructure.</p>
       </div>
     </div>
 
@@ -578,19 +527,19 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       <div class="inner-card">
         <div class="inner-h">📷 What I Shoot</div>
         <div class="tags">
-          <span class="tag">Landscape Photography</span>
-          <span class="tag">Nature &amp; Wildlife</span>
-          <span class="tag">Portrait</span>
-          <span class="tag">Street Photography</span>
-          <span class="tag">Photo Editing</span>
+          <span class="tag">Solarpunk Ecosystems</span>
+          <span class="tag">Urban Nature Coexistence</span>
+          <span class="tag">City Buildings &amp; Architecture</span>
+          <span class="tag">Plants &amp; Botanical Science</span>
+          <span class="tag">Animals &amp; Local Wildlife</span>
         </div>
       </div>
       <div class="inner-card">
-        <div class="inner-h">✦ My Gear</div>
+        <div class="inner-h">✦ My Tools</div>
         <div class="gear-list">
-          <div class="gear-item"><span class="gear-dot"></span>Nikon Z30</div>
-          <div class="gear-item"><span class="gear-dot"></span>Samsung S23</div>
-          <div class="gear-item"><span class="gear-dot"></span>Godox V860III-N</div>
+          <div class="gear-item"><span class="gear-dot"></span>Nikon Z30 Camera</div>
+          <div class="gear-item"><span class="gear-dot"></span>Samsung S23 Device</div>
+          <div class="gear-item"><span class="gear-dot"></span>GitHub Open Deployment</div>
         </div>
       </div>
     </div>
@@ -603,12 +552,11 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   </div>
 </div>
 
-<!-- ═══ CONTACT ══════════════════════════════════════════════ -->
 <div class="page page-sub" id="page-contact">
   <div style="max-width:1080px;margin:0 auto;padding:80px 52px 20px;text-align:center">
     <div class="sec-label" style="justify-content:center">🌿 Get In Touch</div>
     <h1 style="font-family:var(--font-d);font-size:clamp(2.1rem,4.5vw,3.5rem);font-weight:900;color:var(--teal);margin-top:10px">Let's Connect</h1>
-    <p style="font-size:0.98rem;color:var(--tmid);margin-top:12px;line-height:1.72">Whether it's a collaboration, print inquiry, or just a hello — I'd love to hear from you.</p>
+    <p style="font-size:0.98rem;color:var(--tmid);margin-top:12px;line-height:1.72">Whether it's an academic inquiry, collaboration, or design discussion, feel free to drop a message.</p>
   </div>
   <div class="contact-grid">
     <div>
@@ -620,10 +568,6 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
         <div class="cc">
           <div class="ci"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
           <div><div class="cl">Based In</div><div class="cv">Abu Dhabi, UAE</div></div>
-        </div>
-        <div class="cc">
-          <div class="ci"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
-          <div><div class="cl">Instagram</div><div class="cv">@alfaaz.lens</div></div>
         </div>
       </div>
     </div>
@@ -642,7 +586,24 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   </div>
 </div>
 
-<!-- ═══ FOOTER ══════════════════════════════════════════════ -->
+<div class="modal-overlay" id="detail-modal" onclick="closeModal(event)">
+  <div class="modal-window lg-card" onclick="event.stopPropagation()">
+    <div class="modal-close-btn" onclick="toggleModal(false)">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+    <div class="modal-media">
+      <img id="modal-img" src="" alt=""/>
+    </div>
+    <div class="modal-content-panel">
+      <span class="m-label" id="modal-label">Solarpunk Observation</span>
+      <h2 class="m-title" id="modal-title">Post Title Placeholder</h2>
+      <span class="m-date" id="modal-date">Date Placeholder</span>
+      <hr style="border:none; height:1px; background:rgba(13,92,74,0.15)"/>
+      <p class="m-body" id="modal-body">Deep-dive reflection body content placeholder...</p>
+    </div>
+  </div>
+</div>
+
 <footer>
   <span class="f-logo">Alfaaz</span>
   <div class="f-links">
@@ -655,15 +616,187 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 </footer>
 
 <script>
+  // Centralized Data Repository for simple updates
+  const postDatabase = [
+    {
+      id: 1,
+      title: "The Living Architecture of Tomorrow",
+      excerpt: "Exploring how bio-integrated buildings are reshaping our cities with self-healing facades and breathable walls that respond to the environment like a living organism.",
+      body: "In this study, I examine structural layouts where concrete surfaces are deliberately paired with automated irrigation networks to feed climbing ivy and local flora. Looking closely at these facades, it becomes apparent that the building is no longer an inanimate object blocking out nature; it acts as an active ecosystem filter. This is the visual baseline of Solarpunk design—where high-density urban environments use technological frameworks to expand rather than shrink the natural ecosystem around us.",
+      date: "May 10, 2026",
+      img: "https://picsum.photos/seed/arch22/700/480",
+      label: "Architecture & Plants",
+      featured: true
+    },
+    {
+      id: 2,
+      title: "Solar Petals: Energy Harvesting Reimagined",
+      excerpt: "How biomimicry is transforming solar technology into something beautiful and efficient.",
+      body: "Standard industrial solar setups can often feel cold and intrusive in a natural environment. This visual log documents glass photovoltaic cells shaped like organic leaves. By observing how mathematical patterns in botanical leaf alignment optimize light absorption, engineers are building arrays that blend seamlessly into urban parks. Here, technology mirrors biological logic to harvest energy efficiently while maintaining aesthetic harmony with native plants.",
+      date: "May 5, 2026",
+      img: "https://picsum.photos/seed/solar55/500/350",
+      label: "Technology & Mimicry",
+      featured: false
+    },
+    {
+      id: 3,
+      title: "Digital Greenhouses: The Convergence",
+      excerpt: "Where computational design meets botanical science to create spaces that think and grow.",
+      body: "By capturing automated greenhouse designs, I explore spaces where climate controls and sensor data feeds operate completely behind the scenes to sustain rare desert plant varieties. It represents a subtle coexistence where mechanical systems are built solely to protect and encourage natural life cycles inside urban landscapes.",
+      date: "Apr 28, 2026",
+      img: "https://picsum.photos/seed/greenhouse8/500/350",
+      label: "Botanical Systems",
+      featured: false
+    },
+    {
+      id: 4,
+      title: "Mycelium Networks & Data Flow",
+      excerpt: "Underground fungal networks as a model for decentralized communication systems.",
+      body: "This set looks closely at subterranean root structures and fungal networks. The way biological networks transfer nutrients across isolated forest patches mirrors the exact routing layout of digital data architecture. It shows that our most complex human systems are often just electronic recreations of mechanics that nature optimized millions of years ago.",
+      date: "Apr 19, 2026",
+      img: "https://picsum.photos/seed/mycelium3/500/350",
+      label: "Nature Networks",
+      featured: false
+    },
+    {
+      id: 5,
+      title: "Chasing Waterfalls in the Desert Mist",
+      excerpt: "A two-week expedition into the fog-draped wadis and oases of the UAE interior.",
+      body: "Documenting water pathways flowing through dry rocky terrain highlights the raw adaptability of regional ecosystems. Even in hyper-arid conditions, carefully managed modern water conservation technology can run alongside natural land formations to support local wildlife and thriving greenery without depleting local aquifers.",
+      date: "Apr 11, 2026",
+      img: "https://picsum.photos/seed/waterfall44/500/350",
+      label: "Ecosystem Exploration",
+      featured: false
+    },
+    {
+      id: 6,
+      title: "The Crystal Canopy Project",
+      excerpt: "Parametric glass structures grown from algorithms inspired by ice crystal geometry.",
+      body: "This series documents geometry-based structural canopies built inside city spaces. Using digital modeling tools to simulate natural mineral growth patterns, the structures provide geometric shade profiles that shield community gardens from intense sun, proving how data tools can serve local vegetation frameworks.",
+      date: "Apr 3, 2026",
+      img: "https://picsum.photos/seed/crystal77/500/350",
+      label: "Parametric Design",
+      featured: false
+    },
+    {
+      id: 7,
+      title: "Golden Hour Over the Empty Quarter",
+      excerpt: "Forty-eight hours alone in one of the world's largest sand deserts, chasing the last light.",
+      body: "Capturing the expansive dunes under pristine desert skies shows a pure landscape completely separate from human infrastructure. The focus here is managing exposure settings to balance the dramatic shadows cast across sand horizons by intense light shifts.",
+      date: "Mar 22, 2026",
+      img: "https://picsum.photos/seed/desert12/500/350",
+      label: "Landscape Log",
+      featured: false
+    },
+    {
+      id: 8,
+      title: "Abu Dhabi's Hidden Mangrove Corridors",
+      excerpt: "A kayak through the tidal forests that shelter hundreds of migratory bird species each winter.",
+      body: "Mangrove ecosystems are natural protectors of the coastline. This log tracks instances where urban city planning intentionally shapes water channels around existing coastal forests, creating protected zones where local avian species and human marine infrastructure exist side-by-side.",
+      date: "Mar 10, 2026",
+      img: "https://picsum.photos/seed/mangrove6/500/350",
+      label: "Wildlife & Coastlines",
+      featured: false
+    },
+    {
+      id: 9,
+      title: "Stars Above Jebel Hafeet",
+      excerpt: "Why the Al Ain mountain road is the region's best-kept secret for astrophotography.",
+      body: "An observation of dark sky horizons from high altitudes. Balancing long exposures with camera stabilizers reveals cosmic details normally hidden by city light pollution, highlighting the sharp contrast between remote mountain peaks and urban energy hubs below.",
+      date: "Feb 28, 2026",
+      img: "https://picsum.photos/seed/stars33/500/350",
+      label: "Astrophotography",
+      featured: false
+    }
+  ];
+
+  // Render Grid Layouts Automatically
+  function renderGrids() {
+    const homeGrid = document.getElementById('home-posts-grid');
+    const blogGrid = document.getElementById('blog-posts-grid');
+    
+    homeGrid.innerHTML = '';
+    blogGrid.innerHTML = '';
+
+    postDatabase.forEach((post, index) => {
+      // Build standard HTML Template string for the cards
+      const isFeat = post.featured ? 'feat' : '';
+      const cardHTML = `
+        <div class="card ${isFeat}" onclick="openPost(${post.id})">
+          <div class="cmedia">
+            <img src="${post.img}" alt="${post.title}"/>
+          </div>
+          <div class="cbody">
+            <h3 class="ctitle">${post.title}</h3>
+            <p class="cexcerpt">${post.excerpt}</p>
+            <div class="cmeta">
+              <span class="cdate">${post.date}</span>
+              <div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      // Home page gets the first 6 items
+      if(index < 6) {
+        homeGrid.innerHTML += cardHTML;
+      }
+      // Blog page gets all items
+      blogGrid.innerHTML += cardHTML;
+    });
+  }
+
+  // Interactive Deep-Dive Router Logic
+  function openPost(id) {
+    const post = postDatabase.find(p => p.id === id);
+    if(!post) return;
+
+    document.getElementById('modal-img').src = post.img;
+    document.getElementById('modal-label').innerText = post.label;
+    document.getElementById('modal-title').innerText = post.title;
+    document.getElementById('modal-date').innerText = post.date;
+    document.getElementById('modal-body').innerText = post.body;
+
+    toggleModal(true);
+  }
+
+  function toggleModal(show) {
+    const modal = document.getElementById('detail-modal');
+    if(show) {
+      modal.classList.add('active');
+      document.body.classList.add('modal-open');
+    } else {
+      modal.classList.remove('active');
+      document.body.classList.remove('modal-open');
+    }
+  }
+
+  function closeModal(e) {
+    if(e.target.id === 'detail-modal') toggleModal(false);
+  }
+
+  // Page switcher navigation framework
   function go(id){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById('page-'+id).classList.add('active');
     window.scrollTo(0,0);
+    // Auto sync nav active tags if switched internally
+    const targetNavLink = document.getElementById('nl-'+id);
+    if(targetNavLink) act(targetNavLink);
   }
+  
   function act(el){
     document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
     el.classList.add('active');
   }
+
+  // Escape key handler to close glass panel views quickly
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') toggleModal(false);
+  });
+
+  // Launch initial compile
+  window.onload = renderGrids;
 </script>
 </body>
 </html>
