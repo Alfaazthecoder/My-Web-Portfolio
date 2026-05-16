@@ -113,23 +113,24 @@ ul{list-style:none}
 .ld2{width:190px;bottom:7%;left:4%;transform:rotate(-18deg)}
 .ld3{width:140px;top:58%;right:1%;transform:rotate(38deg)}
 
+/* Scaled up floating thumbnails */
 .ft{
   position:absolute;
-  border-radius:20px;overflow:hidden;
+  border-radius:24px;overflow:hidden;
   box-shadow:
-    0 14px 44px rgba(13,92,74,0.22),
-    0 0 0 2px rgba(255,255,255,0.72),
+    0 18px 50px rgba(13,92,74,0.22),
+    0 0 0 2px rgba(255,255,255,0.75),
     inset 0 1px 0 rgba(255,255,255,0.90);
   opacity:0;
   animation:thumbFloat 7s ease-in-out infinite alternate, thumbFadeIn 0.9s ease forwards;
 }
 .ft img{width:100%;height:100%;object-fit:cover;display:block}
-.ft1{width:132px;height:112px;top:13%;left:3%; animation-delay:0.5s, 0.5s}
-.ft2{width:114px;height:134px;top:9%;right:3%;  animation-delay:-2s,  0.8s}
-.ft3{width:124px;height:108px;bottom:15%;left:2%;animation-delay:-4s,  1.1s}
-.ft4{width:112px;height:132px;bottom:11%;right:3%;animation-delay:-1.5s,1.4s}
+.ft1{width:185px;height:157px;top:10%;left:5%; animation-delay:0.5s, 0.5s}
+.ft2{width:160px;height:188px;top:8%;right:4%;  animation-delay:-2s,  0.8s}
+.ft3{width:174px;height:151px;bottom:12%;left:3%;animation-delay:-4s,  1.1s}
+.ft4{width:157px;height:185px;bottom:9%;right:4%;animation-delay:-1.5s,1.4s}
 
-@keyframes thumbFloat{from{transform:translateY(0)}to{transform:translateY(-15px)}}
+@keyframes thumbFloat{from{transform:translateY(0)}to{transform:translateY(-18px)}}
 @keyframes thumbFadeIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
 .hero-content{
@@ -158,12 +159,30 @@ ul{list-style:none}
 }
 .hero-title em{font-style:italic;color:var(--leaf);display:block}
 
+/* Updated fancy intro text */
 .hero-sub{
-  font-size:0.96rem;line-height:1.8;color:var(--tmid);max-width:640px;text-align:justify;
-  background:rgba(255,255,255,0.3);padding:20px;border-radius:18px;
-  border:1px solid rgba(255,255,255,0.4);backdrop-filter:blur(10px);
-  animation:fadeUp 1s .28s cubic-bezier(.22,1,.36,1) both
+  font-family:var(--font-d);
+  font-style:italic;
+  font-size:1.15rem;
+  line-height:1.7;
+  color:var(--teal);
+  max-width:640px;
+  text-align:center;
+  background:rgba(255,255,255,0.45);
+  padding:24px 34px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,0.65);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow: 0 10px 30px rgba(13,92,74,0.05);
+  /* The elegant float animation */
+  animation:fadeUp 1s .28s cubic-bezier(.22,1,.36,1) both, floatSub 6s ease-in-out infinite alternate 1.2s;
 }
+@keyframes floatSub {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
 .hero-cta{
   display:inline-flex;align-items:center;gap:9px;
   padding:14px 34px;border-radius:999px;
@@ -297,20 +316,42 @@ ul{list-style:none}
 
 /* ── ABOUT ─────────────────────────────────────────────── */
 .about-wrap{max-width:1080px;margin:0 auto;padding:30px 52px 80px}
+
+/* Updated Full-Width About Background Banner */
 .about-card{
-  border-radius:24px;padding:42px 46px;
-  display:flex;gap:38px;align-items:center;flex-wrap:wrap;
+  position:relative;
+  border-radius:24px;
+  padding:60px 50px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  min-height:450px;
   margin-bottom:26px;
-  background:rgba(255,255,255,0.58);
-  backdrop-filter:blur(40px) saturate(180%);
-  -webkit-backdrop-filter:blur(40px) saturate(180%);
-  border:1px solid rgba(255,255,255,0.78);
-  box-shadow:0 20px 60px rgba(13,92,74,0.10),inset 0 1.5px 0 rgba(255,255,255,0.96)
+  overflow:hidden;
+  box-shadow:0 20px 60px rgba(13,92,74,0.18),inset 0 1.5px 0 rgba(255,255,255,0.4);
+  border:1px solid rgba(255,255,255,0.4);
 }
-.avatar{width:140px;height:140px;border-radius:20px;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,0.78);box-shadow:0 10px 36px rgba(13,92,74,0.18)}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.ah2{font-family:var(--font-d);font-size:1.45rem;font-weight:700;color:var(--teal);margin-bottom:14px}
-.ap{font-size:0.93rem;line-height:1.78;color:var(--tmid);margin-bottom:12px}
+.about-card::before{
+  content:'';position:absolute;inset:0;
+  /* CHANGE THIS URL to your actual picture */
+  background:url('https://picsum.photos/seed/portrait1/1200/800') center/cover no-repeat;
+  z-index:0;
+}
+.about-card::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(10,46,36,0.95) 0%, rgba(10,46,36,0.1) 100%);
+  z-index:1;
+}
+.about-card-content{position:relative;z-index:2;max-width:650px;}
+.about-card-content .ah2{
+  font-family:var(--font-d);font-size:2.4rem;font-weight:700;color:white;
+  margin-bottom:14px;text-shadow:0 2px 10px rgba(0,0,0,0.4);
+}
+.about-card-content .ap{
+  font-size:1.02rem;line-height:1.78;color:rgba(255,255,255,0.92);
+  margin-bottom:12px;text-shadow:0 1px 5px rgba(0,0,0,0.4);
+}
+
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:24px}
 .inner-card{
   border-radius:20px;padding:30px 34px;
@@ -394,6 +435,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   .photo-strip{grid-template-columns:1fr}
   .modal-overlay{padding:10px}
   .modal-content-panel{padding:24px 20px}
+  .about-card{padding:40px 24px;}
 }
 </style>
 </head>
@@ -458,7 +500,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       </div>
 
       <p class="hero-sub">
-        Welcome to my digital ecosystem. I am a visual storyteller exploring the intricate intersections where nature and human innovation converge. My photography focuses on capturing the hidden beauty of the city—where wildlife, plant ecosystems, and raw structural architecture clash, adapt, and eventually coexist. I am deeply inspired by the philosophies of Solarpunk and Frutiger Aero: visual horizons of a clean, optimistic future where technology doesn’t destroy the natural world, but actively sustains, honors, and elevates it. This blog serves as a living archive of my observations, capturing how the environment and digital advancement can harmoniously live together for the benefit of everything and everyone.
+        Welcome to my digital ecosystem. I am a visual storyteller exploring the intersection of nature and human innovation. My work captures the hidden beauty of the city—where plant ecosystems, wildlife, and architecture adapt and coexist. Inspired by Solarpunk and Frutiger Aero, this journal tracks a future where technology sustains and elevates the natural world.
       </p>
 
       <a class="hero-cta" href="#" onclick="go('blog');act(document.getElementById('nl-blog'));return false">
@@ -512,11 +554,9 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     <h1 style="font-family:var(--font-d);font-size:clamp(2.3rem,4.5vw,3.8rem);font-weight:900;color:var(--teal);margin-top:10px">Hi, I'm Alfaaz.</h1>
   </div>
   <div class="about-wrap">
+    
     <div class="about-card">
-      <div class="avatar">
-        <img src="https://picsum.photos/seed/portrait1/280/280" alt="Alfaaz"/>
-      </div>
-      <div>
+      <div class="about-card-content">
         <h2 class="ah2">Photographer &amp; Visual Storyteller</h2>
         <p class="ap">I'm a self-taught photographer based in Abu Dhabi, obsessed with exploring the subtle spaces where concrete structures meet wild biological life. Looking through my lens, I search for instances where technology and nature find a symbiotic balance rather than fighting for dominance.</p>
         <p class="ap" style="margin-bottom:0">This blog is built to showcase my growth, experiments, and ongoing thoughts as an amateur creator studying the environment and modern digital infrastructure.</p>
@@ -737,8 +777,8 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
         </div>
       `;
       
-      // Home page gets the first 6 items
-      if(index < 6) {
+      // Update: Render exactly 5 posts on the home page so it fills 2 complete rows flawlessly
+      if(index < 5) {
         homeGrid.innerHTML += cardHTML;
       }
       // Blog page gets all items
