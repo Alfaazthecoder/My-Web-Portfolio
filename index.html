@@ -26,15 +26,19 @@
   --glass-gradient: linear-gradient(145deg, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.16) 60%, rgba(255,255,255,0.28) 100%);
   --glass-border-heavy: rgba(255,255,255,0.72);
   --glass-box-shadow: 0 28px 70px rgba(13,92,74,0.18), inset 0 2px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.28), inset 2px 0 0 rgba(255,255,255,0.50), inset -2px 0 0 rgba(255,255,255,0.50);
+  
   --glass-card-bg: rgba(255,255,255,0.62);
   --glass-card-border: rgba(255,255,255,0.80);
   --glass-card-shadow: 0 12px 44px rgba(13,92,74,0.09), inset 0 1.5px 0 rgba(255,255,255,0.98);
+  
   --nav-bg: rgba(237,248,244,0.68);
   --nav-border: rgba(255,255,255,0.62);
+  
   --hero-card-sub-bg: rgba(255,255,255,0.55);
   --card-border: rgba(196,240,226,0.55);
   --card-shadow: 0 3px 20px rgba(13,92,74,0.07);
   --card-shadow-hover: 0 24px 60px rgba(13,92,74,0.18);
+  
   --modal-panel-bg: rgba(255,255,255,0.95);
   --page-sub-bg: linear-gradient(160deg,#d8f5ec 0%,#eaf7f2 38%,#daeefa 100%);
   --sheen-light: rgba(255,255,255,0.4);
@@ -58,18 +62,23 @@ body.dark-mode {
   --tsoft:   #689484;
   --tdark:   #f4fbf8; 
   --surface: #07120e;
+
   --glass-gradient: linear-gradient(145deg, rgba(10,30,24,0.60) 0%, rgba(10,30,24,0.30) 60%, rgba(10,30,24,0.50) 100%);
   --glass-border-heavy: rgba(61, 232, 177, 0.12); 
   --glass-box-shadow: 0 28px 70px rgba(0,0,0,0.6), inset 0 2px 0 rgba(61, 232, 177, 0.1), inset 0 -1px 0 rgba(0,0,0,0.6);
+  
   --glass-card-bg: rgba(10,30,24,0.70);
   --glass-card-border: rgba(61, 232, 177, 0.12);
   --glass-card-shadow: 0 12px 44px rgba(0,0,0,0.5), inset 0 1.5px 0 rgba(61, 232, 177, 0.05);
+  
   --nav-bg: rgba(3,10,8,0.85);
   --nav-border: rgba(61, 232, 177, 0.10);
+  
   --hero-card-sub-bg: rgba(10,30,24,0.65);
   --card-border: rgba(61, 232, 177, 0.15);
   --card-shadow: 0 3px 20px rgba(0,0,0,0.4);
   --card-shadow-hover: 0 20px 50px rgba(0,0,0,0.7);
+  
   --modal-panel-bg: #050d0a;
   --page-sub-bg: linear-gradient(160deg,#030a08 0%,#051410 38%,#040f12 100%);
   --sheen-light: rgba(61, 232, 177, 0.15);
@@ -87,27 +96,31 @@ a{text-decoration:none;color:inherit}
 img{display:block;max-width:100%}
 ul{list-style:none}
 
-/* ── CUSTOM TRAILING CURSOR ────────────────────────────── */
-@media (pointer: fine) {
-  body { cursor: none; }
-  a, button, .card, .icon-bubble, .theme-switch, input, textarea { cursor: none; }
+/* ── HYBRID CUSTOM CURSOR SYSTEM ───────────────────────── */
+/* 1. The Physical SVG Arrow (Replaces system cursor everywhere) */
+html, body, a, button, .card, .icon-bubble, .theme-switch, input, textarea, .modal-close-btn, .filter-btn {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%232dbd8e' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z'/%3E%3C/svg%3E") 3 3, auto !important;
 }
-.custom-cursor {
-  position: fixed; top: 0; left: 0; width: 28px; height: 28px;
+
+/* 2. The JS Trailing Ring */
+.custom-cursor-ring {
+  position: fixed; top: 0; left: 0; width: 34px; height: 34px;
   border: 1.5px solid var(--leaf); border-radius: 50%;
   pointer-events: none; z-index: 9999;
   transform: translate3d(-50%, -50%, 0); /* GPU Accelerated */
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s;
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s, opacity 0.3s;
   will-change: transform;
+  opacity: 0.7;
 }
-.custom-cursor.hovering {
-  width: 45px; height: 45px; background: rgba(45,189,142,0.15); border-color: var(--g);
+.custom-cursor-ring.hovering {
+  width: 50px; height: 50px; background: rgba(45,189,142,0.15); border-color: var(--g); opacity: 1;
 }
 
-/* ── Liquid Glass ──────────────────────────────────────── */
+/* ── Liquid Glass (OPTIMIZED FOR PERFORMANCE) ──────────── */
+/* Blurs aggressively reduced from 24px/16px to 8px/6px */
 .lg{
   background: var(--glass-gradient);
-  backdrop-filter:blur(24px) saturate(160%); -webkit-backdrop-filter:blur(24px) saturate(160%);
+  backdrop-filter:blur(8px) saturate(160%); -webkit-backdrop-filter:blur(8px) saturate(160%);
   border:1px solid var(--glass-border-heavy); box-shadow: var(--glass-box-shadow);
   position:relative;overflow:hidden; transform: translateZ(0); 
   transition: background 0.5s, border-color 0.5s, box-shadow 0.5s;
@@ -121,7 +134,7 @@ ul{list-style:none}
 
 .lg-card{
   background: var(--glass-card-bg);
-  backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%);
+  backdrop-filter:blur(6px) saturate(140%); -webkit-backdrop-filter:blur(6px) saturate(140%);
   border:1px solid var(--glass-card-border); box-shadow: var(--glass-card-shadow);
   transform: translateZ(0); transition: background 0.5s, border-color 0.5s, box-shadow 0.5s;
 }
@@ -130,7 +143,7 @@ ul{list-style:none}
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:200; display:flex;align-items:center;justify-content:space-between;
   padding:14px 52px; background: var(--nav-bg);
-  backdrop-filter:blur(16px) saturate(150%); -webkit-backdrop-filter:blur(16px) saturate(150%);
+  backdrop-filter:blur(8px) saturate(150%); -webkit-backdrop-filter:blur(8px) saturate(150%);
   border-bottom:1px solid var(--nav-border); box-shadow:0 1px 0 rgba(0,0,0,0.05),0 4px 20px rgba(0,0,0,0.05);
   transform: translateZ(0); transition: background 0.5s, border-color 0.5s;
 }
@@ -155,7 +168,7 @@ ul{list-style:none}
 .theme-switch { position: relative; display: inline-block; width: 56px; height: 28px; }
 .theme-switch input { opacity: 0; width: 0; height: 0; }
 .slider {
-  position: absolute; cursor: none; top: 0; left: 0; right: 0; bottom: 0;
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
   background-color: rgba(13,92,74,0.08); transition: .4s; border-radius: 34px; border: 1px solid var(--card-border);
 }
 .slider:before {
@@ -195,7 +208,7 @@ input:checked + .slider .icon-moon { opacity: 1; stroke: #3de8b1; }
 /* Playful Floating Icons */
 .icon-bubble {
   position: absolute; width: 110px; height: 110px; border-radius: 34px;
-  background: var(--glass-card-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: var(--glass-card-bg); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   border: 1.5px solid var(--glass-card-border); box-shadow: var(--card-shadow);
   display: flex; align-items: center; justify-content: center; opacity: 0;
   will-change: transform, opacity; transition: background 0.5s, border-color 0.5s, box-shadow 0.3s;
@@ -254,7 +267,7 @@ input:checked + .slider .icon-moon { opacity: 1; stroke: #3de8b1; }
 .hero-sub{
   font-family:var(--font-d); font-style:italic; font-size:1.15rem; line-height:1.7; color:var(--teal); max-width:640px; text-align:center;
   background: var(--hero-card-sub-bg); padding:24px 34px; border-radius:22px; border:1px solid var(--card-border);
-  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   will-change: transform; transition: background 0.5s, color 0.5s, border-color 0.5s;
   animation:fadeUp 1.2s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both, floatSub 7s ease-in-out infinite alternate 1.5s;
 }
@@ -315,13 +328,11 @@ body.dark-mode .blog-decor { opacity: 0.05; }
 .content-layer { position: relative; z-index: 1; }
 
 /* ── INTERACTIVE FILTER BAR ────────────────────────────── */
-.filter-bar {
-  display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap;
-}
+.filter-bar { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
 .filter-btn {
   padding: 8px 18px; border-radius: 999px; background: var(--surface); border: 1px solid var(--card-border);
   font-family: var(--font-b); font-size: 0.8rem; font-weight: 500; color: var(--tsoft);
-  transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.03); cursor: none;
+  transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
 }
 .filter-btn:hover { border-color: var(--leaf); color: var(--teal); transform: translateY(-2px); }
 .filter-btn.active { background: var(--leaf); color: white; border-color: var(--leaf); box-shadow: 0 6px 16px rgba(45,189,142,0.3); }
@@ -329,11 +340,11 @@ body.dark-mode .blog-decor { opacity: 0.05; }
 /* ── BACK TO TOP PILL ──────────────────────────────────── */
 .back-to-top {
   position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
-  background: var(--nav-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  background: var(--nav-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--card-border); box-shadow: var(--card-shadow);
   color: var(--teal); font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none; transform: translateY(20px);
-  transition: opacity 0.4s, transform 0.4s, border-color 0.3s; z-index: 900; cursor: none;
+  transition: opacity 0.4s, transform 0.4s, border-color 0.3s; z-index: 900;
 }
 .back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .back-to-top:hover { border-color: var(--leaf); transform: translateY(-4px) scale(1.05); }
@@ -360,7 +371,7 @@ body.dark-mode .blog-decor { opacity: 0.05; }
   border-radius:var(--cr);overflow:hidden; background: var(--surface);
   border:1px solid var(--card-border); box-shadow: var(--card-shadow);
   transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .4s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s, border-color 0.5s;
-  cursor:none;display:flex;flex-direction:column; position:relative; will-change: transform;
+  display:flex;flex-direction:column; position:relative; will-change: transform;
 }
 .card:hover{transform:translateY(-9px) scale(1.02);box-shadow: var(--card-shadow-hover);}
 
@@ -401,9 +412,9 @@ body.dark-mode .cmedia::after{background:linear-gradient(180deg,transparent 40%,
 /* ── MODERN GLASS DETAIL MODAL & ZOOM ──────────────────── */
 .modal-overlay{
   position:fixed;inset:0;z-index:999; background: rgba(10,46,36,0.45);
-  backdrop-filter:blur(12px) saturate(120%); -webkit-backdrop-filter:blur(12px) saturate(120%);
+  backdrop-filter:blur(4px) saturate(120%); -webkit-backdrop-filter:blur(4px) saturate(120%);
   display:flex;align-items:center;justify-content:center; padding:40px;opacity:0;pointer-events:none;
-  transition:opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s; cursor:none;
+  transition:opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s;
 }
 body.dark-mode .modal-overlay { background: rgba(0,0,0,0.7); }
 .modal-overlay.active{opacity:1;pointer-events:auto}
@@ -411,7 +422,7 @@ body.dark-mode .modal-overlay { background: rgba(0,0,0,0.7); }
 .modal-window{
   width:100%;max-width:1020px;max-height:85vh; border-radius:28px;overflow-y:auto;
   display:grid;grid-template-columns:1.2fr 1fr; transform:translateY(40px) scale(0.94);
-  transition:transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); will-change: transform; cursor:none;
+  transition:transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); will-change: transform;
 }
 .modal-overlay.active .modal-window{transform:translateY(0) scale(1)}
 .modal-media{position:relative;background:#000;min-height:400px;display:flex;align-items:center;justify-content:center; overflow: hidden;}
@@ -428,7 +439,7 @@ body.dark-mode .modal-overlay { background: rgba(0,0,0,0.7); }
   position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;
   background:rgba(255,255,255,0.85);backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;
-  z-index:10;transition:background .2s,transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); cursor:none;
+  z-index:10;transition:background .2s,transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 body.dark-mode .modal-close-btn { background:rgba(0,0,0,0.5); border-color: rgba(61, 232, 177, 0.3); }
 .modal-close-btn:hover{background:white;transform:scale(1.15) rotate(90deg)}
@@ -464,7 +475,7 @@ body.dark-mode .about-card::after { background:linear-gradient(to top, rgba(0,0,
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:24px}
 .inner-card{
   border-radius:20px;padding:30px 34px; background: var(--glass-card-bg);
-  backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%);
+  backdrop-filter:blur(6px) saturate(140%); -webkit-backdrop-filter:blur(6px) saturate(140%);
   border:1px solid var(--card-border); box-shadow: var(--card-shadow);
   transition: background 0.5s, border-color 0.5s, box-shadow 0.5s, transform 0.3s;
 }
@@ -486,7 +497,7 @@ body.dark-mode .about-card::after { background:linear-gradient(to top, rgba(0,0,
 .contact-cards{display:flex;flex-direction:column;gap:14px;margin-top:30px}
 .cc{
   display:flex;align-items:center;gap:16px;padding:17px 20px; border-radius:16px;background:var(--surface);
-  border:1px solid var(--card-border); box-shadow:var(--card-shadow); cursor:none;
+  border:1px solid var(--card-border); box-shadow:var(--card-shadow);
   transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .4s, background 0.5s, border-color 0.5s; will-change: transform;
 }
 .cc:hover{transform:translateX(8px) scale(1.02);box-shadow:var(--card-shadow-hover);}
@@ -499,9 +510,9 @@ body.dark-mode .about-card::after { background:linear-gradient(to top, rgba(0,0,
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 .fg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
 .fg label{font-size:0.76rem;font-weight:500;color:var(--tmid);letter-spacing:.03em; transition: color 0.5s;}
-.fg input,.fg textarea{padding:12px 15px;border-radius:11px;border:1.5px solid var(--card-border);background:var(--bg);font-family:var(--font-b);font-size:0.88rem;color:var(--tdark);outline:none;transition:border-color .22s,box-shadow .22s, background 0.5s, color 0.5s; cursor:none;}
+.fg input,.fg textarea{padding:12px 15px;border-radius:11px;border:1.5px solid var(--card-border);background:var(--bg);font-family:var(--font-b);font-size:0.88rem;color:var(--tdark);outline:none;transition:border-color .22s,box-shadow .22s, background 0.5s, color 0.5s;}
 .fg input:focus,.fg textarea:focus{border-color:var(--leaf);box-shadow:0 0 0 3px rgba(45,189,142,0.13)}
-.btn-send{width:100%;padding:15px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--leaf),var(--g));color:white;font-family:var(--font-b);font-size:0.93rem;font-weight:600;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 24px rgba(26,140,106,0.36);transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .4s;margin-top:2px; cursor:none;}
+.btn-send{width:100%;padding:15px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--leaf),var(--g));color:white;font-family:var(--font-b);font-size:0.93rem;font-weight:600;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 24px rgba(26,140,106,0.36);transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .4s;margin-top:2px;}
 .btn-send:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 14px 36px rgba(26,140,106,0.46)}
 .btn-send svg{width:15px;height:15px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
@@ -510,7 +521,7 @@ body.dark-mode .about-card::after { background:linear-gradient(to top, rgba(0,0,
 .credit-badge {
   display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 999px;
   background: var(--surface); border: 1px solid var(--card-border); box-shadow: var(--card-shadow);
-  font-family: var(--font-m); font-size: 0.72rem; color: var(--tmid); letter-spacing: 0.05em; cursor:none;
+  font-family: var(--font-m); font-size: 0.72rem; color: var(--tmid); letter-spacing: 0.05em;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s, background 0.5s, border-color 0.5s, color 0.5s;
 }
 .credit-badge:hover { transform: translateY(-4px) scale(1.03); box-shadow: var(--card-shadow-hover); color: var(--teal); }
@@ -556,13 +567,13 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   .b1,.b2,.b3{display:none;}
   .theme-switch-wrapper { margin-left: 15px; padding-left: 15px; }
   .filter-bar { justify-content: center; }
-  .custom-cursor { display: none !important; }
+  .custom-cursor-ring { display: none !important; }
 }
 </style>
 </head>
 <body>
 
-<div class="custom-cursor" id="custom-cursor"></div>
+<div class="custom-cursor-ring" id="custom-cursor"></div>
 
 <button class="back-to-top" id="btt" onclick="window.scrollTo(0,0)">
   <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
@@ -827,31 +838,31 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 </footer>
 
 <script>
-  // ── 1. CUSTOM TRAILING CURSOR ENGINE (Zero Lag) ──
-  const cursor = document.getElementById('custom-cursor');
+  // ── 1. HYBRID CUSTOM CURSOR ENGINE ──
+  const cursorRing = document.getElementById('custom-cursor');
   let mouseX = -100, mouseY = -100;
-  let cursorX = -100, cursorY = -100;
+  let ringX = -100, ringY = -100;
 
-  // Only track on desktop
+  // Only run ring tracking on non-touch devices
   if(window.matchMedia("(pointer: fine)").matches) {
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX; mouseY = e.clientY;
     });
 
     function renderCursor() {
-      cursorX += (mouseX - cursorX) * 0.18; // Lerp physics for fluid trail
-      cursorY += (mouseY - cursorY) * 0.18;
-      // GPU accelerated rendering
-      cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+      ringX += (mouseX - ringX) * 0.2; // Smooth lerp physics
+      ringY += (mouseY - ringY) * 0.2;
+      // GPU accelerated rendering for the ring
+      cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
       requestAnimationFrame(renderCursor);
     }
     requestAnimationFrame(renderCursor);
 
     // Apply glowing ring state to any clickable element
     function attachCursorHovers() {
-      document.querySelectorAll('a, button, .card, .icon-bubble, .theme-switch, input, textarea, .modal-close-btn').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+      document.querySelectorAll('a, button, .card, .icon-bubble, .theme-switch, input, textarea, .modal-close-btn, .filter-btn').forEach(el => {
+        el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
       });
     }
   }
