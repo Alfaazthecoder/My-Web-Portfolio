@@ -23,25 +23,21 @@
   --tdark:   #0a2e24;
   --surface: #ffffff;
 
-  /* Glass & Structure Systems */
   --glass-gradient: linear-gradient(145deg, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.16) 60%, rgba(255,255,255,0.28) 100%);
   --glass-border-heavy: rgba(255,255,255,0.72);
   --glass-box-shadow: 0 28px 70px rgba(13,92,74,0.18), inset 0 2px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.28), inset 2px 0 0 rgba(255,255,255,0.50), inset -2px 0 0 rgba(255,255,255,0.50);
-  
   --glass-card-bg: rgba(255,255,255,0.62);
   --glass-card-border: rgba(255,255,255,0.80);
   --glass-card-shadow: 0 12px 44px rgba(13,92,74,0.09), inset 0 1.5px 0 rgba(255,255,255,0.98);
-  
   --nav-bg: rgba(237,248,244,0.68);
   --nav-border: rgba(255,255,255,0.62);
-  
   --hero-card-sub-bg: rgba(255,255,255,0.55);
   --card-border: rgba(196,240,226,0.55);
   --card-shadow: 0 3px 20px rgba(13,92,74,0.07);
   --card-shadow-hover: 0 24px 60px rgba(13,92,74,0.18);
-  
   --modal-panel-bg: rgba(255,255,255,0.95);
   --page-sub-bg: linear-gradient(160deg,#d8f5ec 0%,#eaf7f2 38%,#daeefa 100%);
+  --sheen-light: rgba(255,255,255,0.4);
   
   --font-d: 'Playfair Display', Georgia, serif;
   --font-b: 'DM Sans', sans-serif;
@@ -49,50 +45,41 @@
   --cr: 22px;
 }
 
-/* ── THEME VARIABLES (Dark Mode Overrides - Fixed Readability) */
+/* ── THEME VARIABLES (Dark Mode Overrides) ────────────── */
 body.dark-mode {
   --g:       #3de8b1;
   --leaf:    #2dbd8e;
   --fresh:   #0d5c4a;
   --mist:    #082e24;
   --sky:     #24719c;
-  
   --teal:    #a9dfcd; 
   --bg:      #030a08;
   --tmid:    #9dc4b7;
   --tsoft:   #689484;
-  
   --tdark:   #f4fbf8; 
   --surface: #07120e;
-
   --glass-gradient: linear-gradient(145deg, rgba(10,30,24,0.60) 0%, rgba(10,30,24,0.30) 60%, rgba(10,30,24,0.50) 100%);
   --glass-border-heavy: rgba(61, 232, 177, 0.12); 
   --glass-box-shadow: 0 28px 70px rgba(0,0,0,0.6), inset 0 2px 0 rgba(61, 232, 177, 0.1), inset 0 -1px 0 rgba(0,0,0,0.6);
-  
   --glass-card-bg: rgba(10,30,24,0.70);
   --glass-card-border: rgba(61, 232, 177, 0.12);
   --glass-card-shadow: 0 12px 44px rgba(0,0,0,0.5), inset 0 1.5px 0 rgba(61, 232, 177, 0.05);
-  
   --nav-bg: rgba(3,10,8,0.85);
   --nav-border: rgba(61, 232, 177, 0.10);
-  
   --hero-card-sub-bg: rgba(10,30,24,0.65);
   --card-border: rgba(61, 232, 177, 0.15);
   --card-shadow: 0 3px 20px rgba(0,0,0,0.4);
   --card-shadow-hover: 0 20px 50px rgba(0,0,0,0.7);
-  
   --modal-panel-bg: #050d0a;
   --page-sub-bg: linear-gradient(160deg,#030a08 0%,#051410 38%,#040f12 100%);
+  --sheen-light: rgba(61, 232, 177, 0.15);
 }
 
 /* ── Base Setup ────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
-  font-family:var(--font-b);
-  color:var(--tdark);
-  background:var(--bg);
-  overflow-x:hidden;
+  font-family:var(--font-b); color:var(--tdark); background:var(--bg); overflow-x:hidden;
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 body.modal-open{overflow:hidden}
@@ -100,20 +87,33 @@ a{text-decoration:none;color:inherit}
 img{display:block;max-width:100%}
 ul{list-style:none}
 
+/* ── CUSTOM TRAILING CURSOR ────────────────────────────── */
+@media (pointer: fine) {
+  body { cursor: none; }
+  a, button, .card, .icon-bubble, .theme-switch, input, textarea { cursor: none; }
+}
+.custom-cursor {
+  position: fixed; top: 0; left: 0; width: 28px; height: 28px;
+  border: 1.5px solid var(--leaf); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate3d(-50%, -50%, 0); /* GPU Accelerated */
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s;
+  will-change: transform;
+}
+.custom-cursor.hovering {
+  width: 45px; height: 45px; background: rgba(45,189,142,0.15); border-color: var(--g);
+}
+
 /* ── Liquid Glass ──────────────────────────────────────── */
 .lg{
   background: var(--glass-gradient);
-  backdrop-filter:blur(24px) saturate(160%);
-  -webkit-backdrop-filter:blur(24px) saturate(160%);
-  border:1px solid var(--glass-border-heavy);
-  box-shadow: var(--glass-box-shadow);
-  position:relative;overflow:hidden;
-  transform: translateZ(0); 
+  backdrop-filter:blur(24px) saturate(160%); -webkit-backdrop-filter:blur(24px) saturate(160%);
+  border:1px solid var(--glass-border-heavy); box-shadow: var(--glass-box-shadow);
+  position:relative;overflow:hidden; transform: translateZ(0); 
   transition: background 0.5s, border-color 0.5s, box-shadow 0.5s;
 }
 .lg::before{
-  content:'';position:absolute;
-  top:-50%;left:-70%;width:240%;height:90%;
+  content:'';position:absolute; top:-50%;left:-70%;width:240%;height:90%;
   background:linear-gradient(108deg,rgba(255,255,255,0) 28%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0) 72%);
   transform:rotate(-10deg);pointer-events:none;z-index:0;
 }
@@ -121,38 +121,27 @@ ul{list-style:none}
 
 .lg-card{
   background: var(--glass-card-bg);
-  backdrop-filter:blur(16px) saturate(140%);
-  -webkit-backdrop-filter:blur(16px) saturate(140%);
-  border:1px solid var(--glass-card-border);
-  box-shadow: var(--glass-card-shadow);
-  transform: translateZ(0);
-  transition: background 0.5s, border-color 0.5s, box-shadow 0.5s;
+  backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid var(--glass-card-border); box-shadow: var(--glass-card-shadow);
+  transform: translateZ(0); transition: background 0.5s, border-color 0.5s, box-shadow 0.5s;
 }
 
 /* ── NAV & TOGGLE SWITCH ───────────────────────────────── */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 52px;
-  background: var(--nav-bg);
-  backdrop-filter:blur(16px) saturate(150%);
-  -webkit-backdrop-filter:blur(16px) saturate(150%);
-  border-bottom:1px solid var(--nav-border);
-  box-shadow:0 1px 0 rgba(0,0,0,0.05),0 4px 20px rgba(0,0,0,0.05);
-  transform: translateZ(0);
-  transition: background 0.5s, border-color 0.5s;
+  position:fixed;top:0;left:0;right:0;z-index:200; display:flex;align-items:center;justify-content:space-between;
+  padding:14px 52px; background: var(--nav-bg);
+  backdrop-filter:blur(16px) saturate(150%); -webkit-backdrop-filter:blur(16px) saturate(150%);
+  border-bottom:1px solid var(--nav-border); box-shadow:0 1px 0 rgba(0,0,0,0.05),0 4px 20px rgba(0,0,0,0.05);
+  transform: translateZ(0); transition: background 0.5s, border-color 0.5s;
 }
 .nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-d);font-weight:700;font-size:1.05rem;color:var(--teal); transition: color 0.5s;}
 .nav-icon{
-  width:36px;height:36px;border-radius:10px;
-  background:linear-gradient(135deg,var(--leaf),var(--sky));
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 14px rgba(45,189,142,0.45);
+  width:36px;height:36px;border-radius:10px; background:linear-gradient(135deg,var(--leaf),var(--sky));
+  display:flex;align-items:center;justify-content:center; box-shadow:0 4px 14px rgba(45,189,142,0.45);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .nav-logo:hover .nav-icon { transform: scale(1.15) rotate(5deg); }
 .nav-icon svg{width:17px;height:17px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
 .nav-right-cluster { display: flex; align-items: center; }
 .nav-links{display:flex;gap:34px; align-items: center;}
 .nav-links a{font-size:0.88rem;font-weight:500;color:var(--tmid);position:relative;transition:color .22s}
@@ -166,9 +155,8 @@ ul{list-style:none}
 .theme-switch { position: relative; display: inline-block; width: 56px; height: 28px; }
 .theme-switch input { opacity: 0; width: 0; height: 0; }
 .slider {
-  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(13,92,74,0.08); transition: .4s; border-radius: 34px;
-  border: 1px solid var(--card-border);
+  position: absolute; cursor: none; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(13,92,74,0.08); transition: .4s; border-radius: 34px; border: 1px solid var(--card-border);
 }
 .slider:before {
   position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
@@ -178,9 +166,7 @@ ul{list-style:none}
 input:checked + .slider { background-color: rgba(61, 232, 177, 0.1); border-color: rgba(61, 232, 177, 0.3); }
 input:checked + .slider:before { transform: translateX(28px); background-color: #3de8b1; box-shadow: 0 0 12px rgba(61, 232, 177, 0.6); }
 .icon-sun, .icon-moon {
-  position: absolute; top: 6px; width: 14px; height: 14px;
-  stroke: var(--tsoft); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
-  transition: .4s; z-index: 1; pointer-events: none;
+  position: absolute; top: 6px; width: 14px; height: 14px; stroke: var(--tsoft); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transition: .4s; z-index: 1; pointer-events: none;
 }
 .icon-sun { left: 6px; stroke: #e6b800; }
 .icon-moon { right: 6px; opacity: 0; }
@@ -206,63 +192,42 @@ input:checked + .slider .icon-moon { opacity: 1; stroke: #3de8b1; }
 @keyframes sway2 { 0% { transform: rotate(-14deg); } 100% { transform: rotate(-22deg); } }
 @keyframes sway3 { 0% { transform: rotate(34deg); } 100% { transform: rotate(42deg); } }
 
-
-/* 🎨 BIG, TILTED, PLAYFUL ICONS */
+/* Playful Floating Icons */
 .icon-bubble {
-  position: absolute;
-  width: 110px; height: 110px; /* Made significantly bigger */
-  border-radius: 34px;
-  background: var(--glass-card-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1.5px solid var(--glass-card-border);
-  box-shadow: var(--card-shadow);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0;
-  will-change: transform, opacity;
-  transition: background 0.5s, border-color 0.5s, box-shadow 0.3s;
+  position: absolute; width: 110px; height: 110px; border-radius: 34px;
+  background: var(--glass-card-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid var(--glass-card-border); box-shadow: var(--card-shadow);
+  display: flex; align-items: center; justify-content: center; opacity: 0;
+  will-change: transform, opacity; transition: background 0.5s, border-color 0.5s, box-shadow 0.3s;
 }
-
-/* Hover now scales the inner SVG and boosts glow, preserving the chaotic rotation! */
-.icon-bubble:hover { cursor: pointer; box-shadow: var(--card-shadow-hover); border-color: var(--leaf); }
+.icon-bubble:hover { box-shadow: var(--card-shadow-hover); border-color: var(--leaf); }
 .icon-bubble:hover svg { transform: scale(1.2); stroke: var(--leaf); }
 .icon-bubble svg { 
-  width: 50px; height: 50px; /* Bigger SVGs */
-  stroke: var(--g); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; 
+  width: 50px; height: 50px; stroke: var(--g); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; 
   transition: stroke 0.4s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
-/* Individual Animations for unique floating and tilting paths */
 .ib1 { top: 18%; left: 10%; animation: pop1 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, float1 7s ease-in-out infinite alternate 1.2s; }
 .ib2 { top: 15%; right: 8%; animation: pop2 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, float2 6.5s ease-in-out infinite alternate 1.2s; }
 .ib3 { bottom: 22%; left: 8%; animation: pop3 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, float3 7.5s ease-in-out infinite alternate 1.2s; }
 .ib4 { bottom: 18%; right: 10%; animation: pop4 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, float4 8s ease-in-out infinite alternate 1.2s; }
 
-/* Pop-ins that settle into unique tilts */
 @keyframes pop1 { 0%{opacity:0; transform:scale(0.2) translateY(60px) rotate(-30deg)} 100%{opacity:1; transform:scale(1) translateY(0) rotate(-12deg)} }
 @keyframes float1 { 0%{transform:translateY(0) rotate(-12deg)} 100%{transform:translateY(-25px) translateX(15px) rotate(-5deg)} }
-
 @keyframes pop2 { 0%{opacity:0; transform:scale(0.2) translateY(60px) rotate(30deg)} 100%{opacity:1; transform:scale(1) translateY(0) rotate(14deg)} }
 @keyframes float2 { 0%{transform:translateY(0) rotate(14deg)} 100%{transform:translateY(-30px) translateX(-10px) rotate(22deg)} }
-
 @keyframes pop3 { 0%{opacity:0; transform:scale(0.2) translateY(60px) rotate(-40deg)} 100%{opacity:1; transform:scale(1) translateY(0) rotate(-18deg)} }
 @keyframes float3 { 0%{transform:translateY(0) rotate(-18deg)} 100%{transform:translateY(-22px) translateX(-18px) rotate(-10deg)} }
-
 @keyframes pop4 { 0%{opacity:0; transform:scale(0.2) translateY(60px) rotate(40deg)} 100%{opacity:1; transform:scale(1) translateY(0) rotate(10deg)} }
 @keyframes float4 { 0%{transform:translateY(0) rotate(10deg)} 100%{transform:translateY(-35px) translateX(12px) rotate(18deg)} }
 
 .hero-content{
-  position:relative;z-index:2;
-  text-align:center;max-width:760px;padding:0 24px;
+  position:relative;z-index:2; text-align:center;max-width:760px;padding:0 24px;
   display:flex;flex-direction:column;align-items:center;gap:26px;
-  animation:fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both
 }
-@keyframes fadeUp{from{opacity:0;transform:translateY(45px)}to{opacity:1;transform:translateY(0)}}
-
 .hero-eye{
-  display:flex;align-items:center;gap:9px;
-  font-family:var(--font-m);font-size:0.70rem;letter-spacing:.2em;
+  display:flex;align-items:center;gap:9px; font-family:var(--font-m);font-size:0.70rem;letter-spacing:.2em;
   text-transform:uppercase;color:var(--g); transition: color 0.5s;
+  animation:fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .hero-eye::before,.hero-eye::after{content:'';display:block;height:1px;width:30px;background:var(--leaf);opacity:.6}
 
@@ -273,11 +238,18 @@ input:checked + .slider .icon-moon { opacity: 1; stroke: #3de8b1; }
 }
 .hero-card:hover { transform: scale(1.02); }
 
+/* Cinematic Staggered Text Reveal */
 .hero-title{
   font-family:var(--font-d); font-size:clamp(2.5rem,5.5vw,4.2rem);
   line-height:1.06;font-weight:900;letter-spacing:-.02em;color:var(--teal); transition: color 0.5s;
 }
-.hero-title em{font-style:italic;color:var(--leaf);display:block}
+.hero-title span, .hero-title em { display: inline-block; opacity: 0; animation: textSweep 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.hero-title span:nth-child(1) { animation-delay: 0.2s; }
+.hero-title span:nth-child(2) { animation-delay: 0.3s; }
+.hero-title em { font-style:italic;color:var(--leaf);display:block; animation-delay: 0.4s; }
+@keyframes textSweep { from { opacity: 0; transform: translateY(30px) rotate(2deg); } to { opacity: 1; transform: translateY(0) rotate(0deg); } }
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(45px)}to{opacity:1;transform:translateY(0)}}
 
 .hero-sub{
   font-family:var(--font-d); font-style:italic; font-size:1.15rem; line-height:1.7; color:var(--teal); max-width:640px; text-align:center;
@@ -289,10 +261,8 @@ input:checked + .slider .icon-moon { opacity: 1; stroke: #3de8b1; }
 @keyframes floatSub { from { transform: translateY(0); } to { transform: translateY(-10px); } }
 
 .hero-cta{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:14px 34px;border-radius:999px;
-  background:linear-gradient(135deg,var(--leaf) 0%,var(--g) 100%);
-  color:white;font-weight:600;font-size:0.9rem;letter-spacing:.04em;
+  display:inline-flex;align-items:center;gap:9px; padding:14px 34px;border-radius:999px;
+  background:linear-gradient(135deg,var(--leaf) 0%,var(--g) 100%); color:white;font-weight:600;font-size:0.9rem;letter-spacing:.04em;
   box-shadow:0 8px 30px rgba(26,140,106,0.42),0 0 0 3px rgba(45,189,142,0.22);
   transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s;
   animation:fadeUp 1.2s 0.45s cubic-bezier(0.16, 1, 0.3, 1) both
@@ -307,8 +277,7 @@ input:checked + .slider .icon-moon { opacity: 1; stroke: #3de8b1; }
   animation:fadeUp 1.2s 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; transition: color 0.5s;
 }
 .scroll-arrow{
-  width:28px;height:28px;border-radius:50%; border:1.5px solid var(--card-border);
-  display:flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:50%; border:1.5px solid var(--card-border); display:flex;align-items:center;justify-content:center;
   animation:bounce 2s ease-in-out infinite; transition: border-color 0.5s;
 }
 .scroll-arrow svg{width:12px;height:12px;stroke:var(--leaf);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -342,13 +311,36 @@ body.dark-mode .blog-decor { opacity: 0.05; }
 }
 .signal-ring:nth-child(2) { animation-delay: 2s; }
 .signal-ring:nth-child(3) { animation-delay: 4s; }
-@keyframes signal { 0% { width: 0; height: 0; opacity: 0.7; border-width: 4px; } 100% { width: 1200px; height: 1200px; opacity: 0; border-width: 1px; } }
 
 .content-layer { position: relative; z-index: 1; }
 
+/* ── INTERACTIVE FILTER BAR ────────────────────────────── */
+.filter-bar {
+  display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap;
+}
+.filter-btn {
+  padding: 8px 18px; border-radius: 999px; background: var(--surface); border: 1px solid var(--card-border);
+  font-family: var(--font-b); font-size: 0.8rem; font-weight: 500; color: var(--tsoft);
+  transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.03); cursor: none;
+}
+.filter-btn:hover { border-color: var(--leaf); color: var(--teal); transform: translateY(-2px); }
+.filter-btn.active { background: var(--leaf); color: white; border-color: var(--leaf); box-shadow: 0 6px 16px rgba(45,189,142,0.3); }
+
+/* ── BACK TO TOP PILL ──────────────────────────────────── */
+.back-to-top {
+  position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
+  background: var(--nav-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--card-border); box-shadow: var(--card-shadow);
+  color: var(--teal); font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transform: translateY(20px);
+  transition: opacity 0.4s, transform 0.4s, border-color 0.3s; z-index: 900; cursor: none;
+}
+.back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.back-to-top:hover { border-color: var(--leaf); transform: translateY(-4px) scale(1.05); }
+
 /* ── JOURNAL / BLOG / GRID ─────────────────────────────── */
 .journal{padding:110px 52px 90px;max-width:1320px;margin:0 auto}
-.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px;flex-wrap:wrap;gap:16px}
+.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap;gap:16px}
 .sec-label{display:flex;align-items:center;gap:8px;font-family:var(--font-m);font-size:0.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-bottom:10px; transition: color 0.5s;}
 .sec-label::before{content:'';display:block;width:18px;height:2px;background:var(--leaf);border-radius:2px}
 .sec-title{font-family:var(--font-d);font-size:clamp(1.75rem,3.2vw,2.7rem);font-weight:900;color:var(--teal);line-height:1.1; transition: color 0.5s;}
@@ -363,21 +355,22 @@ body.dark-mode .blog-decor { opacity: 0.05; }
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 
+/* The Card & GPU Sheen Effect */
 .card{
   border-radius:var(--cr);overflow:hidden; background: var(--surface);
   border:1px solid var(--card-border); box-shadow: var(--card-shadow);
   transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .4s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s, border-color 0.5s;
-  cursor:pointer;display:flex;flex-direction:column; position:relative; will-change: transform;
+  cursor:none;display:flex;flex-direction:column; position:relative; will-change: transform;
 }
 .card:hover{transform:translateY(-9px) scale(1.02);box-shadow: var(--card-shadow-hover);}
 
-.card::after{
-  content:'';position:absolute;inset:0;border-radius:var(--cr);
-  background:linear-gradient(145deg,rgba(255,255,255,0.08),transparent 60%);
-  opacity:0;transition:opacity .34s;pointer-events:none;
+/* Hardware Accelerated Light Sheen */
+.card::before {
+  content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
+  background: linear-gradient(to right, transparent, var(--sheen-light), transparent);
+  transform: skewX(-20deg) translateX(0); z-index: 2; pointer-events: none; transition: transform 0s;
 }
-body.dark-mode .card::after { background:linear-gradient(145deg,rgba(61, 232, 177, 0.05),transparent 60%); }
-.card:hover::after{opacity:1}
+.card:hover::before { transform: skewX(-20deg) translateX(400%); transition: transform 0.8s ease-in-out; }
 
 .card.feat{grid-column:span 2;flex-direction:row}
 .card.feat .cmedia{flex:0 0 54%;min-height:340px;height:auto}
@@ -390,7 +383,7 @@ body.dark-mode .card::after { background:linear-gradient(145deg,rgba(61, 232, 17
 .cmedia::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,0.1) 100%);pointer-events:none}
 body.dark-mode .cmedia::after{background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,0.6) 100%);}
 
-.cbody{padding:22px 20px 26px;display:flex;flex-direction:column;gap:10px;flex:1}
+.cbody{padding:22px 20px 26px;display:flex;flex-direction:column;gap:10px;flex:1; position:relative; z-index:3;}
 .ctitle{font-family:var(--font-d);font-size:1.08rem;font-weight:700;color:var(--teal);line-height:1.25;transition:color .2s}
 .card:hover .ctitle{color:var(--g)}
 .cexcerpt{font-size:0.855rem;line-height:1.67;color:var(--tmid);flex:1; transition: color 0.5s;}
@@ -405,12 +398,12 @@ body.dark-mode .cmedia::after{background:linear-gradient(180deg,transparent 40%,
 .card:hover .carrow{background:var(--leaf);border-color:var(--leaf);transform:translateX(4px) scale(1.1)}
 .card:hover .carrow svg{stroke:white}
 
-/* ── MODERN GLASS DETAIL MODAL ─────────────────────────── */
+/* ── MODERN GLASS DETAIL MODAL & ZOOM ──────────────────── */
 .modal-overlay{
   position:fixed;inset:0;z-index:999; background: rgba(10,46,36,0.45);
   backdrop-filter:blur(12px) saturate(120%); -webkit-backdrop-filter:blur(12px) saturate(120%);
   display:flex;align-items:center;justify-content:center; padding:40px;opacity:0;pointer-events:none;
-  transition:opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s;
+  transition:opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s; cursor:none;
 }
 body.dark-mode .modal-overlay { background: rgba(0,0,0,0.7); }
 .modal-overlay.active{opacity:1;pointer-events:auto}
@@ -418,23 +411,31 @@ body.dark-mode .modal-overlay { background: rgba(0,0,0,0.7); }
 .modal-window{
   width:100%;max-width:1020px;max-height:85vh; border-radius:28px;overflow-y:auto;
   display:grid;grid-template-columns:1.2fr 1fr; transform:translateY(40px) scale(0.94);
-  transition:transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); will-change: transform;
+  transition:transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); will-change: transform; cursor:none;
 }
 .modal-overlay.active .modal-window{transform:translateY(0) scale(1)}
-.modal-media{position:relative;background:#000;min-height:400px;display:flex;align-items:center;justify-content:center}
-.modal-media img{width:100%;height:100%;object-fit:cover;absolute:inset:0}
+.modal-media{position:relative;background:#000;min-height:400px;display:flex;align-items:center;justify-content:center; overflow: hidden;}
+
+/* Cinematic Zoom Effect */
+.modal-media img{
+  width:100%;height:100%;object-fit:cover;absolute:inset:0; 
+  transition: transform 6s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(1.05);
+}
+.modal-window:hover .modal-media img { transform: scale(1); }
+
 .modal-content-panel{ padding:44px 40px; background: var(--modal-panel-bg); display:flex;flex-direction:column;gap:20px;overflow-y:auto; transition: background 0.5s; }
 .modal-close-btn{
   position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;
   background:rgba(255,255,255,0.85);backdrop-filter:blur(10px);
   border:1px solid rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;z-index:10;transition:background .2s,transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index:10;transition:background .2s,transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); cursor:none;
 }
 body.dark-mode .modal-close-btn { background:rgba(0,0,0,0.5); border-color: rgba(61, 232, 177, 0.3); }
 .modal-close-btn:hover{background:white;transform:scale(1.15) rotate(90deg)}
 body.dark-mode .modal-close-btn:hover { background: rgba(61, 232, 177, 0.2); }
 .modal-close-btn svg{width:16px;height:16px;stroke:var(--tdark);fill:none;stroke-width:2.5}
 body.dark-mode .modal-close-btn svg { stroke: #3de8b1; }
+
 .m-label{font-family:var(--font-m);font-size:0.7rem;color:var(--g);letter-spacing:0.15em;text-transform:uppercase}
 .m-title{font-family:var(--font-d);font-size:2rem;font-weight:900;color:var(--teal);line-height:1.2; transition: color 0.5s;}
 .m-date{font-family:var(--font-m);font-size:0.75rem;color:var(--tsoft); transition: color 0.5s;}
@@ -485,7 +486,7 @@ body.dark-mode .about-card::after { background:linear-gradient(to top, rgba(0,0,
 .contact-cards{display:flex;flex-direction:column;gap:14px;margin-top:30px}
 .cc{
   display:flex;align-items:center;gap:16px;padding:17px 20px; border-radius:16px;background:var(--surface);
-  border:1px solid var(--card-border); box-shadow:var(--card-shadow);
+  border:1px solid var(--card-border); box-shadow:var(--card-shadow); cursor:none;
   transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .4s, background 0.5s, border-color 0.5s; will-change: transform;
 }
 .cc:hover{transform:translateX(8px) scale(1.02);box-shadow:var(--card-shadow-hover);}
@@ -498,24 +499,18 @@ body.dark-mode .about-card::after { background:linear-gradient(to top, rgba(0,0,
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 .fg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
 .fg label{font-size:0.76rem;font-weight:500;color:var(--tmid);letter-spacing:.03em; transition: color 0.5s;}
-.fg input,.fg textarea{padding:12px 15px;border-radius:11px;border:1.5px solid var(--card-border);background:var(--bg);font-family:var(--font-b);font-size:0.88rem;color:var(--tdark);outline:none;transition:border-color .22s,box-shadow .22s, background 0.5s, color 0.5s;}
+.fg input,.fg textarea{padding:12px 15px;border-radius:11px;border:1.5px solid var(--card-border);background:var(--bg);font-family:var(--font-b);font-size:0.88rem;color:var(--tdark);outline:none;transition:border-color .22s,box-shadow .22s, background 0.5s, color 0.5s; cursor:none;}
 .fg input:focus,.fg textarea:focus{border-color:var(--leaf);box-shadow:0 0 0 3px rgba(45,189,142,0.13)}
-.fg input::placeholder,.fg textarea::placeholder{color:var(--tsoft)}
-.fg textarea{resize:vertical;min-height:118px}
-.btn-send{width:100%;padding:15px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--leaf),var(--g));color:white;font-family:var(--font-b);font-size:0.93rem;font-weight:600;letter-spacing:.04em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 24px rgba(26,140,106,0.36);transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .4s;margin-top:2px}
+.btn-send{width:100%;padding:15px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--leaf),var(--g));color:white;font-family:var(--font-b);font-size:0.93rem;font-weight:600;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 24px rgba(26,140,106,0.36);transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .4s;margin-top:2px; cursor:none;}
 .btn-send:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 14px 36px rgba(26,140,106,0.46)}
 .btn-send svg{width:15px;height:15px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* ── FOOTER & NEW ANIMATED BADGE ───────────────────────── */
-.credit-badge-wrapper {
-  display: flex; justify-content: center; width: 100%; padding-bottom: 30px; position: relative; z-index: 10;
-}
+/* ── FOOTER & CREDITS ──────────────────────────────────── */
+.credit-badge-wrapper { display: flex; justify-content: center; width: 100%; padding-bottom: 30px; position: relative; z-index: 10; }
 .credit-badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 22px; border-radius: 999px;
-  background: var(--surface); border: 1px solid var(--card-border);
-  box-shadow: var(--card-shadow);
-  font-family: var(--font-m); font-size: 0.72rem; color: var(--tmid); letter-spacing: 0.05em;
+  display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--card-border); box-shadow: var(--card-shadow);
+  font-family: var(--font-m); font-size: 0.72rem; color: var(--tmid); letter-spacing: 0.05em; cursor:none;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s, background 0.5s, border-color 0.5s, color 0.5s;
 }
 .credit-badge:hover { transform: translateY(-4px) scale(1.03); box-shadow: var(--card-shadow-hover); color: var(--teal); }
@@ -560,10 +555,18 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   .about-card{padding:40px 24px;}
   .b1,.b2,.b3{display:none;}
   .theme-switch-wrapper { margin-left: 15px; padding-left: 15px; }
+  .filter-bar { justify-content: center; }
+  .custom-cursor { display: none !important; }
 }
 </style>
 </head>
 <body>
+
+<div class="custom-cursor" id="custom-cursor"></div>
+
+<button class="back-to-top" id="btt" onclick="window.scrollTo(0,0)">
+  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+</button>
 
 <nav class="nav">
   <a class="nav-logo" href="#" onclick="go('home');return false">
@@ -623,24 +626,19 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       </svg>
     </div>
 
-    <div class="icon-bubble ib1">
-      <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-    </div>
-    <div class="icon-bubble ib2">
-      <svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7v7z"></path></svg>
-    </div>
-    <div class="icon-bubble ib3">
-      <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>
-    </div>
-    <div class="icon-bubble ib4">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-    </div>
+    <div class="icon-bubble ib1"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div>
+    <div class="icon-bubble ib2"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7v7z"></path></svg></div>
+    <div class="icon-bubble ib3"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg></div>
+    <div class="icon-bubble ib4"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></div>
 
     <div class="hero-content content-layer">
       <div class="hero-eye">📷 Photo Portfolio</div>
 
       <div class="hero-card lg">
-        <h1 class="hero-title">Light &amp; Life<em>Through My Lens</em></h1>
+        <h1 class="hero-title">
+          <span>Light</span> <span>&amp; Life</span> 
+          <em>Through My Lens</em>
+        </h1>
       </div>
 
       <p class="hero-sub">
@@ -689,6 +687,14 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
         <h2 class="sec-title">The Full Journal</h2>
       </div>
     </div>
+    
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterGallery('all', this)">All Observations</button>
+      <button class="filter-btn" onclick="filterGallery('Urban Botany', this)">Urban Botany</button>
+      <button class="filter-btn" onclick="filterGallery('Urban Infrastructure', this)">Infrastructure</button>
+      <button class="filter-btn" onclick="filterGallery('Landscape Log', this)">Landscapes</button>
+    </div>
+
     <div class="grid" id="blog-posts-grid">
       </div>
   </section>
@@ -821,7 +827,43 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 </footer>
 
 <script>
-  // ── THEME TOGGLE ENGINE ──
+  // ── 1. CUSTOM TRAILING CURSOR ENGINE (Zero Lag) ──
+  const cursor = document.getElementById('custom-cursor');
+  let mouseX = -100, mouseY = -100;
+  let cursorX = -100, cursorY = -100;
+
+  // Only track on desktop
+  if(window.matchMedia("(pointer: fine)").matches) {
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX; mouseY = e.clientY;
+    });
+
+    function renderCursor() {
+      cursorX += (mouseX - cursorX) * 0.18; // Lerp physics for fluid trail
+      cursorY += (mouseY - cursorY) * 0.18;
+      // GPU accelerated rendering
+      cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+      requestAnimationFrame(renderCursor);
+    }
+    requestAnimationFrame(renderCursor);
+
+    // Apply glowing ring state to any clickable element
+    function attachCursorHovers() {
+      document.querySelectorAll('a, button, .card, .icon-bubble, .theme-switch, input, textarea, .modal-close-btn').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+      });
+    }
+  }
+
+  // ── 2. BACK TO TOP OBSERVER ──
+  const btt = document.getElementById('btt');
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 400) btt.classList.add('visible');
+    else btt.classList.remove('visible');
+  }, {passive: true});
+
+  // ── 3. THEME TOGGLE ENGINE ──
   function toggleTheme(isDark) {
     if(isDark) {
       document.body.classList.add('dark-mode');
@@ -832,17 +874,16 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     }
   }
 
-  // Check saved preference on load
   const savedTheme = localStorage.getItem('portfolio-theme');
   if(savedTheme === 'dark') {
     document.body.classList.add('dark-mode');
     document.getElementById('theme-checkbox').checked = true;
   }
 
-  // ── DATABASE & GRID ──
+  // ── 4. DATABASE & FILTER GRID ──
   const postDatabase = [
     {
-      id: 1,
+      id: 10,
       title: "Bioluminescent Blooms in the Concrete Canvas",
       excerpt: "Documenting urban plant life as it scales the lines of modern cityscapes, proving that nature doesn't just adapt—it claims its space.",
       body: "This frame captures a cluster of delicate wild blossoms thriving right against the geometric backdrop of Abu Dhabi's architectural lines. What drew me to this shot was the sharp contrast between the organic, chaotic geometry of the plant stems and the clean, structured curves of the city behind them. It is a quiet reminder of how native eco-systems and high-density human architecture can elegantly sync up, offering a visual window into a true Solarpunk ecosystem operating in the real world.",
@@ -852,7 +893,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       featured: true
     },
     {
-      id: 2,
+      id: 11,
       title: "Symmetry of the Streets: Urban Oasis",
       excerpt: "Analyzing the visual balance between transit systems, high-density infrastructure, and the resilient flora flanking city corridors.",
       body: "This composition focuses on a central Abu Dhabi thoroughfare, capturing a distinct layer of coastal city design. By framing the clean lines of passing vehicles and geometric towers with palm branches and lush flowerbeds, the shot illustrates how intentional green spaces soften the technical rigidity of an expanding metropolis. It captures an everyday glimpse of a city engineered to let infrastructure and regional ecology share the same horizon.",
@@ -862,23 +903,33 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       featured: false
     },
     {
+      id: 1,
+      title: "The Living Architecture of Tomorrow",
+      excerpt: "Exploring how bio-integrated buildings are reshaping our cities with self-healing facades and breathable walls that respond to the environment like a living organism.",
+      body: "In this study, I examine structural layouts where concrete surfaces are deliberately paired with automated irrigation networks to feed climbing ivy and local flora. Looking closely at these facades, it becomes apparent that the building is no longer an inanimate object blocking out nature; it acts as an active ecosystem filter. This is the visual baseline of Solarpunk design—where high-density urban environments use technological frameworks to expand rather than shrink the natural ecosystem around us.",
+      date: "May 10, 2026",
+      img: "https://picsum.photos/seed/arch22/700/480",
+      label: "Architecture & Plants",
+      featured: false
+    },
+    {
+      id: 2,
+      title: "Solar Petals: Energy Harvesting Reimagined",
+      excerpt: "How biomimicry is transforming solar technology into something beautiful and efficient.",
+      body: "Standard industrial solar setups can often feel cold and intrusive in a natural environment. This visual log documents glass photovoltaic cells shaped like organic leaves. By observing how mathematical patterns in botanical leaf alignment optimize light absorption, engineers are building arrays that blend seamlessly into urban parks. Here, technology mirrors biological logic to harvest energy efficiently while maintaining aesthetic harmony with native plants.",
+      date: "May 5, 2026",
+      img: "https://picsum.photos/seed/solar55/500/350",
+      label: "Technology & Mimicry",
+      featured: false
+    },
+    {
       id: 3,
       title: "Digital Greenhouses: The Convergence",
       excerpt: "Where computational design meets botanical science to create spaces that think and grow.",
       body: "By capturing automated greenhouse designs, I explore spaces where climate controls and sensor data feeds operate completely behind the scenes to sustain rare desert plant varieties. It represents a subtle coexistence where mechanical systems are built solely to protect and encourage natural life cycles inside urban landscapes.",
       date: "Apr 28, 2026",
       img: "https://picsum.photos/seed/greenhouse8/500/350",
-      label: "Botanical Systems",
-      featured: false
-    },
-    {
-      id: 4,
-      title: "Mycelium Networks & Data Flow",
-      excerpt: "Underground fungal networks as a model for decentralized communication systems.",
-      body: "This set looks closely at subterranean root structures and fungal networks. The way biological networks transfer nutrients across isolated forest patches mirrors the exact routing layout of digital data architecture. It shows that our most complex human systems are often just electronic recreations of mechanics that nature optimized millions of years ago.",
-      date: "Apr 19, 2026",
-      img: "https://picsum.photos/seed/mycelium3/500/350",
-      label: "Nature Networks",
+      label: "Urban Botany",
       featured: false
     },
     {
@@ -888,17 +939,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       body: "Documenting water pathways flowing through dry rocky terrain highlights the raw adaptability of regional ecosystems. Even in hyper-arid conditions, carefully managed modern water conservation technology can run alongside natural land formations to support local wildlife and thriving greenery without depleting local aquifers.",
       date: "Apr 11, 2026",
       img: "https://picsum.photos/seed/waterfall44/500/350",
-      label: "Ecosystem Exploration",
-      featured: false
-    },
-    {
-      id: 6,
-      title: "The Crystal Canopy Project",
-      excerpt: "Parametric glass structures grown from algorithms inspired by ice crystal geometry.",
-      body: "This series documents geometry-based structural canopies built inside city spaces. Using digital modeling tools to simulate natural mineral growth patterns, the structures provide geometric shade profiles that shield community gardens from intense sun, proving how data tools can serve local vegetation frameworks.",
-      date: "Apr 3, 2026",
-      img: "https://picsum.photos/seed/crystal77/500/350",
-      label: "Parametric Design",
+      label: "Landscape Log",
       featured: false
     },
     {
@@ -910,28 +951,27 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       img: "https://picsum.photos/seed/desert12/500/350",
       label: "Landscape Log",
       featured: false
-    },
-    {
-      id: 8,
-      title: "Abu Dhabi's Hidden Mangrove Corridors",
-      excerpt: "A kayak through the tidal forests that shelter hundreds of migratory bird species each winter.",
-      body: "Mangrove ecosystems are natural protectors of the coastline. This log tracks instances where urban city planning intentionally shapes water channels around existing coastal forests, creating protected zones where local avian species and human marine infrastructure exist side-by-side.",
-      date: "Mar 10, 2026",
-      img: "https://picsum.photos/seed/mangrove6/500/350",
-      label: "Wildlife & Coastlines",
-      featured: false
-    },
-    {
-      id: 9,
-      title: "Stars Above Jebel Hafeet",
-      excerpt: "Why the Al Ain mountain road is the region's best-kept secret for astrophotography.",
-      body: "An observation of dark sky horizons from high altitudes. Balancing long exposures with camera stabilizers reveals cosmic details normally hidden by city light pollution, highlighting the sharp contrast between remote mountain peaks and urban energy hubs below.",
-      date: "Feb 28, 2026",
-      img: "https://picsum.photos/seed/stars33/500/350",
-      label: "Astrophotography",
-      featured: false
     }
   ];
+
+  function buildCardHTML(post) {
+    const isFeat = post.featured ? 'feat' : '';
+    return `
+      <div class="card ${isFeat}" onclick="openPost(${post.id})">
+        <div class="cmedia">
+          <img src="${post.img}" alt="${post.title}" loading="lazy"/>
+        </div>
+        <div class="cbody">
+          <h3 class="ctitle">${post.title}</h3>
+          <p class="cexcerpt">${post.excerpt}</p>
+          <div class="cmeta">
+            <span class="cdate">${post.date}</span>
+            <div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
   function renderGrids() {
     const homeGrid = document.getElementById('home-posts-grid');
@@ -941,28 +981,36 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     blogGrid.innerHTML = '';
 
     postDatabase.forEach((post, index) => {
-      const isFeat = post.featured ? 'feat' : '';
-      const cardHTML = `
-        <div class="card ${isFeat}" onclick="openPost(${post.id})">
-          <div class="cmedia">
-            <img src="${post.img}" alt="${post.title}" loading="lazy"/>
-          </div>
-          <div class="cbody">
-            <h3 class="ctitle">${post.title}</h3>
-            <p class="cexcerpt">${post.excerpt}</p>
-            <div class="cmeta">
-              <span class="cdate">${post.date}</span>
-              <div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      if(index < 5) { homeGrid.innerHTML += cardHTML; }
-      blogGrid.innerHTML += cardHTML;
+      // Home page only gets top 5
+      if(index < 5) homeGrid.innerHTML += buildCardHTML(post);
+      // Blog gets everything initially
+      blogGrid.innerHTML += buildCardHTML(post);
     });
+
+    if(window.matchMedia("(pointer: fine)").matches) attachCursorHovers();
   }
 
+  function filterGallery(category, btnElement) {
+    // Update active button state
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    btnElement.classList.add('active');
+
+    const blogGrid = document.getElementById('blog-posts-grid');
+    blogGrid.innerHTML = ''; // Clear current grid
+
+    // Filter and rebuild
+    const filteredPosts = category === 'all' 
+      ? postDatabase 
+      : postDatabase.filter(post => post.label === category);
+
+    filteredPosts.forEach(post => {
+      blogGrid.innerHTML += buildCardHTML(post);
+    });
+
+    if(window.matchMedia("(pointer: fine)").matches) attachCursorHovers();
+  }
+
+  // ── 5. LIGHTBOX MODAL ──
   function openPost(id) {
     const post = postDatabase.find(p => p.id === id);
     if(!post) return;
@@ -987,6 +1035,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 
   function closeModal(e) { if(e.target.id === 'detail-modal') toggleModal(false); }
 
+  // ── 6. PAGE NAVIGATION ──
   function go(id){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.getElementById('page-'+id).classList.add('active');
