@@ -97,27 +97,26 @@ img{display:block;max-width:100%}
 ul{list-style:none}
 
 /* ── HYBRID CUSTOM CURSOR SYSTEM ───────────────────────── */
-/* 1. The Physical SVG Arrow (Replaces system cursor everywhere) */
 html, body, a, button, .card, .icon-bubble, .theme-switch, input, textarea, .modal-close-btn, .filter-btn {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%232dbd8e' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z'/%3E%3C/svg%3E") 3 3, auto !important;
 }
 
-/* 2. The JS Trailing Ring */
+/* UPDATED: Faster, Diamond Trailing Cursor */
 .custom-cursor-ring {
-  position: fixed; top: 0; left: 0; width: 34px; height: 34px;
-  border: 1.5px solid var(--leaf); border-radius: 50%;
+  position: fixed; top: 0; left: 0; width: 28px; height: 28px;
+  border: 1.5px solid var(--leaf); 
+  border-radius: 8px; /* Creates the rounded square/diamond */
   pointer-events: none; z-index: 9999;
-  transform: translate3d(-50%, -50%, 0); /* GPU Accelerated */
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s, opacity 0.3s;
+  transform: translate3d(-50%, -50%, 0) rotate(45deg); /* Tilted to a diamond */
+  transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s, opacity 0.3s, border-radius 0.3s;
   will-change: transform;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 .custom-cursor-ring.hovering {
-  width: 50px; height: 50px; background: rgba(45,189,142,0.15); border-color: var(--g); opacity: 1;
+  width: 44px; height: 44px; background: rgba(45,189,142,0.20); border-color: var(--g); opacity: 1; border-radius: 14px;
 }
 
-/* ── Liquid Glass (OPTIMIZED FOR PERFORMANCE) ──────────── */
-/* Blurs aggressively reduced from 24px/16px to 8px/6px */
+/* ── Liquid Glass ──────────────────────────────────────── */
 .lg{
   background: var(--glass-gradient);
   backdrop-filter:blur(8px) saturate(160%); -webkit-backdrop-filter:blur(8px) saturate(160%);
@@ -251,7 +250,6 @@ input:checked + .slider .icon-moon { opacity: 1; stroke: #3de8b1; }
 }
 .hero-card:hover { transform: scale(1.02); }
 
-/* Cinematic Staggered Text Reveal */
 .hero-title{
   font-family:var(--font-d); font-size:clamp(2.5rem,5.5vw,4.2rem);
   line-height:1.06;font-weight:900;letter-spacing:-.02em;color:var(--teal); transition: color 0.5s;
@@ -783,16 +781,16 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       </div>
     </div>
     
-    <form class="form-card" action="https://formsubmit.co/alfaazal2009@gmail.com" method="POST">
-      <input type="hidden" name="_next" value="https://alfaazthecoder.github.io/My-Web-Portfolio/">
-      <input type="hidden" name="_subject" value="New Portfolio Message!">
-      <input type="hidden" name="_captcha" value="false">
+    <form class="form-card" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="b71fd75f-7128-4d6c-9278-0f73baf6bf22">
+      <input type="hidden" name="redirect" value="https://alfaazthecoder.github.io/My-Web-Portfolio/">
+      <input type="hidden" name="subject" value="New Portfolio Message!">
 
       <div class="form-row">
         <div class="fg"><label>Name</label><input type="text" name="name" placeholder="Your name" required/></div>
         <div class="fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required/></div>
       </div>
-      <div class="fg"><label>Subject</label><input type="text" name="_subject" placeholder="What's this about?" required/></div>
+      <div class="fg"><label>Subject</label><input type="text" name="subject" placeholder="What's this about?" required/></div>
       <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell me more..." required></textarea></div>
       <button type="submit" class="btn-send">
         <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -838,27 +836,27 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 </footer>
 
 <script>
-  // ── 1. HYBRID CUSTOM CURSOR ENGINE ──
+  // ── 1. HYBRID CUSTOM CURSOR ENGINE (FASTER LERP + DIAMOND) ──
   const cursorRing = document.getElementById('custom-cursor');
   let mouseX = -100, mouseY = -100;
   let ringX = -100, ringY = -100;
 
-  // Only run ring tracking on non-touch devices
   if(window.matchMedia("(pointer: fine)").matches) {
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX; mouseY = e.clientY;
     });
 
     function renderCursor() {
-      ringX += (mouseX - ringX) * 0.2; // Smooth lerp physics
-      ringY += (mouseY - ringY) * 0.2;
-      // GPU accelerated rendering for the ring
-      cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+      // Changed from 0.2 to 0.45. This makes the trail instantly snap behind the arrow
+      ringX += (mouseX - ringX) * 0.45; 
+      ringY += (mouseY - ringY) * 0.45;
+      
+      // Kept the 45 degree tilt directly in the physics engine
+      cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) rotate(45deg)`;
       requestAnimationFrame(renderCursor);
     }
     requestAnimationFrame(renderCursor);
 
-    // Apply glowing ring state to any clickable element
     function attachCursorHovers() {
       document.querySelectorAll('a, button, .card, .icon-bubble, .theme-switch, input, textarea, .modal-close-btn, .filter-btn').forEach(el => {
         el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
@@ -992,9 +990,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     blogGrid.innerHTML = '';
 
     postDatabase.forEach((post, index) => {
-      // Home page only gets top 5
       if(index < 5) homeGrid.innerHTML += buildCardHTML(post);
-      // Blog gets everything initially
       blogGrid.innerHTML += buildCardHTML(post);
     });
 
@@ -1002,14 +998,12 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   }
 
   function filterGallery(category, btnElement) {
-    // Update active button state
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
     btnElement.classList.add('active');
 
     const blogGrid = document.getElementById('blog-posts-grid');
-    blogGrid.innerHTML = ''; // Clear current grid
+    blogGrid.innerHTML = ''; 
 
-    // Filter and rebuild
     const filteredPosts = category === 'all' 
       ? postDatabase 
       : postDatabase.filter(post => post.label === category);
