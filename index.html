@@ -101,13 +101,12 @@ html, body, a, button, .card, .icon-bubble, .theme-switch, input, textarea, .mod
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%232dbd8e' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z'/%3E%3C/svg%3E") 3 3, auto !important;
 }
 
-/* UPDATED: Faster, Diamond Trailing Cursor */
 .custom-cursor-ring {
   position: fixed; top: 0; left: 0; width: 28px; height: 28px;
   border: 1.5px solid var(--leaf); 
-  border-radius: 8px; /* Creates the rounded square/diamond */
+  border-radius: 8px;
   pointer-events: none; z-index: 9999;
-  transform: translate3d(-50%, -50%, 0) rotate(45deg); /* Tilted to a diamond */
+  transform: translate3d(-50%, -50%, 0) rotate(45deg);
   transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s, opacity 0.3s, border-radius 0.3s;
   will-change: transform;
   opacity: 0.8;
@@ -195,7 +194,6 @@ input:checked + .slider .icon-moon { opacity: 1; stroke: #3de8b1; }
 .b3{width:400px;height:400px;background:radial-gradient(circle, rgba(91,224,179,0.10) 0%, transparent 65%);top:30%;left:50%;animation-delay:-9s}
 @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(28px,18px) scale(1.07)}}
 
-/* Live Animated Leaves */
 .leaf-d{position:absolute;opacity:0.15;pointer-events:none; transform-origin: bottom center;}
 .ld1{width:300px;top:4%;right:9%; animation: sway1 8s ease-in-out infinite alternate;}
 .ld2{width:190px;bottom:7%;left:4%; animation: sway2 7s ease-in-out infinite alternate 1s;}
@@ -204,7 +202,6 @@ input:checked + .slider .icon-moon { opacity: 1; stroke: #3de8b1; }
 @keyframes sway2 { 0% { transform: rotate(-14deg); } 100% { transform: rotate(-22deg); } }
 @keyframes sway3 { 0% { transform: rotate(34deg); } 100% { transform: rotate(42deg); } }
 
-/* Playful Floating Icons */
 .icon-bubble {
   position: absolute; width: 110px; height: 110px; border-radius: 34px;
   background: var(--glass-card-bg); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
@@ -364,7 +361,6 @@ body.dark-mode .blog-decor { opacity: 0.05; }
 
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 
-/* The Card & GPU Sheen Effect */
 .card{
   border-radius:var(--cr);overflow:hidden; background: var(--surface);
   border:1px solid var(--card-border); box-shadow: var(--card-shadow);
@@ -373,7 +369,6 @@ body.dark-mode .blog-decor { opacity: 0.05; }
 }
 .card:hover{transform:translateY(-9px) scale(1.02);box-shadow: var(--card-shadow-hover);}
 
-/* Hardware Accelerated Light Sheen */
 .card::before {
   content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
   background: linear-gradient(to right, transparent, var(--sheen-light), transparent);
@@ -425,7 +420,6 @@ body.dark-mode .modal-overlay { background: rgba(0,0,0,0.7); }
 .modal-overlay.active .modal-window{transform:translateY(0) scale(1)}
 .modal-media{position:relative;background:#000;min-height:400px;display:flex;align-items:center;justify-content:center; overflow: hidden;}
 
-/* Cinematic Zoom Effect */
 .modal-media img{
   width:100%;height:100%;object-fit:cover;absolute:inset:0; 
   transition: transform 6s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(1.05);
@@ -452,23 +446,16 @@ body.dark-mode .modal-close-btn svg { stroke: #3de8b1; }
 
 /* ── ABOUT ─────────────────────────────────────────────── */
 .about-wrap{max-width:1080px;margin:0 auto;padding:30px 52px 80px}
+
+/* Updated Dynamic Profile Card */
 .about-card{
   position:relative; border-radius:24px; padding:60px 50px; display:flex; flex-direction:column; justify-content:flex-end;
-  min-height:450px; margin-bottom:26px; overflow:hidden;
+  margin-bottom:26px; overflow:hidden;
   box-shadow:0 20px 60px rgba(0,0,0,0.2),inset 0 1.5px 0 var(--card-border); border:1px solid var(--card-border);
   transition: border-color 0.5s, box-shadow 0.5s;
 }
-.about-card::before{
-  content:'';position:absolute;inset:0; background:url('https://picsum.photos/seed/portrait1/1200/800') center/cover no-repeat; z-index:0;
-}
-.about-card::after{
-  content:'';position:absolute;inset:0; background:linear-gradient(to top, rgba(10,46,36,0.95) 0%, rgba(10,46,36,0.1) 100%);
-  z-index:1; transition: background 0.5s;
-}
-body.dark-mode .about-card::after { background:linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 100%); }
+
 .about-card-content{position:relative;z-index:2;max-width:650px;}
-.about-card-content .ah2{ font-family:var(--font-d);font-size:2.4rem;font-weight:700;color:white; margin-bottom:14px;text-shadow:0 2px 10px rgba(0,0,0,0.4); }
-.about-card-content .ap{ font-size:1.02rem;line-height:1.78;color:rgba(255,255,255,0.92); margin-bottom:12px;text-shadow:0 1px 5px rgba(0,0,0,0.4); }
 
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:24px}
 .inner-card{
@@ -485,10 +472,6 @@ body.dark-mode .about-card::after { background:linear-gradient(to top, rgba(0,0,
 .gear-list{display:flex;flex-direction:column;gap:11px}
 .gear-item{display:flex;align-items:center;gap:10px;font-size:0.9rem;color:var(--tmid); transition: color 0.5s;}
 .gear-dot{width:7px;height:7px;border-radius:50%;background:var(--leaf);flex-shrink:0}
-.photo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.photo-strip div{border-radius:18px;overflow:hidden;height:220px; border: 1px solid var(--card-border); transition: border-color 0.5s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);}
-.photo-strip div:hover { transform: scale(1.03) rotate(1deg); }
-.photo-strip img{width:100%;height:100%;object-fit:cover;display:block}
 
 /* ── CONTACT ───────────────────────────────────────────── */
 .contact-grid{max-width:1080px;margin:0 auto;padding:30px 52px 90px;display:grid;grid-template-columns:1fr 1.45fr;gap:60px;align-items:start}
@@ -558,7 +541,6 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   footer{padding:22px 18px;flex-direction:column;text-align:center}
   .ib1,.ib2,.ib3,.ib4{display:none}
   .hero-card{padding:30px 22px}
-  .photo-strip{grid-template-columns:1fr}
   .modal-overlay{padding:10px}
   .modal-content-panel{padding:24px 20px}
   .about-card{padding:40px 24px;}
@@ -713,45 +695,62 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
   <div class="about-decor"></div>
 
   <div class="content-layer" style="max-width:1080px;margin:0 auto;padding:80px 52px 20px;text-align:center">
-    <div class="sec-label" style="justify-content:center">✦ About Me</div>
+    <div class="sec-label" style="justify-content:center">✦ Behind The System</div>
     <h1 style="font-family:var(--font-d);font-size:clamp(2.3rem,4.5vw,3.8rem);font-weight:900;color:var(--teal);margin-top:10px; transition: color 0.5s;">Hi, I'm Alfaaz.</h1>
   </div>
+  
   <div class="about-wrap content-layer">
     
-    <div class="about-card">
-      <div class="about-card-content">
-        <h2 class="ah2">Photographer &amp; Visual Storyteller</h2>
-        <p class="ap">I'm a self-taught photographer based in Abu Dhabi, obsessed with exploring the subtle spaces where concrete structures meet wild biological life. Looking through my lens, I search for instances where technology and nature find a symbiotic balance rather than fighting for dominance.</p>
-        <p class="ap" style="margin-bottom:0">This blog is built to showcase my growth, experiments, and ongoing thoughts as an amateur creator studying the environment and modern digital infrastructure.</p>
+    <div class="about-card lg-card" style="min-height: auto; padding: 44px; background: linear-gradient(135deg, var(--mist) 0%, rgba(255,255,255,0.4) 100%);">
+      <div class="about-card-content" style="max-width: 100%;">
+        <h2 class="ah2" style="color: var(--teal); text-shadow: none;">Photographer &amp; Frontend Systems Explorer</h2>
+        <p class="ap" style="color: var(--tdark); text-shadow: none;">I am a self-taught creator based in Abu Dhabi, exploring the delicate spaces where architectural rigidity, modern transit systems, and resilient botanical life intersect. Looking through my lens, I search for instances where technology and nature find a symbiotic balance rather than fighting for dominance.</p>
+        <p class="ap" style="color: var(--tmid); text-shadow: none; margin-bottom:0; font-size: 0.95rem;">This portfolio serves as an open-source visual log documenting urban ecosystems, engineered using hardware-accelerated frontend architectures to ensure high-fidelity delivery without performance compromises.</p>
       </div>
     </div>
 
     <div class="two-col">
       <div class="inner-card">
-        <div class="inner-h">📷 What I Shoot</div>
+        <div class="inner-h">📷 Visual Horizons</div>
         <div class="tags">
           <span class="tag">Solarpunk Ecosystems</span>
           <span class="tag">Urban Nature Coexistence</span>
-          <span class="tag">City Buildings &amp; Architecture</span>
-          <span class="tag">Plants &amp; Botanical Science</span>
-          <span class="tag">Animals &amp; Local Wildlife</span>
+          <span class="tag">Transit &amp; Street Geometry</span>
+          <span class="tag">Specular Light &amp; Reflections</span>
+          <span class="tag">Biological Architecture</span>
         </div>
       </div>
       <div class="inner-card">
-        <div class="inner-h">✦ My Tools</div>
+        <div class="inner-h">✦ Active Tooling</div>
         <div class="gear-list">
-          <div class="gear-item"><span class="gear-dot"></span>Nikon Z30 Camera</div>
-          <div class="gear-item"><span class="gear-dot"></span>Samsung S23 Device</div>
-          <div class="gear-item"><span class="gear-dot"></span>GitHub Open Deployment</div>
+          <div class="gear-item"><span class="gear-dot"></span>Nikon Z30 Optical Chassis</div>
+          <div class="gear-item"><span class="gear-dot"></span>Samsung S23 Mobile Capture</div>
+          <div class="gear-item"><span class="gear-dot"></span>Sublime Text &amp; Git Versioning</div>
         </div>
       </div>
     </div>
 
-    <div class="photo-strip">
-      <div><img src="https://picsum.photos/seed/pstrip1/400/440" alt="" loading="lazy"/></div>
-      <div><img src="https://picsum.photos/seed/pstrip2/400/440" alt="" loading="lazy"/></div>
-      <div><img src="https://picsum.photos/seed/pstrip3/400/440" alt="" loading="lazy"/></div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 24px;">
+      <div class="inner-card" style="padding: 24px;">
+        <div class="inner-h" style="font-size: 0.85rem; letter-spacing: 0.05em; font-family: var(--font-m); color: var(--g);">[01 / OPTICS]</div>
+        <p style="font-size: 0.84rem; line-height: 1.6; color: var(--tmid); text-align: justify;">
+          <strong>Capture Pipeline:</strong> Leveraging high-aperture manual optics to separate crisp foreground botanical textures from dense structural backgrounds, isolating local wildlife and urban flora at raw exposure intervals.
+        </p>
+      </div>
+      <div class="inner-card" style="padding: 24px;">
+        <div class="inner-h" style="font-size: 0.85rem; letter-spacing: 0.05em; font-family: var(--font-m); color: var(--g);">[02 / DEVELOPMENT]</div>
+        <p style="font-size: 0.84rem; line-height: 1.6; color: var(--tmid); text-align: justify;">
+          <strong>Digital Grading:</strong> Balancing natural sunlight with clean digital contrasts. Every asset undergoes precise geometric perspective mapping to emphasize architectural crossroad paths and glass canopy frameworks.
+        </p>
+      </div>
+      <div class="inner-card" style="padding: 24px;">
+        <div class="inner-h" style="font-size: 0.85rem; letter-spacing: 0.05em; font-family: var(--font-m); color: var(--g);">[03 / ARCHITECTURE]</div>
+        <p style="font-size: 0.84rem; line-height: 1.6; color: var(--tmid); text-align: justify;">
+          <strong>Frontend Core:</strong> Hand-crafted semantic structure deploying non-blocking CSS variables, custom asynchronous filtering matrices, and native GPU layers for an optimal fluid user experience.
+        </p>
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -782,7 +781,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     </div>
     
     <form class="form-card" action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="b71fd75f-7128-4d6c-9278-0f73baf6bf22">
+      <input type="hidden" name="access_key" value="PUT_YOUR_ACCESS_KEY_HERE">
       <input type="hidden" name="redirect" value="https://alfaazthecoder.github.io/My-Web-Portfolio/">
       <input type="hidden" name="subject" value="New Portfolio Message!">
 
@@ -836,7 +835,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 </footer>
 
 <script>
-  // ── 1. HYBRID CUSTOM CURSOR ENGINE (FASTER LERP + DIAMOND) ──
+  // ── 1. HYBRID CUSTOM CURSOR ENGINE ──
   const cursorRing = document.getElementById('custom-cursor');
   let mouseX = -100, mouseY = -100;
   let ringX = -100, ringY = -100;
@@ -847,11 +846,9 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     });
 
     function renderCursor() {
-      // Changed from 0.2 to 0.45. This makes the trail instantly snap behind the arrow
       ringX += (mouseX - ringX) * 0.45; 
       ringY += (mouseY - ringY) * 0.45;
       
-      // Kept the 45 degree tilt directly in the physics engine
       cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) rotate(45deg)`;
       requestAnimationFrame(renderCursor);
     }
@@ -889,10 +886,10 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
     document.getElementById('theme-checkbox').checked = true;
   }
 
-  // ── 4. DATABASE & FILTER GRID ──
+  // ── 4. DATABASE & FILTER GRID (Underscores removed) ──
   const postDatabase = [
     {
-      id: 1,
+      id: 7,
       title: "Bioluminescent Blooms in the Concrete Canvas",
       excerpt: "Documenting urban plant life as it scales the lines of modern cityscapes, proving that nature doesn't just adapt—it claims its space.",
       body: "This frame captures a cluster of delicate wild blossoms thriving right against the geometric backdrop of Abu Dhabi's architectural lines. What drew me to this shot was the sharp contrast between the organic, chaotic geometry of the plant stems and the clean, structured curves of the city behind them. It is a quiet reminder of how native eco-systems and high-density human architecture can elegantly sync up, offering a visual window into a true Solarpunk ecosystem operating in the real world.",
@@ -902,7 +899,7 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       featured: true
     },
     {
-      id: 2,
+      id: 8,
       title: "Symmetry of the Streets: Urban Oasis",
       excerpt: "Analyzing the visual balance between transit systems, high-density infrastructure, and the resilient flora flanking city corridors.",
       body: "This composition focuses on a central Abu Dhabi thoroughfare, capturing a distinct layer of coastal city design. By framing the clean lines of passing vehicles and geometric towers with palm branches and lush flowerbeds, the shot illustrates how intentional green spaces soften the technical rigidity of an expanding metropolis. It captures an everyday glimpse of a city engineered to let infrastructure and regional ecology share the same horizon.",
@@ -912,53 +909,43 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
       featured: false
     },
     {
-      id: 3,
+      id: 9,
       title: "Decaying Canopy: The Cost of Light",
       excerpt: "An observation of botanical leaves displaying structural damage against a sun-drenched canopy, capturing the fragility within thriving ecosystems.",
       body: "This shot positions damaged, browning foliage directly against a vibrant, light-filled green canopy. The contrast highlights a vital ecological truth: even within highly optimized environments, individual structural decay is a natural biproduct of intense exposure to light and energy. Capturing this macro view explores the microscopic vulnerabilities that exist inside macro systems, balancing pure tech-optimism with raw biological reality.",
       date: "May 18, 2026",
-      img: "_DSC3324.jpg",
+      img: "DSC3324.jpg",
       label: "Urban Botany",
       featured: false
     },
     {
-      id: 4,
+      id: 10,
       title: "Glass Canopies: The Digital Greenhouse",
       excerpt: "Analyzing the visual alignment of geometric glass panes against natural branch formations, highlighting architectural biomimicry.",
       body: "This composition layers organic branch patterns directly over the crisp, structural grids of contemporary urban windows. The sunlight filtering through the translucent leaves highlights a structural philosophy where modern glass elements mirror the natural distribution of light in a forest canopy. Documenting this structure emphasizes an optimistic architectural direction: building high-density spaces that incorporate native greenery rather than isolating from it.",
       date: "May 18, 2026",
-      img: "_DSC3334.jpg",
+      img: "DSC3334.jpg",
       label: "Urban Infrastructure",
       featured: false
     },
     {
-      id: 5,
+      id: 11,
       title: "Chasing Grids: The Urban Crossroad",
       excerpt: "An exploration of city transit geometry, pedestrian spacing, and high-density structural architecture under the clear desert sky.",
       body: "This composition focuses on the architectural rhythm of Abu Dhabi's streetscapes. By capturing the stark white crosswalk geometry alongside structural high-rises and towering streetlights, the shot emphasizes a grid-based city layout. The inclusion of figures waiting at the crossroad scales the frame, highlighting human navigation through an expertly engineered, modern urban ecosystem.",
       date: "May 18, 2026",
-      img: "_DSC3409.jpg",
+      img: "DSC3409.jpg",
       label: "Urban Infrastructure",
       featured: false
     },
     {
-      id: 6,
+      id: 12,
       title: "Vertical Green: The Scaffold Ecosystem",
       excerpt: "An observation of botanical vines climbing architectural structures, creating a natural vertical grid system alongside industrial fixtures.",
       body: "This composition explores a vertical narrative within urban ecology. By balancing a weathered hanging rope against two descending paths of climbing vines, the frame documents a direct symbiotic relationship between built structures and plant life. The soft, diffuse lighting emphasizes a clean architectural layout where raw mechanical components don't crowd out nature, but actively act as the structural framework that supports its growth.",
       date: "May 18, 2026",
-      img: "_DSC3343.jpg",
+      img: "DSC3343.jpg",
       label: "Urban Botany",
-      featured: false
-    },
-    {
-      id: 7,
-      title: "Golden Hour Over the Empty Quarter",
-      excerpt: "Forty-eight hours alone in one of the world's largest sand deserts, chasing the last light.",
-      body: "Capturing the expansive dunes under pristine desert skies shows a pure landscape completely separate from human infrastructure. The focus here is managing exposure settings to balance the dramatic shadows cast across sand horizons by intense light shifts.",
-      date: "Mar 22, 2026",
-      img: "https://picsum.photos/seed/desert12/500/350",
-      label: "Landscape Log",
       featured: false
     }
   ];
