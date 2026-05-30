@@ -9,576 +9,391 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 
 <style>
-/* ── THEME VARIABLES (Light Mode Default) ─────────────── */
-:root{
-  --g:       #1a8c6a;
-  --leaf:    #2dbd8e;
-  --fresh:   #5be0b3;
-  --mist:    #c4f0e2;
-  --sky:     #4fc3f7;
-  --teal:    #0d5c4a;
-  --bg:      #edf8f4;
-  --tmid:    #3a6e5a;
-  --tsoft:   #7aafa0;
-  --tdark:   #0a2e24;
-  --surface: #ffffff;
+/* ── 1. UNIFIED AERO-MORPHIC THEME VARIABLES ───────────────── */
+:root {
+  /* Core Aero Palette */
+  --g: #1a8c6a;
+  --leaf: #2dbd8e;
+  --sky: #4fc3f7;
+  --teal: #0d5c4a;
+  --tmid: #3a6e5a;
+  --tsoft: #7aafa0;
+  --tdark: #0a2e24;
+  
+  /* Neomorphic Backgrounds */
+  --bg: #e6f4f1;
+  --surface: #edf8f4;
+  
+  /* Claymorphic Shadows (Light Mode) */
+  --clay-light: #ffffff;
+  --clay-dark: #c5e3d8;
+  --clay-inset-light: rgba(255,255,255,0.9);
+  --clay-inset-dark: rgba(13, 92, 74, 0.15);
 
-  --glass-gradient: linear-gradient(145deg, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.16) 60%, rgba(255,255,255,0.28) 100%);
-  --glass-border-heavy: rgba(255,255,255,0.72);
-  --glass-box-shadow: 0 28px 70px rgba(13,92,74,0.18), inset 0 2px 0 rgba(255,255,255,0.95), inset 0 -1px 0 rgba(255,255,255,0.28), inset 2px 0 0 rgba(255,255,255,0.50), inset -2px 0 0 rgba(255,255,255,0.50);
-  
-  --glass-card-bg: rgba(255,255,255,0.62);
-  --glass-card-border: rgba(255,255,255,0.80);
-  --glass-card-shadow: 0 12px 44px rgba(13,92,74,0.09), inset 0 1.5px 0 rgba(255,255,255,0.98);
-  
-  --nav-bg: rgba(237,248,244,0.68);
-  --nav-border: rgba(255,255,255,0.62);
-  
-  --hero-card-sub-bg: rgba(255,255,255,0.55);
-  --card-border: rgba(196,240,226,0.55);
-  --card-shadow: 0 3px 20px rgba(13,92,74,0.07);
-  --card-shadow-hover: 0 24px 60px rgba(13,92,74,0.18);
-  
-  --modal-panel-bg: rgba(255,255,255,0.95);
-  --page-sub-bg: linear-gradient(160deg,#d8f5ec 0%,#eaf7f2 38%,#daeefa 100%);
-  --sheen-light: rgba(255,255,255,0.4);
-  
+  /* Liquid Glass (Light Mode) */
+  --glass-bg: rgba(255, 255, 255, 0.45);
+  --glass-blur: blur(12px);
+  --glass-border-light: rgba(255, 255, 255, 0.8);
+  --glass-border-dark: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 20px 40px rgba(13, 92, 74, 0.1);
+
   --font-d: 'Playfair Display', Georgia, serif;
   --font-b: 'DM Sans', sans-serif;
   --font-m: 'Space Mono', monospace;
-  --cr: 22px;
 }
 
-/* ── THEME VARIABLES (Dark Mode Overrides) ────────────── */
 body.dark-mode {
-  --g:       #3de8b1;
-  --leaf:    #2dbd8e;
-  --fresh:   #0d5c4a;
-  --mist:    #082e24;
-  --sky:     #24719c;
-  --teal:    #a9dfcd; 
-  --bg:      #030a08;
-  --tmid:    #9dc4b7;
-  --tsoft:   #689484;
-  --tdark:   #f4fbf8; 
-  --surface: #07120e;
+  /* Dark Aero Palette */
+  --g: #3de8b1;
+  --leaf: #2dbd8e;
+  --sky: #24719c;
+  --teal: #a9dfcd; 
+  --tmid: #9dc4b7;
+  --tsoft: #689484;
+  --tdark: #f4fbf8; 
+  
+  /* Neomorphic Backgrounds (Dark Mode) */
+  --bg: #040f0c;
+  --surface: #071511;
 
-  --glass-gradient: linear-gradient(145deg, rgba(10,30,24,0.60) 0%, rgba(10,30,24,0.30) 60%, rgba(10,30,24,0.50) 100%);
-  --glass-border-heavy: rgba(61, 232, 177, 0.12); 
-  --glass-box-shadow: 0 28px 70px rgba(0,0,0,0.6), inset 0 2px 0 rgba(61, 232, 177, 0.1), inset 0 -1px 0 rgba(0,0,0,0.6);
-  
-  --glass-card-bg: rgba(10,30,24,0.70);
-  --glass-card-border: rgba(61, 232, 177, 0.12);
-  --glass-card-shadow: 0 12px 44px rgba(0,0,0,0.5), inset 0 1.5px 0 rgba(61, 232, 177, 0.05);
-  
-  --nav-bg: rgba(3,10,8,0.85);
-  --nav-border: rgba(61, 232, 177, 0.10);
-  
-  --hero-card-sub-bg: rgba(10,30,24,0.65);
-  --card-border: rgba(61, 232, 177, 0.15);
-  --card-shadow: 0 3px 20px rgba(0,0,0,0.4);
-  --card-shadow-hover: 0 20px 50px rgba(0,0,0,0.7);
-  
-  --modal-panel-bg: #050d0a;
-  --page-sub-bg: linear-gradient(160deg,#030a08 0%,#051410 38%,#040f12 100%);
-  --sheen-light: rgba(61, 232, 177, 0.15);
+  /* Claymorphic Shadows (Dark Mode) */
+  --clay-light: #0a1f18;
+  --clay-dark: #010504;
+  --clay-inset-light: rgba(61, 232, 177, 0.1);
+  --clay-inset-dark: rgba(0, 0, 0, 0.8);
+
+  /* Liquid Glass (Dark Mode) */
+  --glass-bg: rgba(10, 30, 24, 0.45);
+  --glass-border-light: rgba(61, 232, 177, 0.2);
+  --glass-border-dark: rgba(0, 0, 0, 0.4);
+  --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
-/* ── Base Setup ────────────────────────────────────────── */
+/* ── 2. BASE SETUP & HARDWARE CURSOR ───────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
   font-family:var(--font-b); color:var(--tdark); background:var(--bg); overflow-x:hidden;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  transition: background-color 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s;
 }
 body.modal-open{overflow:hidden}
 a{text-decoration:none;color:inherit}
-img{display:block;max-width:100%}
+img{display:block;max-width:100%; border-radius: inherit;}
 ul{list-style:none}
 
-/* ── HYBRID CUSTOM CURSOR SYSTEM ───────────────────────── */
-html, body, a, button, .card, .icon-bubble, .theme-switch, input, textarea, .modal-close-btn, .filter-btn {
+/* Modern Arrow Cursor */
+html, body, a, button, input, textarea, .modal-close-btn, .filter-pill {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%232dbd8e' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z'/%3E%3C/svg%3E") 3 3, auto !important;
 }
 
-.custom-cursor-ring {
-  position: fixed; top: 0; left: 0; width: 28px; height: 28px;
-  border: 1.5px solid var(--leaf); 
-  border-radius: 8px;
+/* Glowing Droplet Trail */
+.cursor-droplet {
+  position: fixed; top: 0; left: 0; width: 24px; height: 24px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), var(--sky));
+  border-radius: 50% 50% 50% 2px; /* Droplet shape */
+  box-shadow: 0 4px 12px rgba(79,195,247,0.4);
   pointer-events: none; z-index: 9999;
-  transform: translate3d(-50%, -50%, 0) rotate(45deg);
-  transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s, opacity 0.3s, border-radius 0.3s;
-  will-change: transform;
-  opacity: 0.8;
+  transform: translate3d(-50%, -50%, 0) rotate(-45deg);
+  transition: width 0.3s, height 0.3s, background 0.3s, border-radius 0.3s;
+  will-change: transform; opacity: 0.8; mix-blend-mode: screen;
 }
-.custom-cursor-ring.hovering {
-  width: 44px; height: 44px; background: rgba(45,189,142,0.20); border-color: var(--g); opacity: 1; border-radius: 14px;
-}
-
-/* ── Liquid Glass ──────────────────────────────────────── */
-.lg{
-  background: var(--glass-gradient);
-  backdrop-filter:blur(8px) saturate(160%); -webkit-backdrop-filter:blur(8px) saturate(160%);
-  border:1px solid var(--glass-border-heavy); box-shadow: var(--glass-box-shadow);
-  position:relative;overflow:hidden; transform: translateZ(0); 
-  transition: background 0.5s, border-color 0.5s, box-shadow 0.5s;
-}
-.lg::before{
-  content:'';position:absolute; top:-50%;left:-70%;width:240%;height:90%;
-  background:linear-gradient(108deg,rgba(255,255,255,0) 28%,rgba(255,255,255,0.15) 50%,rgba(255,255,255,0) 72%);
-  transform:rotate(-10deg);pointer-events:none;z-index:0;
-}
-.lg>*{position:relative;z-index:1}
-
-.lg-card{
-  background: var(--glass-card-bg);
-  backdrop-filter:blur(6px) saturate(140%); -webkit-backdrop-filter:blur(6px) saturate(140%);
-  border:1px solid var(--glass-card-border); box-shadow: var(--glass-card-shadow);
-  transform: translateZ(0); transition: background 0.5s, border-color 0.5s, box-shadow 0.5s;
+.cursor-droplet.hovering {
+  width: 45px; height: 45px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(45,189,142,0.4), transparent);
+  box-shadow: 0 0 20px rgba(45,189,142,0.6);
 }
 
-/* ── NAV & TOGGLE SWITCH ───────────────────────────────── */
-.nav{
-  position:fixed;top:0;left:0;right:0;z-index:200; display:flex;align-items:center;justify-content:space-between;
-  padding:14px 52px; background: var(--nav-bg);
-  backdrop-filter:blur(8px) saturate(150%); -webkit-backdrop-filter:blur(8px) saturate(150%);
-  border-bottom:1px solid var(--nav-border); box-shadow:0 1px 0 rgba(0,0,0,0.05),0 4px 20px rgba(0,0,0,0.05);
-  transform: translateZ(0); transition: background 0.5s, border-color 0.5s;
+/* ── 3. SKEUOMORPHIC NAVIGATION ────────────────────────────── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200; 
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 5vw; 
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border-light);
+  box-shadow: var(--glass-shadow);
+  transition: all 0.5s;
 }
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-d);font-weight:700;font-size:1.05rem;color:var(--teal); transition: color 0.5s;}
-.nav-icon{
-  width:36px;height:36px;border-radius:10px; background:linear-gradient(135deg,var(--leaf),var(--sky));
-  display:flex;align-items:center;justify-content:center; box-shadow:0 4px 14px rgba(45,189,142,0.45);
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+.nav-logo { display: flex; align-items: center; gap: 12px; font-family: var(--font-d); font-weight: 900; font-size: 1.2rem; color: var(--teal); transition: color 0.5s; }
+.nav-icon {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: linear-gradient(135deg, var(--sky), var(--leaf));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.2), 0 5px 15px rgba(26,140,106,0.3);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.nav-logo:hover .nav-icon { transform: scale(1.15) rotate(5deg); }
-.nav-icon svg{width:17px;height:17px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.nav-right-cluster { display: flex; align-items: center; }
-.nav-links{display:flex;gap:34px; align-items: center;}
-.nav-links a{font-size:0.88rem;font-weight:500;color:var(--tmid);position:relative;transition:color .22s}
-.nav-links a:hover,.nav-links a.active{color:var(--g)}
-.nav-links a.active::after{content:'';position:absolute;bottom:-5px;left:0;right:0;height:2px;background:var(--leaf);border-radius:2px; transition: width 0.3s;}
+.nav-logo:hover .nav-icon { transform: scale(1.1) rotate(10deg); }
+.nav-icon svg { width: 20px; height: 20px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
 
-.theme-switch-wrapper {
-  margin-left: 30px; padding-left: 30px; border-left: 1px solid var(--card-border);
-  display: flex; align-items: center; transition: border-color 0.5s;
+.nav-links { display: flex; gap: 3vw; align-items: center; }
+.nav-links a { font-size: 0.9rem; font-weight: 600; color: var(--tmid); position: relative; padding: 5px 10px; transition: color 0.3s; }
+.nav-links a:hover, .nav-links a.active { color: var(--teal); }
+.nav-links a.active::after {
+  content:''; position:absolute; bottom: -2px; left: 10px; right: 10px; height: 3px; 
+  background: var(--leaf); border-radius: 3px; box-shadow: 0 2px 8px var(--leaf);
 }
-.theme-switch { position: relative; display: inline-block; width: 56px; height: 28px; }
+
+/* Skeuomorphic Toggle Switch */
+.theme-switch-wrapper { margin-left: 20px; border-left: 2px solid var(--clay-dark); padding-left: 20px; }
+.theme-switch { position: relative; display: inline-block; width: 64px; height: 32px; }
 .theme-switch input { opacity: 0; width: 0; height: 0; }
 .slider {
   position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(13,92,74,0.08); transition: .4s; border-radius: 34px; border: 1px solid var(--card-border);
+  background: var(--surface); border-radius: 32px;
+  box-shadow: inset 4px 4px 8px var(--clay-dark), inset -4px -4px 8px var(--clay-light);
+  cursor: pointer; transition: 0.4s;
 }
 .slider:before {
-  position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
-  background-color: var(--teal); transition: .4s cubic-bezier(0.16, 1, 0.3, 1); 
-  border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 2;
+  position: absolute; content: ""; height: 24px; width: 24px; left: 4px; bottom: 4px;
+  background: linear-gradient(135deg, #f0f0f0, #d4d4d4);
+  border: 1px solid white; border-radius: 50%;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.2), inset -2px -2px 4px rgba(0,0,0,0.1);
+  transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 2;
 }
-input:checked + .slider { background-color: rgba(61, 232, 177, 0.1); border-color: rgba(61, 232, 177, 0.3); }
-input:checked + .slider:before { transform: translateX(28px); background-color: #3de8b1; box-shadow: 0 0 12px rgba(61, 232, 177, 0.6); }
+body.dark-mode .slider:before { background: linear-gradient(135deg, #2dbd8e, #1a8c6a); border-color: #5be0b3; }
+input:checked + .slider:before { transform: translateX(32px); }
 .icon-sun, .icon-moon {
-  position: absolute; top: 6px; width: 14px; height: 14px; stroke: var(--tsoft); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transition: .4s; z-index: 1; pointer-events: none;
+  position: absolute; top: 8px; width: 16px; height: 16px; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; z-index: 1; transition: 0.4s;
 }
-.icon-sun { left: 6px; stroke: #e6b800; }
-.icon-moon { right: 6px; opacity: 0; }
-input:checked + .slider .icon-sun { opacity: 0; }
-input:checked + .slider .icon-moon { opacity: 1; stroke: #3de8b1; }
+.icon-sun { left: 8px; stroke: #e6b800; }
+.icon-moon { right: 8px; stroke: #3de8b1; opacity: 0; }
+input:checked + .slider .icon-sun { opacity: 0; transform: scale(0.5); }
+input:checked + .slider .icon-moon { opacity: 1; transform: scale(1); }
 
-/* ── HERO ──────────────────────────────────────────────── */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding-top:80px}
-.hero-bg{ position:absolute;inset:0; background: var(--page-sub-bg); transition: background 0.5s; }
+/* ── 4. NEOMORPHIC BACKGROUNDS & ANIMATIONS ────────────────── */
+.page-sub { padding-top: 100px; min-height: 100vh; position: relative; overflow: hidden; }
 
-.blob{position:absolute;border-radius:50%;pointer-events:none;will-change:transform;animation:drift 14s ease-in-out infinite alternate;}
-.b1{width:600px;height:600px;background:radial-gradient(circle, rgba(45,189,142,0.15) 0%, transparent 65%);top:-150px;left:-150px;animation-delay:0s}
-.b2{width:500px;height:500px;background:radial-gradient(circle, rgba(79,195,247,0.12) 0%, transparent 65%);bottom:-100px;right:-100px;animation-delay:-5s}
-.b3{width:400px;height:400px;background:radial-gradient(circle, rgba(91,224,179,0.10) 0%, transparent 65%);top:30%;left:50%;animation-delay:-9s}
-@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(28px,18px) scale(1.07)}}
-
-.leaf-d{position:absolute;opacity:0.15;pointer-events:none; transform-origin: bottom center;}
-.ld1{width:300px;top:4%;right:9%; animation: sway1 8s ease-in-out infinite alternate;}
-.ld2{width:190px;bottom:7%;left:4%; animation: sway2 7s ease-in-out infinite alternate 1s;}
-.ld3{width:140px;top:58%;right:1%; animation: sway3 9s ease-in-out infinite alternate 2s;}
-@keyframes sway1 { 0% { transform: rotate(18deg); } 100% { transform: rotate(26deg); } }
-@keyframes sway2 { 0% { transform: rotate(-14deg); } 100% { transform: rotate(-22deg); } }
-@keyframes sway3 { 0% { transform: rotate(34deg); } 100% { transform: rotate(42deg); } }
-
-.icon-bubble {
-  position: absolute; width: 110px; height: 110px; border-radius: 34px;
-  background: var(--glass-card-bg); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-  border: 1.5px solid var(--glass-card-border); box-shadow: var(--card-shadow);
-  display: flex; align-items: center; justify-content: center; opacity: 0;
-  will-change: transform, opacity; transition: background 0.5s, border-color 0.5s, box-shadow 0.3s;
+/* Animated Neomorphic Grid */
+.neo-grid-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: 
+    linear-gradient(var(--clay-dark) 1px, transparent 1px),
+    linear-gradient(90deg, var(--clay-dark) 1px, transparent 1px);
+  background-size: 40px 40px; opacity: 0.3;
+  transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+  animation: gridMove 20s linear infinite;
 }
-.icon-bubble:hover { box-shadow: var(--card-shadow-hover); border-color: var(--leaf); }
-.icon-bubble:hover svg { transform: scale(1.2); stroke: var(--leaf); }
-.icon-bubble svg { 
-  width: 50px; height: 50px; stroke: var(--g); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; 
-  transition: stroke 0.4s, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.ib1 { top: 18%; left: 10%; animation: pop1 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, float1 7s ease-in-out infinite alternate 1.2s; }
-.ib2 { top: 15%; right: 8%; animation: pop2 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, float2 6.5s ease-in-out infinite alternate 1.2s; }
-.ib3 { bottom: 22%; left: 8%; animation: pop3 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, float3 7.5s ease-in-out infinite alternate 1.2s; }
-.ib4 { bottom: 18%; right: 10%; animation: pop4 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, float4 8s ease-in-out infinite alternate 1.2s; }
+@keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 40px; } }
 
-@keyframes pop1 { 0%{opacity:0; transform:scale(0.2) translateY(60px) rotate(-30deg)} 100%{opacity:1; transform:scale(1) translateY(0) rotate(-12deg)} }
-@keyframes float1 { 0%{transform:translateY(0) rotate(-12deg)} 100%{transform:translateY(-25px) translateX(15px) rotate(-5deg)} }
-@keyframes pop2 { 0%{opacity:0; transform:scale(0.2) translateY(60px) rotate(30deg)} 100%{opacity:1; transform:scale(1) translateY(0) rotate(14deg)} }
-@keyframes float2 { 0%{transform:translateY(0) rotate(14deg)} 100%{transform:translateY(-30px) translateX(-10px) rotate(22deg)} }
-@keyframes pop3 { 0%{opacity:0; transform:scale(0.2) translateY(60px) rotate(-40deg)} 100%{opacity:1; transform:scale(1) translateY(0) rotate(-18deg)} }
-@keyframes float3 { 0%{transform:translateY(0) rotate(-18deg)} 100%{transform:translateY(-22px) translateX(-18px) rotate(-10deg)} }
-@keyframes pop4 { 0%{opacity:0; transform:scale(0.2) translateY(60px) rotate(40deg)} 100%{opacity:1; transform:scale(1) translateY(0) rotate(10deg)} }
-@keyframes float4 { 0%{transform:translateY(0) rotate(10deg)} 100%{transform:translateY(-35px) translateX(12px) rotate(18deg)} }
+/* Floating Aero Blobs */
+.blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.5; animation: drift 15s ease-in-out infinite alternate; z-index: 0; }
+.b1 { width: 40vw; height: 40vw; background: var(--sky); top: -10%; left: -10%; }
+.b2 { width: 35vw; height: 35vw; background: var(--leaf); bottom: -10%; right: -10%; animation-delay: -5s; }
+@keyframes drift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(5vw, 5vh) scale(1.1); } }
 
-.hero-content{
-  position:relative;z-index:2; text-align:center;max-width:760px;padding:0 24px;
-  display:flex;flex-direction:column;align-items:center;gap:26px;
-}
-.hero-eye{
-  display:flex;align-items:center;gap:9px; font-family:var(--font-m);font-size:0.70rem;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--g); transition: color 0.5s;
-  animation:fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-.hero-eye::before,.hero-eye::after{content:'';display:block;height:1px;width:30px;background:var(--leaf);opacity:.6}
+/* ── 5. HERO SECTION (LIQUID SHIMMER) ──────────────────────── */
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; overflow: hidden; }
+.hero-content { position: relative; z-index: 2; text-align: center; max-width: 800px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
 
-.hero-card{
-  border-radius:30px;padding:44px 52px;
-  animation:fadeUp 1.2s 0.15s cubic-bezier(0.16, 1, 0.3, 1) both;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.hero-card:hover { transform: scale(1.02); }
-
-.hero-title{
-  font-family:var(--font-d); font-size:clamp(2.5rem,5.5vw,4.2rem);
-  line-height:1.06;font-weight:900;letter-spacing:-.02em;color:var(--teal); transition: color 0.5s;
-}
-.hero-title span, .hero-title em { display: inline-block; opacity: 0; animation: textSweep 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-.hero-title span:nth-child(1) { animation-delay: 0.2s; }
-.hero-title span:nth-child(2) { animation-delay: 0.3s; }
-.hero-title em { font-style:italic;color:var(--leaf);display:block; animation-delay: 0.4s; }
-@keyframes textSweep { from { opacity: 0; transform: translateY(30px) rotate(2deg); } to { opacity: 1; transform: translateY(0) rotate(0deg); } }
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(45px)}to{opacity:1;transform:translateY(0)}}
-
-.hero-sub{
-  font-family:var(--font-d); font-style:italic; font-size:1.15rem; line-height:1.7; color:var(--teal); max-width:640px; text-align:center;
-  background: var(--hero-card-sub-bg); padding:24px 34px; border-radius:22px; border:1px solid var(--card-border);
-  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  will-change: transform; transition: background 0.5s, color 0.5s, border-color 0.5s;
-  animation:fadeUp 1.2s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both, floatSub 7s ease-in-out infinite alternate 1.5s;
-}
-@keyframes floatSub { from { transform: translateY(0); } to { transform: translateY(-10px); } }
-
-.hero-cta{
-  display:inline-flex;align-items:center;gap:9px; padding:14px 34px;border-radius:999px;
-  background:linear-gradient(135deg,var(--leaf) 0%,var(--g) 100%); color:white;font-weight:600;font-size:0.9rem;letter-spacing:.04em;
-  box-shadow:0 8px 30px rgba(26,140,106,0.42),0 0 0 3px rgba(45,189,142,0.22);
-  transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .25s;
-  animation:fadeUp 1.2s 0.45s cubic-bezier(0.16, 1, 0.3, 1) both
-}
-.hero-cta:hover{transform:translateY(-5px) scale(1.05);box-shadow:0 16px 40px rgba(26,140,106,0.52),0 0 0 4px rgba(45,189,142,0.28)}
-.hero-cta svg{width:16px;height:16px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-.scroll-hint{
-  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  font-family:var(--font-m);font-size:0.63rem;letter-spacing:.18em;color:var(--tsoft);
-  animation:fadeUp 1.2s 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; transition: color 0.5s;
-}
-.scroll-arrow{
-  width:28px;height:28px;border-radius:50%; border:1.5px solid var(--card-border); display:flex;align-items:center;justify-content:center;
-  animation:bounce 2s ease-in-out infinite; transition: border-color 0.5s;
-}
-.scroll-arrow svg{width:12px;height:12px;stroke:var(--leaf);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
-
-/* ── VISUAL KNICK KNACKS ───────────────────────────────── */
-.blog-decor {
-  position: absolute; inset: 0; pointer-events: none; z-index: 0;
-  background-image: radial-gradient(var(--leaf) 2px, transparent 2.5px), radial-gradient(var(--sky) 1.5px, transparent 2px);
-  background-size: 60px 60px, 30px 30px; background-position: 0 0, 15px 15px; opacity: 0.15; 
-  animation: scanline 25s linear infinite;
-  mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-}
-body.dark-mode .blog-decor { opacity: 0.05; }
-@keyframes scanline { 0% { background-position: 0 0, 15px 15px; } 100% { background-position: 0 600px, 15px 615px; } }
-
-.about-decor { position: absolute; top: 0; right: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-.about-decor::before, .about-decor::after {
-  content: ''; position: absolute; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-  top: -150px; right: -150px; animation: morph 15s linear infinite alternate;
-}
-.about-decor::before { width: 800px; height: 800px; border: 4px solid rgba(45,189,142,0.3); box-shadow: 0 0 50px rgba(45,189,142,0.1), inset 0 0 50px rgba(45,189,142,0.1); }
-.about-decor::after { width: 600px; height: 600px; top: -50px; right: -50px; border: 3px solid rgba(79,195,247,0.3); box-shadow: 0 0 40px rgba(79,195,247,0.1), inset 0 0 40px rgba(79,195,247,0.1); animation-direction: alternate-reverse; animation-duration: 20s; }
-
-.contact-decor { position: absolute; top: 150px; left: -100px; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-.signal-ring {
-  position: absolute; border-radius: 50%; border: 2px solid var(--sky);
-  box-shadow: 0 0 25px rgba(79,195,247,0.3), inset 0 0 25px rgba(79,195,247,0.3);
-  top: 30%; left: 10%; transform: translate(-50%, -50%); opacity: 0; 
-  animation: signal 6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-}
-.signal-ring:nth-child(2) { animation-delay: 2s; }
-.signal-ring:nth-child(3) { animation-delay: 4s; }
-
-.content-layer { position: relative; z-index: 1; }
-
-/* ── INTERACTIVE FILTER BAR ────────────────────────────── */
-.filter-bar { display: flex; gap: 12px; margin-bottom: 30px; flex-wrap: wrap; }
-.filter-btn {
-  padding: 8px 18px; border-radius: 999px; background: var(--surface); border: 1px solid var(--card-border);
-  font-family: var(--font-b); font-size: 0.8rem; font-weight: 500; color: var(--tsoft);
-  transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-}
-.filter-btn:hover { border-color: var(--leaf); color: var(--teal); transform: translateY(-2px); }
-.filter-btn.active { background: var(--leaf); color: white; border-color: var(--leaf); box-shadow: 0 6px 16px rgba(45,189,142,0.3); }
-
-/* ── BACK TO TOP PILL ──────────────────────────────────── */
-.back-to-top {
-  position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%;
-  background: var(--nav-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-  border: 1px solid var(--card-border); box-shadow: var(--card-shadow);
-  color: var(--teal); font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none; transform: translateY(20px);
-  transition: opacity 0.4s, transform 0.4s, border-color 0.3s; z-index: 900;
-}
-.back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
-.back-to-top:hover { border-color: var(--leaf); transform: translateY(-4px) scale(1.05); }
-
-/* ── JOURNAL / BLOG / GRID ─────────────────────────────── */
-.journal{padding:110px 52px 90px;max-width:1320px;margin:0 auto}
-.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:30px;flex-wrap:wrap;gap:16px}
-.sec-label{display:flex;align-items:center;gap:8px;font-family:var(--font-m);font-size:0.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-bottom:10px; transition: color 0.5s;}
-.sec-label::before{content:'';display:block;width:18px;height:2px;background:var(--leaf);border-radius:2px}
-.sec-title{font-family:var(--font-d);font-size:clamp(1.75rem,3.2vw,2.7rem);font-weight:900;color:var(--teal);line-height:1.1; transition: color 0.5s;}
-
-.view-all{
-  display:inline-flex;align-items:center;gap:6px; font-size:0.83rem;font-weight:500;color:var(--g);
-  border:1.5px solid var(--card-border); padding:10px 22px;border-radius:999px;white-space:nowrap;
-  transition:background .25s,border-color .25s, color 0.5s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.view-all:hover{background:rgba(45,189,142,0.1);border-color:var(--leaf); transform: scale(1.05);}
-.view-all svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-
-.card{
-  border-radius:var(--cr);overflow:hidden; background: var(--surface);
-  border:1px solid var(--card-border); box-shadow: var(--card-shadow);
-  transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .4s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s, border-color 0.5s;
-  display:flex;flex-direction:column; position:relative; will-change: transform;
-}
-.card:hover{transform:translateY(-9px) scale(1.02);box-shadow: var(--card-shadow-hover);}
-
-.card::before {
-  content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
-  background: linear-gradient(to right, transparent, var(--sheen-light), transparent);
-  transform: skewX(-20deg) translateX(0); z-index: 2; pointer-events: none; transition: transform 0s;
-}
-.card:hover::before { transform: skewX(-20deg) translateX(400%); transition: transform 0.8s ease-in-out; }
-
-.card.feat{grid-column:span 2;flex-direction:row}
-.card.feat .cmedia{flex:0 0 54%;min-height:340px;height:auto}
-.card.feat .cbody{flex:1;padding:36px 30px;display:flex;flex-direction:column;justify-content:center}
-.card.feat .ctitle{font-size:1.4rem}
-
-.cmedia{position:relative;height:218px;overflow:hidden;flex-shrink:0}
-.cmedia img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(0.16, 1, 0.3, 1);display:block}
-.card:hover .cmedia img{transform:scale(1.07)}
-.cmedia::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,0.1) 100%);pointer-events:none}
-body.dark-mode .cmedia::after{background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,0.6) 100%);}
-
-.cbody{padding:22px 20px 26px;display:flex;flex-direction:column;gap:10px;flex:1; position:relative; z-index:3;}
-.ctitle{font-family:var(--font-d);font-size:1.08rem;font-weight:700;color:var(--teal);line-height:1.25;transition:color .2s}
-.card:hover .ctitle{color:var(--g)}
-.cexcerpt{font-size:0.855rem;line-height:1.67;color:var(--tmid);flex:1; transition: color 0.5s;}
-.cmeta{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
-.cdate{font-family:var(--font-m);font-size:0.68rem;color:var(--tsoft);letter-spacing:.06em; transition: color 0.5s;}
-.carrow{
-  width:30px;height:30px;border-radius:50%; border:1.5px solid var(--card-border);
-  display:flex;align-items:center;justify-content:center;
-  transition:background .25s,border-color .25s,transform .4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.carrow svg{width:11px;height:11px;stroke:var(--g);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.card:hover .carrow{background:var(--leaf);border-color:var(--leaf);transform:translateX(4px) scale(1.1)}
-.card:hover .carrow svg{stroke:white}
-
-/* ── MODERN GLASS DETAIL MODAL & ZOOM ──────────────────── */
-.modal-overlay{
-  position:fixed;inset:0;z-index:999; background: rgba(10,46,36,0.45);
-  backdrop-filter:blur(4px) saturate(120%); -webkit-backdrop-filter:blur(4px) saturate(120%);
-  display:flex;align-items:center;justify-content:center; padding:40px;opacity:0;pointer-events:none;
-  transition:opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s;
-}
-body.dark-mode .modal-overlay { background: rgba(0,0,0,0.7); }
-.modal-overlay.active{opacity:1;pointer-events:auto}
-
-.modal-window{
-  width:100%;max-width:1020px;max-height:85vh; border-radius:28px;overflow-y:auto;
-  display:grid;grid-template-columns:1.2fr 1fr; transform:translateY(40px) scale(0.94);
-  transition:transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); will-change: transform;
-}
-.modal-overlay.active .modal-window{transform:translateY(0) scale(1)}
-.modal-media{position:relative;background:#000;min-height:400px;display:flex;align-items:center;justify-content:center; overflow: hidden;}
-
-.modal-media img{
-  width:100%;height:100%;object-fit:cover;absolute:inset:0; 
-  transition: transform 6s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(1.05);
-}
-.modal-window:hover .modal-media img { transform: scale(1); }
-
-.modal-content-panel{ padding:44px 40px; background: var(--modal-panel-bg); display:flex;flex-direction:column;gap:20px;overflow-y:auto; transition: background 0.5s; }
-.modal-close-btn{
-  position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;
-  background:rgba(255,255,255,0.85);backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,0.9);display:flex;align-items:center;justify-content:center;
-  z-index:10;transition:background .2s,transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-body.dark-mode .modal-close-btn { background:rgba(0,0,0,0.5); border-color: rgba(61, 232, 177, 0.3); }
-.modal-close-btn:hover{background:white;transform:scale(1.15) rotate(90deg)}
-body.dark-mode .modal-close-btn:hover { background: rgba(61, 232, 177, 0.2); }
-.modal-close-btn svg{width:16px;height:16px;stroke:var(--tdark);fill:none;stroke-width:2.5}
-body.dark-mode .modal-close-btn svg { stroke: #3de8b1; }
-
-.m-label{font-family:var(--font-m);font-size:0.7rem;color:var(--g);letter-spacing:0.15em;text-transform:uppercase}
-.m-title{font-family:var(--font-d);font-size:2rem;font-weight:900;color:var(--teal);line-height:1.2; transition: color 0.5s;}
-.m-date{font-family:var(--font-m);font-size:0.75rem;color:var(--tsoft); transition: color 0.5s;}
-.m-body{font-size:0.93rem;line-height:1.8;color:var(--tdark);text-align:justify; transition: color 0.5s;}
-
-/* ── ABOUT ─────────────────────────────────────────────── */
-.about-wrap{max-width:1080px;margin:0 auto;padding:30px 52px 80px}
-
-/* Updated Dynamic Profile Card */
-.about-card{
-  position:relative; border-radius:24px; padding:60px 50px; display:flex; flex-direction:column; justify-content:flex-end;
-  margin-bottom:26px; overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,0.2),inset 0 1.5px 0 var(--card-border); border:1px solid var(--card-border);
-  transition: border-color 0.5s, box-shadow 0.5s;
+/* Glassmorphic Hero Card */
+.hero-card {
+  padding: 50px 40px; border-radius: 40px;
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border-top: 1px solid var(--glass-border-light); border-left: 1px solid var(--glass-border-light);
+  border-bottom: 1px solid var(--glass-border-dark); border-right: 1px solid var(--glass-border-dark);
+  box-shadow: var(--glass-shadow), inset 0 0 20px rgba(255,255,255,0.2);
+  animation: fadeUp 1s ease-out both;
 }
 
-.about-card-content{position:relative;z-index:2;max-width:650px;}
-
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:24px}
-.inner-card{
-  border-radius:20px;padding:30px 34px; background: var(--glass-card-bg);
-  backdrop-filter:blur(6px) saturate(140%); -webkit-backdrop-filter:blur(6px) saturate(140%);
-  border:1px solid var(--card-border); box-shadow: var(--card-shadow);
-  transition: background 0.5s, border-color 0.5s, box-shadow 0.5s, transform 0.3s;
+/* Liquid Shimmer Text */
+.hero-title {
+  font-family: var(--font-d); font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 900; line-height: 1.1;
+  background: linear-gradient(to right, var(--teal) 20%, var(--sky) 40%, var(--teal) 60%);
+  background-size: 200% auto;
+  color: transparent; -webkit-background-clip: text; background-clip: text;
+  animation: liquidShimmer 5s linear infinite;
 }
-.inner-card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
-.inner-h{font-size:0.95rem;font-weight:600;color:var(--teal);margin-bottom:18px;display:flex;align-items:center;gap:8px; transition: color 0.5s;}
-.tags{display:flex;flex-wrap:wrap;gap:9px}
-.tag{padding:5px 16px;border-radius:999px;font-size:0.75rem;font-weight:500;background:rgba(45,189,142,0.10);border:1px solid var(--card-border);color:var(--g);transition:background .2s, border-color 0.5s, color 0.5s, transform 0.2s;}
-.tag:hover{background:rgba(45,189,142,0.22); transform: scale(1.05);}
-.gear-list{display:flex;flex-direction:column;gap:11px}
-.gear-item{display:flex;align-items:center;gap:10px;font-size:0.9rem;color:var(--tmid); transition: color 0.5s;}
-.gear-dot{width:7px;height:7px;border-radius:50%;background:var(--leaf);flex-shrink:0}
+body.dark-mode .hero-title { background: linear-gradient(to right, var(--g) 20%, #ffffff 40%, var(--g) 60%); background-size: 200% auto; color: transparent; -webkit-background-clip: text; }
+@keyframes liquidShimmer { to { background-position: 200% center; } }
 
-/* ── CONTACT ───────────────────────────────────────────── */
-.contact-grid{max-width:1080px;margin:0 auto;padding:30px 52px 90px;display:grid;grid-template-columns:1fr 1.45fr;gap:60px;align-items:start}
-.contact-cards{display:flex;flex-direction:column;gap:14px;margin-top:30px}
-.cc{
-  display:flex;align-items:center;gap:16px;padding:17px 20px; border-radius:16px;background:var(--surface);
-  border:1px solid var(--card-border); box-shadow:var(--card-shadow);
-  transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .4s, background 0.5s, border-color 0.5s; will-change: transform;
+.hero-title em { font-style: italic; color: var(--leaf); display: block; text-shadow: 0 4px 15px rgba(45,189,142,0.3); }
+
+/* Claymorphic CTA Button */
+.clay-btn {
+  display: inline-flex; align-items: center; gap: 10px; padding: 16px 40px; border-radius: 999px;
+  font-family: var(--font-b); font-size: 1rem; font-weight: 700; letter-spacing: 0.05em;
+  background: var(--surface); color: var(--teal); border: none; cursor: none;
+  box-shadow: 8px 8px 16px var(--clay-dark), -8px -8px 16px var(--clay-light), inset -2px -2px 6px rgba(0,0,0,0.05), inset 2px 2px 6px var(--clay-inset-light);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.cc:hover{transform:translateX(8px) scale(1.02);box-shadow:var(--card-shadow-hover);}
-.ci{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,rgba(91,224,179,0.20),rgba(79,195,247,0.20));display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ci svg{width:17px;height:17px;stroke:var(--g);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round; transition: stroke 0.5s;}
-.cl{font-size:0.70rem;color:var(--tsoft);font-family:var(--font-m); transition: color 0.5s;}
-.cv{font-size:0.88rem;font-weight:500;color:var(--teal); transition: color 0.5s;}
-
-.form-card{border-radius:24px;padding:38px;background:var(--surface);border:1px solid var(--card-border);box-shadow:var(--card-shadow); transition: background 0.5s, border-color 0.5s, box-shadow 0.5s;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-.fg label{font-size:0.76rem;font-weight:500;color:var(--tmid);letter-spacing:.03em; transition: color 0.5s;}
-.fg input,.fg textarea{padding:12px 15px;border-radius:11px;border:1.5px solid var(--card-border);background:var(--bg);font-family:var(--font-b);font-size:0.88rem;color:var(--tdark);outline:none;transition:border-color .22s,box-shadow .22s, background 0.5s, color 0.5s;}
-.fg input:focus,.fg textarea:focus{border-color:var(--leaf);box-shadow:0 0 0 3px rgba(45,189,142,0.13)}
-.btn-send{width:100%;padding:15px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--leaf),var(--g));color:white;font-family:var(--font-b);font-size:0.93rem;font-weight:600;letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 24px rgba(26,140,106,0.36);transition:transform .4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .4s;margin-top:2px;}
-.btn-send:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 14px 36px rgba(26,140,106,0.46)}
-.btn-send svg{width:15px;height:15px;stroke:white;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* ── FOOTER & CREDITS ──────────────────────────────────── */
-.credit-badge-wrapper { display: flex; justify-content: center; width: 100%; padding-bottom: 30px; position: relative; z-index: 10; }
-.credit-badge {
-  display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 999px;
-  background: var(--surface); border: 1px solid var(--card-border); box-shadow: var(--card-shadow);
-  font-family: var(--font-m); font-size: 0.72rem; color: var(--tmid); letter-spacing: 0.05em;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s, background 0.5s, border-color 0.5s, color 0.5s;
+.clay-btn:hover {
+  transform: translateY(-4px); color: var(--g);
+  box-shadow: 12px 12px 20px var(--clay-dark), -12px -12px 20px var(--clay-light), inset -2px -2px 6px rgba(0,0,0,0.05), inset 2px 2px 6px var(--clay-inset-light);
 }
-.credit-badge:hover { transform: translateY(-4px) scale(1.03); box-shadow: var(--card-shadow-hover); color: var(--teal); }
-.sparkle-icon { display: inline-block; animation: pulseSparkle 2s ease-in-out infinite alternate; font-size: 1rem; }
-@keyframes pulseSparkle { 0% { transform: scale(0.8); opacity: 0.7; filter: hue-rotate(0deg); } 100% { transform: scale(1.2); opacity: 1; filter: hue-rotate(20deg); } }
-
-footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;position:relative;z-index:10; transition: background 0.5s;}
-.f-logo{font-family:var(--font-d);font-weight:700;font-size:0.98rem;color:rgba(255,255,255,0.85)}
-.f-links{display:flex;gap:22px}
-.f-links a{font-size:0.80rem;color:rgba(255,255,255,0.50);transition:color .2s, transform 0.2s; display: inline-block;}
-.f-links a:hover{color:var(--fresh); transform: translateY(-2px);}
-.f-copy{font-size:0.76rem;color:rgba(255,255,255,0.38);font-family:var(--font-m)}
-
-/* ── Page system ───────────────────────────────────────── */
-.page{display:none}
-.page.active{display:block}
-.page-sub{padding-top:80px;min-height:100vh;background: var(--page-sub-bg); position:relative;overflow:hidden; transition: background 0.5s;}
-
-/* ── Responsive ────────────────────────────────────────── */
-@media(max-width:980px){
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .card.feat{grid-column:span 2;flex-direction:column}
-  .card.feat .cmedia{min-height:240px;height:240px}
-  .contact-grid{grid-template-columns:1fr}
-  .two-col{grid-template-columns:1fr}
-  .ib2,.ib4{display:none}
-  .modal-window{grid-template-columns:1fr;max-height:90vh}
-  .modal-media{min-height:280px}
+.clay-btn:active {
+  transform: translateY(2px);
+  box-shadow: inset 6px 6px 10px var(--clay-dark), inset -6px -6px 10px var(--clay-light);
 }
-@media(max-width:640px){
-  .nav{padding:12px 18px}
-  .journal{padding:72px 18px 72px}
-  .grid{grid-template-columns:1fr}
-  .card.feat{grid-column:span 1;flex-direction:column}
-  .about-wrap,.contact-grid{padding-left:18px;padding-right:18px}
-  footer{padding:22px 18px;flex-direction:column;text-align:center}
-  .ib1,.ib2,.ib3,.ib4{display:none}
-  .hero-card{padding:30px 22px}
-  .modal-overlay{padding:10px}
-  .modal-content-panel{padding:24px 20px}
-  .about-card{padding:40px 24px;}
-  .b1,.b2,.b3{display:none;}
-  .theme-switch-wrapper { margin-left: 15px; padding-left: 15px; }
-  .filter-bar { justify-content: center; }
-  .custom-cursor-ring { display: none !important; }
+.clay-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ── 6. RESPONSIVE GRID & LIQUID GLASS CARDS ───────────────── */
+.section-wrapper { padding: 80px 5vw; max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
+.sec-hd { margin-bottom: 40px; text-align: center; }
+.sec-label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-m); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--g); text-transform: uppercase; margin-bottom: 15px; }
+.sec-title { font-family: var(--font-d); font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--teal); transition: color 0.5s; }
+
+/* Auto-Wrapping Smart Grid (No Media Queries Needed!) */
+.smart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 30px;
+}
+
+/* Liquid Glass Cards */
+.glass-card {
+  border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; cursor: none;
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border-top: 1px solid var(--glass-border-light); border-left: 1px solid var(--glass-border-light);
+  border-bottom: 1px solid var(--glass-border-dark); border-right: 1px solid var(--glass-border-dark);
+  box-shadow: var(--glass-shadow);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s;
+}
+.glass-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.15); }
+
+.cmedia { position: relative; height: 250px; overflow: hidden; }
+.cmedia img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+.glass-card:hover .cmedia img { transform: scale(1.08) rotate(1deg); }
+.cmedia::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--glass-bg), transparent); transition: background 0.5s; }
+
+.cbody { padding: 25px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.ctitle { font-family: var(--font-d); font-size: 1.2rem; font-weight: 700; color: var(--teal); line-height: 1.3; transition: color 0.5s; }
+.glass-card:hover .ctitle { color: var(--g); }
+.cexcerpt { font-size: 0.9rem; line-height: 1.6; color: var(--tmid); flex: 1; transition: color 0.5s; }
+.cmeta { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 15px; border-top: 1px dashed var(--glass-border-dark); }
+.cdate { font-family: var(--font-m); font-size: 0.75rem; color: var(--tsoft); letter-spacing: 0.05em; transition: color 0.5s; }
+
+/* ── 7. INTERACTIVE FILTERS (CLAYMORPHISM) ─────────────────── */
+.filter-bar { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+.filter-pill {
+  padding: 10px 24px; border-radius: 999px; cursor: none;
+  font-family: var(--font-b); font-size: 0.9rem; font-weight: 600; color: var(--tmid);
+  background: var(--surface); border: none;
+  box-shadow: 5px 5px 10px var(--clay-dark), -5px -5px 10px var(--clay-light);
+  transition: all 0.3s ease;
+}
+.filter-pill:hover { color: var(--teal); transform: translateY(-2px); }
+.filter-pill.active {
+  background: var(--leaf); color: white;
+  box-shadow: inset 4px 4px 8px rgba(0,0,0,0.2), inset -4px -4px 8px rgba(255,255,255,0.3);
+}
+
+/* ── 8. ABOUT: NEOMORPHIC TECH MATRIX ──────────────────────── */
+.neo-card {
+  padding: 40px; border-radius: 30px;
+  background: var(--surface); transition: background 0.5s, box-shadow 0.5s;
+  box-shadow: 10px 10px 20px var(--clay-dark), -10px -10px 20px var(--clay-light);
+  margin-bottom: 30px; border: 1px solid var(--clay-inset-light);
+}
+.neo-card h2 { font-family: var(--font-d); font-size: 2.2rem; color: var(--teal); margin-bottom: 20px; transition: color 0.5s; }
+.neo-card p { font-size: 1.05rem; line-height: 1.8; color: var(--tdark); margin-bottom: 15px; transition: color 0.5s; }
+
+/* Tech Matrix Grid */
+.matrix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+.matrix-node {
+  padding: 30px; border-radius: 20px; background: var(--surface); transition: background 0.5s, box-shadow 0.5s;
+  box-shadow: inset 6px 6px 12px var(--clay-dark), inset -6px -6px 12px var(--clay-light);
+}
+.matrix-node .node-id { font-family: var(--font-m); color: var(--g); font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 15px; display: block; }
+.matrix-node p { font-size: 0.9rem; line-height: 1.6; color: var(--tmid); margin: 0; transition: color 0.5s; }
+
+/* ── 9. CONTACT: FLOATING ANIMATIONS & CLAY INPUTS ─────────── */
+.contact-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: 50px; align-items: start; }
+
+.floating-card {
+  display: flex; align-items: center; gap: 20px; padding: 25px; border-radius: 24px;
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border-light); box-shadow: var(--glass-shadow);
+  animation: float 6s ease-in-out infinite alternate;
+}
+.floating-card:nth-child(2) { animation-delay: -3s; }
+@keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
+
+.fc-icon {
+  width: 50px; height: 50px; border-radius: 16px; background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 4px 4px 8px var(--clay-dark), -4px -4px 8px var(--clay-light); transition: background 0.5s, box-shadow 0.5s;
+}
+.fc-icon svg { width: 24px; height: 24px; stroke: var(--g); fill: none; stroke-width: 2; transition: stroke 0.5s; }
+.fc-text h4 { font-family: var(--font-m); font-size: 0.8rem; color: var(--tsoft); margin-bottom: 5px; text-transform: uppercase; transition: color 0.5s; }
+.fc-text p { font-size: 1.1rem; font-weight: 700; color: var(--teal); transition: color 0.5s; }
+
+/* Neomorphic Form */
+.neo-form { padding: 40px; border-radius: 30px; background: var(--surface); box-shadow: 10px 10px 30px var(--clay-dark), -10px -10px 30px var(--clay-light); transition: background 0.5s, box-shadow 0.5s; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--tmid); margin-bottom: 10px; padding-left: 5px; transition: color 0.5s; }
+.neo-input {
+  width: 100%; padding: 16px 20px; border-radius: 16px; font-family: var(--font-b); font-size: 1rem; color: var(--tdark); cursor: none;
+  background: var(--surface); border: none; outline: none;
+  box-shadow: inset 4px 4px 8px var(--clay-dark), inset -4px -4px 8px var(--clay-light);
+  transition: box-shadow 0.3s, background 0.5s, color 0.5s;
+}
+.neo-input:focus { box-shadow: inset 6px 6px 12px var(--clay-dark), inset -6px -6px 12px var(--clay-light), 0 0 0 2px var(--leaf); }
+
+/* ── 10. LIGHTBOX MODAL ────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 999; display: flex; align-items: center; justify-content: center; padding: 2vw;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+  opacity: 0; pointer-events: none; transition: opacity 0.5s; cursor: none;
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-window {
+  width: 100%; max-width: 1100px; max-height: 90vh; border-radius: 32px; overflow: hidden; display: flex; flex-wrap: wrap; cursor: auto;
+  background: var(--glass-bg); border: 1px solid var(--glass-border-light); box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+  transform: translateY(50px) scale(0.9); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.modal-overlay.active .modal-window { transform: translateY(0) scale(1); }
+.modal-media { flex: 1.5; min-width: 300px; background: #000; position: relative; }
+.modal-media img { width: 100%; height: 100%; object-fit: contain; }
+.modal-panel { flex: 1; min-width: 300px; padding: 40px; background: var(--surface); overflow-y: auto; max-height: 90vh; transition: background 0.5s; }
+.m-title { font-family: var(--font-d); font-size: 2.2rem; color: var(--teal); margin: 10px 0 20px; line-height: 1.1; transition: color 0.5s; }
+
+.modal-close {
+  position: absolute; top: 20px; right: 20px; width: 45px; height: 45px; border-radius: 50%; cursor: none;
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+  box-shadow: 4px 4px 10px var(--clay-dark), -4px -4px 10px var(--clay-light); z-index: 10;
+  transition: transform 0.3s, background 0.5s, box-shadow 0.5s; border: none;
+}
+.modal-close:hover { transform: scale(1.1) rotate(90deg); }
+.modal-close svg { width: 20px; height: 20px; stroke: var(--tdark); fill: none; stroke-width: 2.5; transition: stroke 0.5s; }
+
+/* ── 11. PAGE ROUTING & RESPONSIVE ─────────────────────────── */
+.page { display: none; animation: fadeIn 0.6s ease-out; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+footer { text-align: center; padding: 40px; font-family: var(--font-m); font-size: 0.8rem; color: var(--tsoft); border-top: 1px solid var(--glass-border-dark); transition: color 0.5s, border-color 0.5s; }
+
+/* Mobile Menu Adjustments */
+@media(max-width: 768px) {
+  .nav { padding: 15px; flex-wrap: wrap; gap: 15px; justify-content: center; }
+  .nav-links { gap: 15px; }
+  .theme-switch-wrapper { margin-left: 5px; padding-left: 10px; }
+  .cursor-droplet { display: none !important; }
 }
 </style>
 </head>
 <body>
 
-<div class="custom-cursor-ring" id="custom-cursor"></div>
-
-<button class="back-to-top" id="btt" onclick="window.scrollTo(0,0)">
-  <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-</button>
+<div class="cursor-droplet" id="cursor"></div>
 
 <nav class="nav">
-  <a class="nav-logo" href="#" onclick="go('home');return false">
+  <a class="nav-logo" href="#" onclick="go('home')">
     <div class="nav-icon">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M6.343 6.343a8 8 0 100 11.314M12 2v2m0 16v2m10-10h-2M4 12H2"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg>
     </div>
-    My Portfolio
+    Alfaaz.
   </a>
-  <div class="nav-right-cluster">
-    <ul class="nav-links">
-      <li><a href="#" id="nl-home" class="active" onclick="go('home');act(this);return false">Home</a></li>
-      <li><a href="#" id="nl-blog" onclick="go('blog');act(this);return false">Blog</a></li>
-      <li><a href="#" id="nl-about" onclick="go('about');act(this);return false">About</a></li>
-      <li><a href="#" id="nl-contact" onclick="go('contact');act(this);return false">Contact</a></li>
-    </ul>
+  <div class="nav-links">
+    <a href="#" id="nl-home" class="active" onclick="go('home')">Home</a>
+    <a href="#" id="nl-blog" onclick="go('blog')">Archive</a>
+    <a href="#" id="nl-about" onclick="go('about')">System</a>
+    <a href="#" id="nl-contact" onclick="go('contact')">Connect</a>
     
     <div class="theme-switch-wrapper">
       <label class="theme-switch" for="theme-checkbox">
         <input type="checkbox" id="theme-checkbox" onchange="toggleTheme(this.checked)" />
         <div class="slider">
-          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
           <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </div>
       </label>
@@ -587,442 +402,226 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 </nav>
 
 <div class="page active" id="page-home">
-
   <section class="hero">
-    <div class="hero-bg"></div>
+    <div class="neo-grid-bg"></div>
     <div class="blob b1"></div>
     <div class="blob b2"></div>
-    <div class="blob b3"></div>
-
-    <div class="leaf-d ld1">
-      <svg viewBox="0 0 200 310" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 8C162 8 195 82 184 165 C173 248 122 298 100 298 C78 298 27 248 16 165 C5 82 38 8 100 8Z" fill="#1a8c6a"/>
-        <line x1="100" y1="8" x2="100" y2="298" stroke="#0d5c4a" stroke-width="1.8"/>
-        <path d="M100 65 C78 96 52 107 42 134" stroke="#0d5c4a" stroke-width="1.4"/>
-        <path d="M100 65 C122 96 148 107 158 134" stroke="#0d5c4a" stroke-width="1.4"/>
-        <path d="M100 128 C73 152 55 163 44 184" stroke="#0d5c4a" stroke-width="1.4"/>
-        <path d="M100 128 C127 152 145 163 156 184" stroke="#0d5c4a" stroke-width="1.4"/>
-      </svg>
-    </div>
-    <div class="leaf-d ld2">
-      <svg viewBox="0 0 180 270" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M90 6C140 6 172 70 162 145 C152 220 112 260 90 260 C68 260 28 220 18 145 C8 70 40 6 90 6Z" fill="#2dbd8e"/>
-        <line x1="90" y1="6" x2="90" y2="260" stroke="#1a8c6a" stroke-width="1.4"/>
-      </svg>
-    </div>
-    <div class="leaf-d ld3">
-      <svg viewBox="0 0 120 185" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M60 5C96 5 118 52 110 104 C102 156 75 178 60 178 C45 178 18 156 10 104 C2 52 24 5 60 5Z" fill="#4fc3f7"/>
-        <line x1="60" y1="5" x2="60" y2="178" stroke="#0d5c4a" stroke-width="1"/>
-      </svg>
-    </div>
-
-    <div class="icon-bubble ib1"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div>
-    <div class="icon-bubble ib2"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7v7z"></path></svg></div>
-    <div class="icon-bubble ib3"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg></div>
-    <div class="icon-bubble ib4"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg></div>
-
-    <div class="hero-content content-layer">
-      <div class="hero-eye">📷 Photo Portfolio</div>
-
-      <div class="hero-card lg">
+    
+    <div class="hero-content">
+      <div class="hero-card">
+        <div class="sec-label" style="justify-content: center; margin-bottom: 20px;">✦ Visual Ecology</div>
         <h1 class="hero-title">
-          <span>Light</span> <span>&amp; Life</span> 
+          Light &amp; Life<br>
           <em>Through My Lens</em>
         </h1>
-      </div>
-
-      <p class="hero-sub">
-        Welcome to my digital ecosystem. I am a visual storyteller exploring the intersection of nature and human innovation. My work captures the hidden beauty of the city—where plant ecosystems, wildlife, and architecture adapt and coexist. Inspired by Solarpunk and Frutiger Aero, this journal tracks a future where technology sustains and elevates the natural world.
-      </p>
-
-      <a class="hero-cta" href="#" onclick="go('blog');act(document.getElementById('nl-blog'));return false">
-        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-        View Gallery
-      </a>
-    </div>
-
-    <div class="scroll-hint">
-      <span>SCROLL</span>
-      <div class="scroll-arrow">
-        <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: var(--tmid); margin: 25px 0 35px; max-width: 600px; margin-inline: auto;">
+          An open-source exploration of Solarpunk aesthetics, Frutiger Aero design, and the seamless integration of raw natural biology within high-density geometric architecture.
+        </p>
+        <button class="clay-btn" onclick="go('blog')">
+          Access Archive <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
       </div>
     </div>
   </section>
 
-  <section class="journal">
-    <div class="sec-hd content-layer">
-      <div>
-        <div class="sec-label">✦ Recent Stories</div>
-        <h2 class="sec-title">From the Journal</h2>
-      </div>
-      <a class="view-all" href="#" onclick="go('blog');act(document.getElementById('nl-blog'));return false">
-        All Posts
-        <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
+  <section class="section-wrapper">
+    <div class="sec-hd">
+      <div class="sec-label">✦ Latest Captures</div>
+      <h2 class="sec-title">Recent Architecture</h2>
     </div>
-
-    <div class="grid content-layer" id="home-posts-grid">
-      </div>
+    <div class="smart-grid" id="home-grid"></div>
   </section>
-
 </div>
 
 <div class="page page-sub" id="page-blog">
-  <div class="blog-decor"></div>
-
-  <section class="journal content-layer">
+  <div class="neo-grid-bg"></div>
+  <section class="section-wrapper">
     <div class="sec-hd">
-      <div>
-        <div class="sec-label">✦ All Media &amp; Thoughts</div>
-        <h2 class="sec-title">The Full Journal</h2>
-      </div>
+      <h2 class="sec-title">The Complete Archive</h2>
     </div>
     
     <div class="filter-bar">
-      <button class="filter-btn active" onclick="filterGallery('all', this)">All Observations</button>
-      <button class="filter-btn" onclick="filterGallery('Urban Botany', this)">Urban Botany</button>
-      <button class="filter-btn" onclick="filterGallery('Urban Infrastructure', this)">Infrastructure</button>
-      <button class="filter-btn" onclick="filterGallery('Landscape Log', this)">Landscapes</button>
+      <button class="filter-pill active" onclick="filterGallery('all', this)">All Nodes</button>
+      <button class="filter-pill" onclick="filterGallery('Urban Botany', this)">Urban Botany</button>
+      <button class="filter-pill" onclick="filterGallery('Urban Infrastructure', this)">Infrastructure</button>
+      <button class="filter-pill" onclick="filterGallery('Landscape Log', this)">Landscapes</button>
     </div>
 
-    <div class="grid" id="blog-posts-grid">
-      </div>
+    <div class="smart-grid" id="blog-grid"></div>
   </section>
 </div>
 
 <div class="page page-sub" id="page-about">
-  <div class="about-decor"></div>
-
-  <div class="content-layer" style="max-width:1080px;margin:0 auto;padding:80px 52px 20px;text-align:center">
-    <div class="sec-label" style="justify-content:center">✦ Behind The System</div>
-    <h1 style="font-family:var(--font-d);font-size:clamp(2.3rem,4.5vw,3.8rem);font-weight:900;color:var(--teal);margin-top:10px; transition: color 0.5s;">Hi, I'm Alfaaz.</h1>
-  </div>
-  
-  <div class="about-wrap content-layer">
+  <div class="neo-grid-bg"></div>
+  <section class="section-wrapper">
+    <div class="sec-hd"><h2 class="sec-title">System Architecture</h2></div>
     
-    <div class="about-card lg-card" style="min-height: auto; padding: 44px; background: linear-gradient(135deg, var(--mist) 0%, rgba(255,255,255,0.4) 100%);">
-      <div class="about-card-content" style="max-width: 100%;">
-        <h2 class="ah2" style="color: var(--teal); text-shadow: none;">Photographer &amp; Frontend Systems Explorer</h2>
-        <p class="ap" style="color: var(--tdark); text-shadow: none;">I am a self-taught creator based in Abu Dhabi, exploring the delicate spaces where architectural rigidity, modern transit systems, and resilient botanical life intersect. Looking through my lens, I search for instances where technology and nature find a symbiotic balance rather than fighting for dominance.</p>
-        <p class="ap" style="color: var(--tmid); text-shadow: none; margin-bottom:0; font-size: 0.95rem;">This portfolio serves as an open-source visual log documenting urban ecosystems, engineered using hardware-accelerated frontend architectures to ensure high-fidelity delivery without performance compromises.</p>
-      </div>
+    <div class="neo-card">
+      <h2>Alfaaz. Photographer &amp; Developer</h2>
+      <p>Based in Abu Dhabi, I explore the spaces where rigid urban transit systems and resilient botanical life intersect. This portfolio serves as an open-source visual log documenting urban ecosystems, engineered using hardware-accelerated frontend architectures (Glassmorphism, Claymorphism, and Neomorphism) to ensure high-fidelity delivery.</p>
     </div>
 
-    <div class="two-col">
-      <div class="inner-card">
-        <div class="inner-h">📷 Visual Horizons</div>
-        <div class="tags">
-          <span class="tag">Solarpunk Ecosystems</span>
-          <span class="tag">Urban Nature Coexistence</span>
-          <span class="tag">Transit &amp; Street Geometry</span>
-          <span class="tag">Specular Light &amp; Reflections</span>
-          <span class="tag">Biological Architecture</span>
-        </div>
+    <div class="matrix-grid">
+      <div class="matrix-node">
+        <span class="node-id">[01 / OPTICS]</span>
+        <p>Leveraging high-aperture manual optics (Nikon Z30) to separate crisp foreground botanical textures from dense structural backgrounds.</p>
       </div>
-      <div class="inner-card">
-        <div class="inner-h">✦ Active Tooling</div>
-        <div class="gear-list">
-          <div class="gear-item"><span class="gear-dot"></span>Nikon Z30 Optical Chassis</div>
-          <div class="gear-item"><span class="gear-dot"></span>Samsung S23 Mobile Capture</div>
-          <div class="gear-item"><span class="gear-dot"></span>Sublime Text &amp; Git Versioning</div>
-        </div>
+      <div class="matrix-node">
+        <span class="node-id">[02 / GRADING]</span>
+        <p>Balancing natural sunlight with clean digital contrasts. Every asset undergoes precise geometric perspective mapping.</p>
+      </div>
+      <div class="matrix-node">
+        <span class="node-id">[03 / FRONTEND]</span>
+        <p>Hand-crafted semantic structure deploying non-blocking CSS variables, fluid responsive grids, and native GPU layers.</p>
       </div>
     </div>
-
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 24px;">
-      <div class="inner-card" style="padding: 24px;">
-        <div class="inner-h" style="font-size: 0.85rem; letter-spacing: 0.05em; font-family: var(--font-m); color: var(--g);">[01 / OPTICS]</div>
-        <p style="font-size: 0.84rem; line-height: 1.6; color: var(--tmid); text-align: justify;">
-          <strong>Capture Pipeline:</strong> Leveraging high-aperture manual optics to separate crisp foreground botanical textures from dense structural backgrounds, isolating local wildlife and urban flora at raw exposure intervals.
-        </p>
-      </div>
-      <div class="inner-card" style="padding: 24px;">
-        <div class="inner-h" style="font-size: 0.85rem; letter-spacing: 0.05em; font-family: var(--font-m); color: var(--g);">[02 / DEVELOPMENT]</div>
-        <p style="font-size: 0.84rem; line-height: 1.6; color: var(--tmid); text-align: justify;">
-          <strong>Digital Grading:</strong> Balancing natural sunlight with clean digital contrasts. Every asset undergoes precise geometric perspective mapping to emphasize architectural crossroad paths and glass canopy frameworks.
-        </p>
-      </div>
-      <div class="inner-card" style="padding: 24px;">
-        <div class="inner-h" style="font-size: 0.85rem; letter-spacing: 0.05em; font-family: var(--font-m); color: var(--g);">[03 / ARCHITECTURE]</div>
-        <p style="font-size: 0.84rem; line-height: 1.6; color: var(--tmid); text-align: justify;">
-          <strong>Frontend Core:</strong> Hand-crafted semantic structure deploying non-blocking CSS variables, custom asynchronous filtering matrices, and native GPU layers for an optimal fluid user experience.
-        </p>
-      </div>
-    </div>
-
-  </div>
+  </section>
 </div>
 
 <div class="page page-sub" id="page-contact">
-  <div class="contact-decor">
-    <div class="signal-ring"></div>
-    <div class="signal-ring"></div>
-    <div class="signal-ring"></div>
-  </div>
-
-  <div class="content-layer" style="max-width:1080px;margin:0 auto;padding:80px 52px 20px;text-align:center">
-    <div class="sec-label" style="justify-content:center">🌿 Get In Touch</div>
-    <h1 style="font-family:var(--font-d);font-size:clamp(2.1rem,4.5vw,3.5rem);font-weight:900;color:var(--teal);margin-top:10px; transition: color 0.5s;">Let's Connect</h1>
-    <p style="font-size:0.98rem;color:var(--tmid);margin-top:12px;line-height:1.72; transition: color 0.5s;">Whether it's an academic inquiry, collaboration, or design discussion, feel free to drop a message.</p>
-  </div>
-  <div class="contact-grid content-layer">
-    <div>
-      <div class="contact-cards">
-        <div class="cc">
-          <div class="ci"><svg viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
-          <div><div class="cl">Email</div><div class="cv">alfaazal2009@gmail.com</div></div>
-        </div>
-        <div class="cc">
-          <div class="ci"><svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
-          <div><div class="cl">Based In</div><div class="cv">Abu Dhabi, UAE</div></div>
-        </div>
-      </div>
-    </div>
+  <div class="neo-grid-bg"></div>
+  <section class="section-wrapper">
+    <div class="sec-hd"><h2 class="sec-title">Establish Connection</h2></div>
     
-    <form class="form-card" action="https://api.web3forms.com/submit" method="POST">
-      <input type="hidden" name="access_key" value="b71fd75f-7128-4d6c-9278-0f73baf6bf22">
-      <input type="hidden" name="redirect" value="https://alfaazthecoder.github.io/My-Web-Portfolio/">
-      <input type="hidden" name="subject" value="New Portfolio Message!">
-
-      <div class="form-row">
-        <div class="fg"><label>Name</label><input type="text" name="name" placeholder="Your name" required/></div>
-        <div class="fg"><label>Email</label><input type="email" name="email" placeholder="your@email.com" required/></div>
+    <div class="contact-layout">
+      <div style="display: flex; flex-direction: column; gap: 30px; padding-top: 20px;">
+        <div class="floating-card">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div class="fc-text"><h4>Direct Relay</h4><p>alfaazal2009@gmail.com</p></div>
+        </div>
+        <div class="floating-card">
+          <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div class="fc-text"><h4>Coordinates</h4><p>Abu Dhabi, UAE</p></div>
+        </div>
       </div>
-      <div class="fg"><label>Subject</label><input type="text" name="subject" placeholder="What's this about?" required/></div>
-      <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell me more..." required></textarea></div>
-      <button type="submit" class="btn-send">
-        <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Send Message
-      </button>
-    </form>
-  </div>
+
+      <form class="neo-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="PUT_YOUR_ACCESS_KEY_HERE">
+        <input type="hidden" name="redirect" value="https://alfaazthecoder.github.io/My-Web-Portfolio/">
+        <div class="form-group">
+          <label>Your Identifier</label>
+          <input type="text" name="name" class="neo-input" required placeholder="John Doe">
+        </div>
+        <div class="form-group">
+          <label>Return Address</label>
+          <input type="email" name="email" class="neo-input" required placeholder="john@domain.com">
+        </div>
+        <div class="form-group">
+          <label>Transmission Data</label>
+          <textarea name="message" class="neo-input" rows="4" required placeholder="Initiate sequence..."></textarea>
+        </div>
+        <button type="submit" class="clay-btn" style="width: 100%; justify-content: center; margin-top: 10px;">
+          Transmit <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </form>
+    </div>
+  </section>
 </div>
 
 <div class="modal-overlay" id="detail-modal" onclick="closeModal(event)">
-  <div class="modal-window lg-card" onclick="event.stopPropagation()">
-    <div class="modal-close-btn" onclick="toggleModal(false)">
+  <div class="modal-window" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="toggleModal(false)">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </div>
+    </button>
     <div class="modal-media">
       <img id="modal-img" src="" alt="" loading="lazy"/>
     </div>
-    <div class="modal-content-panel">
-      <span class="m-label" id="modal-label">Solarpunk Observation</span>
-      <h2 class="m-title" id="modal-title">Post Title Placeholder</h2>
-      <span class="m-date" id="modal-date">Date Placeholder</span>
-      <hr style="border:none; height:1px; background:rgba(13,92,74,0.15)"/>
-      <p class="m-body" id="modal-body">Deep-dive reflection body content placeholder...</p>
+    <div class="modal-panel">
+      <div class="sec-label" id="modal-label" style="margin-bottom: 5px;">Category</div>
+      <h2 class="m-title" id="modal-title">Title</h2>
+      <span class="m-date" id="modal-date" style="font-family: var(--font-m); color: var(--tsoft);">Date</span>
+      <div style="height: 2px; background: var(--clay-dark); margin: 25px 0;"></div>
+      <p class="m-body" id="modal-body" style="font-size: 1.05rem; line-height: 1.8; color: var(--tmid);">Description...</p>
     </div>
   </div>
 </div>
 
-<div class="credit-badge-wrapper">
-  <div class="credit-badge">
-    <span class="sparkle-icon">✨</span> All photography shown is captured by me
-  </div>
-</div>
-
-<footer>
-  <span class="f-logo">Alfaaz</span>
-  <div class="f-links">
-    <a href="#" onclick="go('home');act(document.getElementById('nl-home'));return false">Home</a>
-    <a href="#" onclick="go('blog');act(document.getElementById('nl-blog'));return false">Blog</a>
-    <a href="#" onclick="go('about');act(document.getElementById('nl-about'));return false">About</a>
-    <a href="#" onclick="go('contact');act(document.getElementById('nl-contact'));return false">Contact</a>
-  </div>
-  <span class="f-copy">© 2026 Alfaaz · All rights reserved</span>
-</footer>
+<footer>© 2026 Alfaaz · Open Source Aesthetic</footer>
 
 <script>
-  // ── 1. HYBRID CUSTOM CURSOR ENGINE ──
-  const cursorRing = document.getElementById('custom-cursor');
-  let mouseX = -100, mouseY = -100;
-  let ringX = -100, ringY = -100;
+  // 1. LIQUID CURSOR PHYSICS
+  const cursor = document.getElementById('cursor');
+  let mouseX = -100, mouseY = -100, ringX = -100, ringY = -100;
 
   if(window.matchMedia("(pointer: fine)").matches) {
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX; mouseY = e.clientY;
-    });
-
+    document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
     function renderCursor() {
-      ringX += (mouseX - ringX) * 0.45; 
-      ringY += (mouseY - ringY) * 0.45;
-      
-      cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) rotate(45deg)`;
+      ringX += (mouseX - ringX) * 0.35; 
+      ringY += (mouseY - ringY) * 0.35;
+      cursor.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) rotate(-45deg)`;
       requestAnimationFrame(renderCursor);
     }
     requestAnimationFrame(renderCursor);
 
-    function attachCursorHovers() {
-      document.querySelectorAll('a, button, .card, .icon-bubble, .theme-switch, input, textarea, .modal-close-btn, .filter-btn').forEach(el => {
-        el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
-        el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
+    function attachHovers() {
+      document.querySelectorAll('a, button, input, textarea, .glass-card, .filter-pill, .modal-close').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
       });
     }
-  }
+  } else { cursor.style.display = 'none'; }
 
-  // ── 2. BACK TO TOP OBSERVER ──
-  const btt = document.getElementById('btt');
-  window.addEventListener('scroll', () => {
-    if(window.scrollY > 400) btt.classList.add('visible');
-    else btt.classList.remove('visible');
-  }, {passive: true});
-
-  // ── 3. THEME TOGGLE ENGINE ──
+  // 2. THEME ENGINE
   function toggleTheme(isDark) {
-    if(isDark) {
-      document.body.classList.add('dark-mode');
-      localStorage.setItem('portfolio-theme', 'dark');
-    } else {
-      document.body.classList.remove('dark-mode');
-      localStorage.setItem('portfolio-theme', 'light');
-    }
+    document.body.classList.toggle('dark-mode', isDark);
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }
-
-  const savedTheme = localStorage.getItem('portfolio-theme');
-  if(savedTheme === 'dark') {
+  if(localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
     document.getElementById('theme-checkbox').checked = true;
   }
 
-  // ── 4. DATABASE & FILTER GRID (Underscores removed) ──
+  // 3. DATABASE (Contains all 8 of your entries with no underscores!)
   const postDatabase = [
-    {
-      id: 1,
-      title: "Bioluminescent Blooms in the Concrete Canvas",
-      excerpt: "Documenting urban plant life as it scales the lines of modern cityscapes, proving that nature doesn't just adapt—it claims its space.",
-      body: "This frame captures a cluster of delicate wild blossoms thriving right against the geometric backdrop of Abu Dhabi's architectural lines. What drew me to this shot was the sharp contrast between the organic, chaotic geometry of the plant stems and the clean, structured curves of the city behind them. It is a quiet reminder of how native eco-systems and high-density human architecture can elegantly sync up, offering a visual window into a true Solarpunk ecosystem operating in the real world.",
-      date: "May 18, 2026",
-      img: "20260517_174228.jpg",
-      label: "Urban Botany",
-      featured: true
-    },
-    {
-      id: 2,
-      title: "Symmetry of the Streets: Urban Oasis",
-      excerpt: "Analyzing the visual balance between transit systems, high-density infrastructure, and the resilient flora flanking city corridors.",
-      body: "This composition focuses on a central Abu Dhabi thoroughfare, capturing a distinct layer of coastal city design. By framing the clean lines of passing vehicles and geometric towers with palm branches and lush flowerbeds, the shot illustrates how intentional green spaces soften the technical rigidity of an expanding metropolis. It captures an everyday glimpse of a city engineered to let infrastructure and regional ecology share the same horizon.",
-      date: "May 18, 2026",
-      img: "20260517_174605.jpg",
-      label: "Urban Infrastructure",
-      featured: false
-    },
-    {
-      id: 3,
-      title: "Decaying Canopy: The Cost of Light",
-      excerpt: "An observation of botanical leaves displaying structural damage against a sun-drenched canopy, capturing the fragility within thriving ecosystems.",
-      body: "This shot positions damaged, browning foliage directly against a vibrant, light-filled green canopy. The contrast highlights a vital ecological truth: even within highly optimized environments, individual structural decay is a natural biproduct of intense exposure to light and energy. Capturing this macro view explores the microscopic vulnerabilities that exist inside macro systems, balancing pure tech-optimism with raw biological reality.",
-      date: "May 18, 2026",
-      img: "DSC3324.jpg",
-      label: "Urban Botany",
-      featured: false
-    },
-    {
-      id: 4,
-      title: "Glass Canopies: The Digital Greenhouse",
-      excerpt: "Analyzing the visual alignment of geometric glass panes against natural branch formations, highlighting architectural biomimicry.",
-      body: "This composition layers organic branch patterns directly over the crisp, structural grids of contemporary urban windows. The sunlight filtering through the translucent leaves highlights a structural philosophy where modern glass elements mirror the natural distribution of light in a forest canopy. Documenting this structure emphasizes an optimistic architectural direction: building high-density spaces that incorporate native greenery rather than isolating from it.",
-      date: "May 18, 2026",
-      img: "DSC3334.jpg",
-      label: "Urban Infrastructure",
-      featured: false
-    },
-    {
-      id: 5,
-      title: "Chasing Grids: The Urban Crossroad",
-      excerpt: "An exploration of city transit geometry, pedestrian spacing, and high-density structural architecture under the clear desert sky.",
-      body: "This composition focuses on the architectural rhythm of Abu Dhabi's streetscapes. By capturing the stark white crosswalk geometry alongside structural high-rises and towering streetlights, the shot emphasizes a grid-based city layout. The inclusion of figures waiting at the crossroad scales the frame, highlighting human navigation through an expertly engineered, modern urban ecosystem.",
-      date: "May 18, 2026",
-      img: "DSC3409.jpg",
-      label: "Urban Infrastructure",
-      featured: false
-    },
-    {
-      id: 6,
-      title: "Vertical Green: The Scaffold Ecosystem",
-      excerpt: "An observation of botanical vines climbing architectural structures, creating a natural vertical grid system alongside industrial fixtures.",
-      body: "This composition explores a vertical narrative within urban ecology. By balancing a weathered hanging rope against two descending paths of climbing vines, the frame documents a direct symbiotic relationship between built structures and plant life. The soft, diffuse lighting emphasizes a clean architectural layout where raw mechanical components don't crowd out nature, but actively act as the structural framework that supports its growth.",
-      date: "May 18, 2026",
-      img: "DSC3343.jpg",
-      label: "Urban Botany",
-      featured: false
-    },
-    {
-      id: 7,
-      title: "The Fibonacci Canopy: Fluid Systems",
-      excerpt: "A technical study of algorithmic plant distribution, mapping organic leaf vectors against high-key atmospheric lighting states.",
-      body: "This composition leverages strict natural mathematical ratios, aligning regional branches along the path of a traditional Golden Spiral. By using dark foreground leaves as a hardware vignette frame, the eye is forced inward to an isolated, high-exposure background matrix. It captures a pure instance of Frutiger Aero design language—where vivid organic structures feel mathematically optimized, clean, and perfectly balanced within a digital canvas.",
-      date: "May 23, 2026",
-      img: "DSC3464.jpg",
-      label: "Urban Botany",
-      featured: false
-    },
-    {
-      id: 8,
-      title: "The Porch Sentinel: Minimalist Spaces",
-      excerpt: "A study of domestic wildlife scale and perspective, capturing a cat resting within the clean geometric lines of a modern residential entryway.",
-      body: "This composition focuses on a quiet moment of domestic adaptation within structured architectural geometry. Positioned on the porch step in the front yard, the cat forms the focal grounding element of the frame. The vertical lines and clean structural panels of the entryway steps contrast beautifully with the cat's resting posture, while a polished, reflective element at the base bends the perspective into a smooth, sweeping arc. It captures a peaceful intersection of home design, sharp lighting, and local life.",
-      date: "May 23, 2026",
-      img: "DSC3421.jpg",
-      label: "Urban Infrastructure",
-      featured: false
-    }
+    { id: 1, title: "Bioluminescent Blooms in the Concrete Canvas", excerpt: "Documenting urban plant life scaling the lines of modern cityscapes.", body: "This frame captures a cluster of delicate wild blossoms thriving right against the geometric backdrop of Abu Dhabi's architectural lines. What drew me to this shot was the sharp contrast between the organic, chaotic geometry of the plant stems and the clean, structured curves of the city behind them.", date: "May 18, 2026", img: "20260517_174228.jpg", label: "Urban Botany", featured: true },
+    { id: 2, title: "Symmetry of the Streets: Urban Oasis", excerpt: "Analyzing the visual balance between transit systems and resilient flora.", body: "This composition focuses on a central Abu Dhabi thoroughfare, capturing a distinct layer of coastal city design. By framing the clean lines of passing vehicles and geometric towers with palm branches and lush flowerbeds, the shot illustrates how intentional green spaces soften technical rigidity.", date: "May 18, 2026", img: "20260517_174605.jpg", label: "Urban Infrastructure", featured: false },
+    { id: 3, title: "Decaying Canopy: The Cost of Light", excerpt: "An observation of botanical leaves displaying structural damage against a sun-drenched canopy.", body: "This shot positions damaged, browning foliage directly against a vibrant, light-filled green canopy. The contrast highlights a vital ecological truth: even within highly optimized environments, individual structural decay is a natural biproduct of intense exposure to light and energy.", date: "May 18, 2026", img: "DSC3324.jpg", label: "Urban Botany", featured: false },
+    { id: 4, title: "Glass Canopies: The Digital Greenhouse", excerpt: "Analyzing the visual alignment of geometric glass panes against natural branch formations.", body: "This composition layers organic branch patterns directly over the crisp, structural grids of contemporary urban windows. The sunlight filtering through the translucent leaves highlights a structural philosophy where modern glass elements mirror the natural distribution of light in a forest canopy.", date: "May 18, 2026", img: "DSC3334.jpg", label: "Urban Infrastructure", featured: false },
+    { id: 5, title: "Chasing Grids: The Urban Crossroad", excerpt: "An exploration of city transit geometry, pedestrian spacing, and high-density structural architecture.", body: "This composition focuses on the architectural rhythm of Abu Dhabi's streetscapes. By capturing the stark white crosswalk geometry alongside structural high-rises and towering streetlights, the shot emphasizes a grid-based city layout.", date: "May 18, 2026", img: "DSC3409.jpg", label: "Urban Infrastructure", featured: false },
+    { id: 6, title: "Vertical Green: The Scaffold Ecosystem", excerpt: "An observation of botanical vines climbing architectural structures.", body: "This composition explores a vertical narrative within urban ecology. By balancing a weathered hanging rope against two descending paths of climbing vines, the frame documents a direct symbiotic relationship between built structures and plant life.", date: "May 18, 2026", img: "DSC3343.jpg", label: "Urban Botany", featured: false },
+    { id: 7, title: "The Fibonacci Canopy: Fluid Systems", excerpt: "A technical study of algorithmic plant distribution.", body: "This composition leverages strict natural mathematical ratios, aligning regional branches along the path of a traditional Golden Spiral. By using dark foreground leaves as a hardware vignette frame, the eye is forced inward to an isolated, high-exposure background matrix.", date: "May 23, 2026", img: "DSC3464.jpg", label: "Urban Botany", featured: false },
+    { id: 8, title: "The Porch Sentinel: Minimalist Spaces", excerpt: "A study of domestic wildlife scale and perspective, capturing a cat resting within clean geometric lines.", body: "Positioned on the porch step in the front yard, the cat forms the focal grounding element of the frame. The vertical lines and clean structural panels of the entryway steps contrast beautifully with the cat's resting posture, while a polished, reflective element at the base bends the perspective into a smooth, sweeping arc.", date: "May 23, 2026", img: "DSC3421.jpg", label: "Urban Infrastructure", featured: false }
   ];
 
-  function buildCardHTML(post) {
-    const isFeat = post.featured ? 'feat' : '';
+  function buildCard(post) {
     return `
-      <div class="card ${isFeat}" onclick="openPost(${post.id})">
-        <div class="cmedia">
-          <img src="${post.img}" alt="${post.title}" loading="lazy"/>
-        </div>
+      <div class="glass-card" onclick="openPost(${post.id})">
+        <div class="cmedia"><img src="${post.img}" alt="${post.title}" loading="lazy"/></div>
         <div class="cbody">
           <h3 class="ctitle">${post.title}</h3>
           <p class="cexcerpt">${post.excerpt}</p>
-          <div class="cmeta">
-            <span class="cdate">${post.date}</span>
-            <div class="carrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-          </div>
+          <div class="cmeta"><span class="cdate">${post.date}</span></div>
         </div>
       </div>
     `;
   }
 
   function renderGrids() {
-    const homeGrid = document.getElementById('home-posts-grid');
-    const blogGrid = document.getElementById('blog-posts-grid');
+    const home = document.getElementById('home-grid');
+    const blog = document.getElementById('blog-grid');
+    home.innerHTML = ''; blog.innerHTML = '';
     
-    homeGrid.innerHTML = '';
-    blogGrid.innerHTML = '';
+    // Reverse array to show newest first
+    const reversedDB = [...postDatabase].reverse();
 
-    postDatabase.forEach((post, index) => {
-      if(index < 5) homeGrid.innerHTML += buildCardHTML(post);
-      blogGrid.innerHTML += buildCardHTML(post);
+    reversedDB.forEach((post, i) => {
+      if(i < 6) home.innerHTML += buildCard(post); // Show latest 6 on home
+      blog.innerHTML += buildCard(post);
     });
-
-    if(window.matchMedia("(pointer: fine)").matches) attachCursorHovers();
+    if(window.matchMedia("(pointer: fine)").matches) attachHovers();
   }
 
-  function filterGallery(category, btnElement) {
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-    btnElement.classList.add('active');
-
-    const blogGrid = document.getElementById('blog-posts-grid');
-    blogGrid.innerHTML = ''; 
-
-    const filteredPosts = category === 'all' 
-      ? postDatabase 
-      : postDatabase.filter(post => post.label === category);
-
-    filteredPosts.forEach(post => {
-      blogGrid.innerHTML += buildCardHTML(post);
-    });
-
-    if(window.matchMedia("(pointer: fine)").matches) attachCursorHovers();
+  function filterGallery(cat, btn) {
+    document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const blog = document.getElementById('blog-grid');
+    blog.innerHTML = ''; 
+    const filtered = cat === 'all' ? postDatabase : postDatabase.filter(p => p.label === cat);
+    [...filtered].reverse().forEach(post => blog.innerHTML += buildCard(post));
+    if(window.matchMedia("(pointer: fine)").matches) attachHovers();
   }
 
-  // ── 5. LIGHTBOX MODAL ──
+  // 4. MODAL & ROUTING
   function openPost(id) {
     const post = postDatabase.find(p => p.id === id);
     if(!post) return;
@@ -1036,32 +635,19 @@ footer{background:var(--teal);padding:28px 52px;display:flex;align-items:center;
 
   function toggleModal(show) {
     const modal = document.getElementById('detail-modal');
-    if(show) {
-      modal.classList.add('active');
-      document.body.classList.add('modal-open');
-    } else {
-      modal.classList.remove('active');
-      document.body.classList.remove('modal-open');
-    }
+    show ? modal.classList.add('active') : modal.classList.remove('active');
+    document.body.style.overflow = show ? 'hidden' : '';
   }
-
   function closeModal(e) { if(e.target.id === 'detail-modal') toggleModal(false); }
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') toggleModal(false); });
 
-  // ── 6. PAGE NAVIGATION ──
   function go(id){
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-'+id).classList.add('active');
     window.scrollTo(0,0);
-    const targetNavLink = document.getElementById('nl-'+id);
-    if(targetNavLink) act(targetNavLink);
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.getElementById('nl-'+id).classList.add('active');
   }
-  
-  function act(el){
-    document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-    el.classList.add('active');
-  }
-
-  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') toggleModal(false); });
 
   window.onload = renderGrids;
 </script>
