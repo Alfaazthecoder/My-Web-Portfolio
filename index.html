@@ -115,7 +115,7 @@ html, body, a, button, input, textarea, .modal-close-btn, .filter-pill {
 .nav-logo-group { display: flex; align-items: center; gap: 14px; transition: transform 0.4s; }
 .nav-logo-group:hover { transform: scale(1.02); }
 
-/* New Aperture Icon */
+/* Aperture Icon */
 .nav-icon {
   width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--sky), var(--leaf));
   display: flex; align-items: center; justify-content: center;
@@ -258,7 +258,7 @@ body.dark-mode .clay-btn::after { background: linear-gradient(to right, transpar
 /* TRUE PARALLAX FIX: NO PERSPECTIVE ON GRID */
 .smart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 35px; }
 
-/* Independent 3D perspective applied directly to each card */
+/* Independent 3D perspective applied directly to each card. Hardware accelerated. */
 .glass-card {
   border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; position: relative;
   background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
@@ -267,20 +267,21 @@ body.dark-mode .clay-btn::after { background: linear-gradient(to right, transpar
   box-shadow: var(--glass-shadow); 
   transform-style: preserve-3d;
   transform: perspective(1200px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+  will-change: transform;
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.8s;
 }
 .glass-card:hover { z-index: 5; box-shadow: 0 40px 80px rgba(0,0,0,0.15); }
 body.dark-mode .glass-card:hover { box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 30px rgba(var(--glow-rgb), 0.15); }
 
 /* Dynamic Glare Layer */
-.glass-card .glare { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4), transparent 60%); opacity: 0; pointer-events: none; mix-blend-mode: overlay; transition: opacity 0.3s; z-index: 10; }
+.glass-card .glare { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3), transparent 60%); opacity: 0; pointer-events: none; mix-blend-mode: overlay; transition: opacity 0.3s; z-index: 10; }
 body.dark-mode .glass-card .glare { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), transparent 60%); mix-blend-mode: screen; }
 .glass-card:hover .glare { opacity: 1; }
 
 .cmedia { position: relative; height: 260px; overflow: hidden; transform: translateZ(20px); pointer-events: none; }
 .cmedia img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform; }
 .glass-card:hover .cmedia img { transform: scale(1.1); }
-.cmedia::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--glass-bg), transparent); transition: background 0.5s; }
+.cmedia::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--glass-bg), transparent); transition: background 0.5s; pointer-events: none; }
 
 .cbody { padding: 25px 30px; display: flex; flex-direction: column; gap: 12px; flex: 1; z-index: 2; position: relative; transform: translateZ(30px); pointer-events: none;}
 .ctitle { font-family: var(--font-d); font-size: 1.25rem; font-weight: 700; color: var(--teal); line-height: 1.3; transition: color 0.3s; }
@@ -377,7 +378,7 @@ body.dark-mode .tag { background: rgba(0,0,0,0.3); color: var(--g); }
 }
 .modal-overlay.active .modal-window { transform: translateY(0) scale(1); }
 .modal-media { flex: 1.5; min-width: 300px; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden;}
-.modal-media img { width: 100%; height: 100%; object-fit: contain; transform: scale(1.05); transition: transform 6s ease-out; }
+.modal-media img { width: 100%; height: 100%; object-fit: contain; transform: scale(1.05); transition: transform 0.6s ease-out; }
 .modal-overlay.active .modal-media img { transform: scale(1); }
 .modal-panel { flex: 1; min-width: 350px; padding: 50px; background: var(--surface); overflow-y: auto; max-height: 90vh; transition: background 0.5s; }
 .m-title { font-family: var(--font-d); font-size: 2.5rem; color: var(--teal); margin: 10px 0 25px; line-height: 1.1; transition: color 0.5s; }
@@ -486,7 +487,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
         <p style="font-size: 1.1rem; line-height: 1.8; color: var(--tmid); margin: 25px 0 35px; max-width: 600px; margin-inline: auto;">
           An open-source exploration of Solarpunk aesthetics, Frutiger Aero design, and the seamless integration of raw natural biology within high-density geometric architecture.
         </p>
-        <button class="clay-btn magnetic play-click" onclick="go('blog')">
+        <button class="clay-btn play-click magnetic" onclick="go('blog')">
           Access Archive <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
@@ -513,10 +514,10 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     <div class="sec-hd reveal"><h2 class="sec-title">The Complete Archive</h2></div>
     
     <div class="filter-bar reveal delay-1">
-      <button class="filter-pill magnetic play-click active" onclick="filterGallery('all', this)">All Nodes</button>
-      <button class="filter-pill magnetic play-click" onclick="filterGallery('Urban Botany', this)">Urban Botany</button>
-      <button class="filter-pill magnetic play-click" onclick="filterGallery('Urban Infrastructure', this)">Infrastructure</button>
-      <button class="filter-pill magnetic play-click" onclick="filterGallery('Landscape Log', this)">Landscapes</button>
+      <button class="filter-pill play-click active" onclick="filterGallery('all', this)">All Nodes</button>
+      <button class="filter-pill play-click" onclick="filterGallery('Urban Botany', this)">Urban Botany</button>
+      <button class="filter-pill play-click" onclick="filterGallery('Urban Infrastructure', this)">Infrastructure</button>
+      <button class="filter-pill play-click" onclick="filterGallery('Landscape Log', this)">Landscapes</button>
     </div>
 
     <div class="smart-grid" id="blog-grid"></div>
@@ -616,7 +617,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
 
 <div class="modal-overlay" id="detail-modal" onclick="closeModal(event)">
   <div class="modal-window" onclick="event.stopPropagation()">
-    <button class="modal-close magnetic play-click" onclick="toggleModal(false)">
+    <button class="modal-close play-click" onclick="toggleModal(false)">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
     <div class="modal-media">
@@ -678,9 +679,17 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     osc.start(); osc.stop(audioCtx.currentTime + 0.1);
   }
 
-  // Attach Sounds
-  document.addEventListener('mouseover', e => { if(e.target.closest('.glass-card') || e.target.closest('.icon-btn') || e.target.closest('.filter-pill') || e.target.closest('.inner-card') || e.target.closest('.matrix-node') || e.target.closest('.floating-card')) playHover(); });
-  document.addEventListener('click', e => { if(e.target.closest('.play-click') || e.target.closest('a')) playClick(); });
+  // Attach Sounds (Event Delegation)
+  document.addEventListener('mouseover', e => { 
+    if(e.target.closest('.glass-card') || e.target.closest('.icon-btn') || e.target.closest('.filter-pill') || e.target.closest('.inner-card') || e.target.closest('.matrix-node') || e.target.closest('.floating-card')) {
+      playHover(); 
+    }
+  });
+  document.addEventListener('click', e => { 
+    if(e.target.closest('.play-click') || e.target.closest('a') || e.target.closest('button')) {
+      playClick(); 
+    }
+  });
 
   /* ── 2. MAGNETIC SPRING PHYSICS ── */
   document.querySelectorAll('.magnetic').forEach(btn => {
@@ -703,11 +712,10 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        // Reduced strength from 10 to 4 for a more elegant, subtle tilt
+        // Perspective applied directly to the item ensures no grid-warping
         const rotateX = ((y - centerY) / centerY) * -4; 
         const rotateY = ((x - centerX) / centerX) * 4;
         
-        // Perspective applied directly to the item ensures no grid-warping
         card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
         const glare = card.querySelector('.glare');
         if(glare) glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.3), transparent 60%)`;
@@ -723,13 +731,11 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
   let currentThemeIdx = 0;
 
   function cycleTheme() {
-    playClick();
     currentThemeIdx = (currentThemeIdx + 1) % themes.length;
     document.body.setAttribute('data-theme', themes[currentThemeIdx]);
   }
 
   function toggleDarkMode(isDark) {
-    playClick();
     document.body.classList.toggle('dark-mode', isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }
@@ -738,7 +744,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     document.getElementById('theme-checkbox').checked = true;
   }
 
-  /* ── 5. DATABASE & RENDER ── */
+  /* ── 5. DATABASE & RENDER (OPTIMIZED) ── */
   const postDatabase = [
     { id: 1, title: "Bioluminescent Blooms in the Concrete Canvas", excerpt: "Documenting urban plant life scaling the lines of modern cityscapes.", body: "This frame captures a cluster of delicate wild blossoms thriving right against the geometric backdrop of Abu Dhabi's architectural lines. What drew me to this shot was the sharp contrast between the organic, chaotic geometry of the plant stems and the clean, structured curves of the city behind them.", date: "May 18, 2026", img: "20260517_174228.jpg", label: "Urban Botany", featured: true },
     { id: 2, title: "Symmetry of the Streets: Urban Oasis", excerpt: "Analyzing the visual balance between transit systems and resilient flora.", body: "This composition focuses on a central Abu Dhabi thoroughfare, capturing a distinct layer of coastal city design. By framing the clean lines of passing vehicles and geometric towers with palm branches and lush flowerbeds, the shot illustrates how intentional green spaces soften technical rigidity.", date: "May 18, 2026", img: "20260517_174605.jpg", label: "Urban Infrastructure", featured: false },
@@ -768,12 +774,19 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
   function renderGrids() {
     const home = document.getElementById('home-grid');
     const blog = document.getElementById('blog-grid');
-    home.innerHTML = ''; blog.innerHTML = '';
+    
+    let homeStr = '';
+    let blogStr = '';
+    
     const reversedDB = [...postDatabase].reverse();
     reversedDB.forEach((post, i) => {
-      if(i < 6) home.innerHTML += buildCard(post, i); 
-      blog.innerHTML += buildCard(post, i);
+      if(i < 6) homeStr += buildCard(post, i); 
+      blogStr += buildCard(post, i);
     });
+    
+    home.innerHTML = homeStr;
+    blog.innerHTML = blogStr;
+    
     attachParallax();
     initScrollReveal();
   }
@@ -781,15 +794,22 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
   function filterGallery(cat, btn) {
     document.querySelectorAll('.filter-pill').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    
     const blog = document.getElementById('blog-grid');
-    blog.innerHTML = ''; 
+    let blogStr = '';
+    
     const filtered = cat === 'all' ? postDatabase : postDatabase.filter(p => p.label === cat);
-    [...filtered].reverse().forEach((post, i) => blog.innerHTML += buildCard(post, i));
+    [...filtered].reverse().forEach((post, i) => {
+      blogStr += buildCard(post, i);
+    });
+    
+    blog.innerHTML = blogStr;
+    
     attachParallax();
     setTimeout(initScrollReveal, 50);
   }
 
-  /* ── 5. AWWWARDS SCROLL REVEAL OBSERVER ── */
+  /* ── 6. AWWWARDS SCROLL REVEAL OBSERVER ── */
   function initScrollReveal() {
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
@@ -802,18 +822,23 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     reveals.forEach(el => observer.observe(el));
   }
 
-  /* ── 6. SUBTLE PAGE TRANSITION & MODALS ── */
+  /* ── 7. SUBTLE PAGE TRANSITION (WITH ANIMATION LOCK) ── */
+  let isNavigating = false;
+
   function go(id){
+    if (isNavigating) return; // Prevent spam-clicking
     const targetPage = document.getElementById('page-'+id);
-    if(targetPage.classList.contains('active')) return;
+    if (targetPage.classList.contains('active')) return;
     
+    isNavigating = true;
     const current = document.querySelector('.page.active');
+    
     if (current) {
       current.classList.add('fade-out');
       setTimeout(() => {
         current.classList.remove('active', 'fade-out');
         activateNewPage(id, targetPage);
-      }, 300); // Wait for fade out
+      }, 350); // Wait for fade out
     } else {
       activateNewPage(id, targetPage);
     }
@@ -826,10 +851,16 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     document.getElementById('nl-'+id).classList.add('active');
     
+    // Reset and trigger reveals
     targetPage.querySelectorAll('.reveal').forEach(r => r.classList.remove('active'));
-    setTimeout(initScrollReveal, 50);
+    
+    setTimeout(() => {
+      initScrollReveal();
+      isNavigating = false; // Unlock navigation
+    }, 50);
   }
 
+  /* ── 8. LIGHTBOX MODAL ── */
   function openPost(id) {
     const post = postDatabase.find(p => p.id === id);
     if(!post) return;
