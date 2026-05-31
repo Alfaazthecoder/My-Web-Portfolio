@@ -138,7 +138,7 @@ html, body, a, button, input, textarea, .modal-close-btn, .filter-pill {
 /* Utility Nav Panel */
 .nav-utilities { display: flex; align-items: center; gap: 15px; border-left: 2px solid var(--clay-dark); padding-left: 20px; margin-left: 10px; }
 
-/* Micro-Audio & Palette Buttons (Magnetic) */
+/* Micro-Audio & Palette Buttons */
 .icon-btn {
   width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: none; outline: none;
   background: var(--surface); display: flex; align-items: center; justify-content: center;
@@ -233,7 +233,7 @@ body.dark-mode .hero-card { box-shadow: var(--glass-shadow), inset 0 0 30px rgba
 @keyframes liquidShimmer { to { background-position: 200% center; } }
 .hero-title em { font-style: italic; color: var(--leaf); display: block; text-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: color 0.8s; }
 
-/* Claymorphic Magnetic Button */
+/* Claymorphic Animated Button */
 .clay-btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 10px; padding: 18px 45px; border-radius: 999px; font-family: var(--font-b); font-size: 1.05rem; font-weight: 700; letter-spacing: 0.05em; background: var(--surface); color: var(--teal); border: none; box-shadow: 8px 8px 16px var(--clay-dark), -8px -8px 16px var(--clay-light), inset -2px -2px 6px rgba(0,0,0,0.05), inset 2px 2px 6px var(--clay-inset-light); transition: box-shadow 0.3s, color 0.3s; cursor: pointer; }
 .clay-btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent); transform: skewX(-20deg); animation: glare 4s infinite; pointer-events: none; }
 body.dark-mode .clay-btn::after { background: linear-gradient(to right, transparent, rgba(var(--glow-rgb), 0.2), transparent); }
@@ -255,7 +255,8 @@ body.dark-mode .clay-btn::after { background: linear-gradient(to right, transpar
 .sec-label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-m); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--g); text-transform: uppercase; margin-bottom: 15px; transition: color 0.8s; }
 .sec-title { font-family: var(--font-d); font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--teal); transition: color 0.5s; }
 
-.smart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 35px; perspective: 1000px; }
+/* FIX: Removed global perspective to stop the grid warping issue */
+.smart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 35px; }
 
 /* True 3D Parallax Glass Cards */
 .glass-card {
@@ -270,7 +271,7 @@ body.dark-mode .clay-btn::after { background: linear-gradient(to right, transpar
 body.dark-mode .glass-card:hover { box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 30px rgba(var(--glow-rgb), 0.15); }
 
 /* Dynamic Glare Layer */
-.glass-card .glare { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4), transparent 60%); opacity: 0; pointer-events: none; mix-blend-mode: overlay; transition: opacity 0.3s; z-index: 10; }
+.glass-card .glare { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.3), transparent 60%); opacity: 0; pointer-events: none; mix-blend-mode: overlay; transition: opacity 0.3s; z-index: 10; }
 body.dark-mode .glass-card .glare { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), transparent 60%); mix-blend-mode: screen; }
 .glass-card:hover .glare { opacity: 1; }
 
@@ -389,13 +390,11 @@ body.dark-mode .tag { background: rgba(0,0,0,0.3); color: var(--g); }
 .modal-close svg { width: 24px; height: 24px; stroke: var(--tdark); fill: none; stroke-width: 2.5; transition: stroke 0.5s; pointer-events: none;}
 
 /* ── 11. DEPTH-BLUR PAGE TRANSITION & ROUTING ─────────────────────────── */
-/* The new elegant blur transition instead of the massive screen wipe */
 .page { 
   display: none; opacity: 0; transform: translateY(15px); filter: blur(10px);
   transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
 }
 .page.active { display: block; opacity: 1; transform: translateY(0); filter: blur(0); }
-/* Class for fading out old page gracefully */
 .page.fade-out { opacity: 0; transform: translateY(-15px); filter: blur(8px); }
 
 footer { text-align: center; padding: 50px; font-family: var(--font-m); font-size: 0.85rem; color: var(--tsoft); border-top: 1px solid var(--glass-border-dark); transition: color 0.5s, border-color 0.5s; }
@@ -408,7 +407,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
   .nav-links a { padding: 4px 6px; font-size: 0.85rem;}
   .theme-switch-wrapper { margin-left: 0; padding-left: 10px; border-left: 1px solid var(--clay-dark); }
   .nav-utilities { margin-left: 0; padding-left: 10px; border-left: 1px solid var(--clay-dark); }
-  .nav-slogan { display: none; } /* Hide sub-slogan on very small screens to save space */
+  .nav-slogan { display: none; }
   
   .page-sub { padding-top: 130px; }
   .glass-orb, .icon-bubble, .leaf-d { display: none; } 
@@ -421,9 +420,8 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
 
 <!-- ═══ NAVIGATION ═══ -->
 <nav class="nav">
-  <a class="nav-logo-group magnetic" href="#" onclick="go('home')">
+  <a class="nav-logo-group" href="#" onclick="go('home')">
     <div class="nav-icon">
-      <!-- New Aperture Icon -->
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"></path></svg>
     </div>
     <div class="nav-text-stack">
@@ -439,20 +437,20 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     
     <div class="nav-utilities">
       <!-- Theme Switcher -->
-      <button class="icon-btn magnetic" id="theme-cycle-btn" onclick="cycleTheme()" title="Change Color Palette">
+      <button class="icon-btn play-click" id="theme-cycle-btn" onclick="cycleTheme()" title="Change Color Palette">
         <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 4.2c3.11 2.31 4.34 5.96 3.1 9.47-1.25 3.51-4.7 5.64-8.76 5.64s-7.51-2.13-8.76-5.64c-1.24-3.51-.01-7.16 3.1-9.47L12 2.69z"/></svg>
       </button>
 
       <!-- Micro-Audio Toggle -->
-      <button class="icon-btn magnetic off" id="sound-toggle-btn" onclick="toggleSound()" title="Toggle UI Sounds">
+      <button class="icon-btn off play-click" id="sound-toggle-btn" onclick="toggleSound()" title="Toggle UI Sounds">
         <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
       </button>
 
       <!-- Skeuomorphic Dark Mode -->
       <div class="theme-switch-wrapper">
-        <label class="theme-switch magnetic" for="theme-checkbox">
+        <label class="theme-switch" for="theme-checkbox">
           <input type="checkbox" id="theme-checkbox" onchange="toggleDarkMode(this.checked)" />
-          <div class="slider">
+          <div class="slider play-click">
             <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
             <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           </div>
@@ -465,11 +463,10 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
 <!-- ═══ HOME PAGE ═══ -->
 <div class="page active" id="page-home">
   <section class="hero">
-    <!-- Fluid Blobs -->
     <div class="bg-layer"><div class="blob b1"></div><div class="blob b2"></div></div>
-    <div class="glass-orb orb1 magnetic"></div>
-    <div class="glass-orb orb2 magnetic"></div>
-    <div class="glass-orb orb3 magnetic"></div>
+    <div class="glass-orb orb1"></div>
+    <div class="glass-orb orb2"></div>
+    <div class="glass-orb orb3"></div>
 
     <div class="leaf-d ld1">
       <svg viewBox="0 0 200 310" fill="none"><path class="leaf-path" d="M100 8C162 8 195 82 184 165 C173 248 122 298 100 298 C78 298 27 248 16 165 C5 82 38 8 100 8Z"/><line class="leaf-stem" x1="100" y1="8" x2="100" y2="298" stroke-width="1.8"/><path class="leaf-stem" d="M100 65 C78 96 52 107 42 134" stroke-width="1.4"/><path class="leaf-stem" d="M100 65 C122 96 148 107 158 134" stroke-width="1.4"/></svg>
@@ -478,9 +475,9 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
       <svg viewBox="0 0 180 270" fill="none"><path class="leaf-path" d="M90 6C140 6 172 70 162 145 C152 220 112 260 90 260 C68 260 28 220 18 145 C8 70 40 6 90 6Z"/><line class="leaf-stem" x1="90" y1="6" x2="90" y2="260" stroke-width="1.4"/></svg>
     </div>
 
-    <div class="icon-bubble ib1 magnetic"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div>
-    <div class="icon-bubble ib2 magnetic"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7v7z"></path></svg></div>
-    <div class="icon-bubble ib3 magnetic"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path></svg></div>
+    <div class="icon-bubble ib1"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div>
+    <div class="icon-bubble ib2"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7v7z"></path></svg></div>
+    <div class="icon-bubble ib3"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path></svg></div>
 
     <div class="hero-content">
       <div class="hero-card reveal delay-1">
@@ -492,7 +489,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
         <p style="font-size: 1.1rem; line-height: 1.8; color: var(--tmid); margin: 25px 0 35px; max-width: 600px; margin-inline: auto;">
           An open-source exploration of Solarpunk aesthetics, Frutiger Aero design, and the seamless integration of raw natural biology within high-density geometric architecture.
         </p>
-        <button class="clay-btn magnetic play-click" onclick="go('blog')">
+        <button class="clay-btn play-click" onclick="go('blog')">
           Access Archive <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
@@ -520,10 +517,10 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     <div class="sec-hd reveal"><h2 class="sec-title">The Complete Archive</h2></div>
     
     <div class="filter-bar reveal delay-1">
-      <button class="filter-pill magnetic play-click active" onclick="filterGallery('all', this)">All Nodes</button>
-      <button class="filter-pill magnetic play-click" onclick="filterGallery('Urban Botany', this)">Urban Botany</button>
-      <button class="filter-pill magnetic play-click" onclick="filterGallery('Urban Infrastructure', this)">Infrastructure</button>
-      <button class="filter-pill magnetic play-click" onclick="filterGallery('Landscape Log', this)">Landscapes</button>
+      <button class="filter-pill play-click active" onclick="filterGallery('all', this)">All Nodes</button>
+      <button class="filter-pill play-click" onclick="filterGallery('Urban Botany', this)">Urban Botany</button>
+      <button class="filter-pill play-click" onclick="filterGallery('Urban Infrastructure', this)">Infrastructure</button>
+      <button class="filter-pill play-click" onclick="filterGallery('Landscape Log', this)">Landscapes</button>
     </div>
 
     <div class="smart-grid" id="blog-grid"></div>
@@ -541,9 +538,8 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
       <p>Based in Abu Dhabi, I explore the spaces where rigid urban transit systems and resilient botanical life intersect. This portfolio serves as an open-source visual log documenting urban ecosystems, engineered using hardware-accelerated frontend architectures to ensure high-fidelity delivery without compromises.</p>
     </div>
 
-    <!-- Restored Content -->
     <div class="two-col reveal delay-2">
-      <div class="inner-card magnetic-hover">
+      <div class="inner-card">
         <div class="inner-h">📷 Visual Horizons</div>
         <div class="tags">
           <span class="tag">Solarpunk Ecosystems</span>
@@ -553,7 +549,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
           <span class="tag">Biological Architecture</span>
         </div>
       </div>
-      <div class="inner-card magnetic-hover">
+      <div class="inner-card">
         <div class="inner-h">✦ Active Tooling</div>
         <div class="gear-list">
           <div class="gear-item"><span class="gear-dot"></span>Nikon Z30 Optical Chassis</div>
@@ -564,15 +560,15 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     </div>
 
     <div class="matrix-grid reveal delay-3">
-      <div class="matrix-node magnetic-hover">
+      <div class="matrix-node">
         <span class="node-id">[01 / OPTICS]</span>
         <p>Leveraging high-aperture manual optics to separate crisp foreground botanical textures from dense structural backgrounds.</p>
       </div>
-      <div class="matrix-node magnetic-hover">
+      <div class="matrix-node">
         <span class="node-id">[02 / GRADING]</span>
         <p>Balancing natural sunlight with clean digital contrasts. Every asset undergoes precise geometric perspective mapping.</p>
       </div>
-      <div class="matrix-node magnetic-hover">
+      <div class="matrix-node">
         <span class="node-id">[03 / FRONTEND]</span>
         <p>Hand-crafted semantic structure deploying non-blocking CSS variables, 3D parallax physics, and native GPU layers.</p>
       </div>
@@ -591,11 +587,11 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     
     <div class="contact-layout">
       <div style="display: flex; flex-direction: column; gap: 30px; padding-top: 20px;">
-        <div class="floating-card reveal delay-1 magnetic-hover">
+        <div class="floating-card reveal delay-1">
           <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
           <div class="fc-text"><h4>Email Address</h4><p>alfaazal2009@gmail.com</p></div>
         </div>
-        <div class="floating-card reveal delay-2 magnetic-hover">
+        <div class="floating-card reveal delay-2">
           <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div class="fc-text"><h4>Location</h4><p>Abu Dhabi, UAE</p></div>
         </div>
@@ -617,7 +613,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
           <label>Message</label>
           <textarea name="message" class="neo-input" rows="4" required placeholder="How can we collaborate?"></textarea>
         </div>
-        <button type="submit" class="clay-btn play-click magnetic" style="width: 100%; justify-content: center; margin-top: 10px;">
+        <button type="submit" class="clay-btn play-click" style="width: 100%; justify-content: center; margin-top: 10px;">
           Send Message <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </form>
@@ -628,7 +624,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
 <!-- ═══ LIGHTBOX MODAL ═══ -->
 <div class="modal-overlay" id="detail-modal" onclick="closeModal(event)">
   <div class="modal-window" onclick="event.stopPropagation()">
-    <button class="modal-close magnetic play-click" onclick="toggleModal(false)">
+    <button class="modal-close play-click" onclick="toggleModal(false)">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
     <div class="modal-media">
@@ -692,21 +688,10 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
   }
 
   // Attach Sounds
-  document.addEventListener('mouseover', e => { if(e.target.closest('.magnetic') || e.target.closest('.glass-card') || e.target.closest('.magnetic-hover')) playHover(); });
+  document.addEventListener('mouseover', e => { if(e.target.closest('.glass-card') || e.target.closest('.icon-btn') || e.target.closest('.filter-pill') || e.target.closest('.inner-card') || e.target.closest('.matrix-node') || e.target.closest('.floating-card')) playHover(); });
   document.addEventListener('click', e => { if(e.target.closest('.play-click') || e.target.closest('a')) playClick(); });
 
-  /* ── 2. MAGNETIC SPRING PHYSICS ── */
-  document.querySelectorAll('.magnetic').forEach(btn => {
-    btn.addEventListener('mousemove', e => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-    });
-    btn.addEventListener('mouseleave', () => { btn.style.transform = `translate(0, 0)`; });
-  });
-
-  /* ── 3. TRUE 3D PARALLAX FOR GLASS CARDS ── */
+  /* ── 2. TRUE 3D PARALLAX FOR GLASS CARDS (FIXED PERSPECTIVE) ── */
   function attachParallax() {
     document.querySelectorAll('.glass-card').forEach(card => {
       card.addEventListener('mousemove', e => {
@@ -715,20 +700,23 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -10; 
-        const rotateY = ((x - centerX) / centerX) * 10;
         
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        // Reduced strength from 10 to 4 for a more elegant, subtle tilt
+        const rotateX = ((y - centerY) / centerY) * -4; 
+        const rotateY = ((x - centerX) / centerX) * 4;
+        
+        // Perspective applied directly to the item ensures no grid-warping
+        card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
         const glare = card.querySelector('.glare');
-        if(glare) glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.5), transparent 60%)`;
+        if(glare) glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.3), transparent 60%)`;
       });
       card.addEventListener('mouseleave', () => {
-        card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+        card.style.transform = `perspective(1200px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
       });
     });
   }
 
-  /* ── 4. MULTI-THEME ENGINE ── */
+  /* ── 3. MULTI-THEME ENGINE ── */
   const themes = ['aero', 'ocean', 'sunset'];
   let currentThemeIdx = 0;
 
@@ -748,7 +736,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     document.getElementById('theme-checkbox').checked = true;
   }
 
-  /* ── 5. DATABASE & RENDER ── */
+  /* ── 4. DATABASE & RENDER ── */
   const postDatabase = [
     { id: 1, title: "Bioluminescent Blooms in the Concrete Canvas", excerpt: "Documenting urban plant life scaling the lines of modern cityscapes.", body: "This frame captures a cluster of delicate wild blossoms thriving right against the geometric backdrop of Abu Dhabi's architectural lines. What drew me to this shot was the sharp contrast between the organic, chaotic geometry of the plant stems and the clean, structured curves of the city behind them.", date: "May 18, 2026", img: "20260517_174228.jpg", label: "Urban Botany", featured: true },
     { id: 2, title: "Symmetry of the Streets: Urban Oasis", excerpt: "Analyzing the visual balance between transit systems and resilient flora.", body: "This composition focuses on a central Abu Dhabi thoroughfare, capturing a distinct layer of coastal city design. By framing the clean lines of passing vehicles and geometric towers with palm branches and lush flowerbeds, the shot illustrates how intentional green spaces soften technical rigidity.", date: "May 18, 2026", img: "20260517_174605.jpg", label: "Urban Infrastructure", featured: false },
@@ -799,7 +787,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     setTimeout(initScrollReveal, 50);
   }
 
-  /* ── 6. AWWWARDS SCROLL REVEAL OBSERVER ── */
+  /* ── 5. AWWWARDS SCROLL REVEAL OBSERVER ── */
   function initScrollReveal() {
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
@@ -812,7 +800,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     reveals.forEach(el => observer.observe(el));
   }
 
-  /* ── 7. SUBTLE PAGE TRANSITION & MODALS ── */
+  /* ── 6. SUBTLE PAGE TRANSITION & MODALS ── */
   function go(id){
     const targetPage = document.getElementById('page-'+id);
     if(targetPage.classList.contains('active')) return;
@@ -836,7 +824,6 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     document.getElementById('nl-'+id).classList.add('active');
     
-    // Reset and trigger reveals
     targetPage.querySelectorAll('.reveal').forEach(r => r.classList.remove('active'));
     setTimeout(initScrollReveal, 50);
   }
