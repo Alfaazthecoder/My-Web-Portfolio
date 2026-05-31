@@ -9,28 +9,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 
 <style>
-/* ── 1. UNIFIED AERO-MORPHIC THEME VARIABLES ───────────────── */
+/* ── 1. MULTI-THEME ECOSYSTEM VARIABLES ───────────────── */
 :root {
-  --g: #1a8c6a;
-  --leaf: #2dbd8e;
-  --sky: #4fc3f7;
-  --teal: #0d5c4a;
-  --tmid: #3a6e5a;
-  --tsoft: #7aafa0;
-  --tdark: #0a2e24;
+  /* Default: AERO (Teal/Green) */
+  --g: #1a8c6a; --leaf: #2dbd8e; --sky: #4fc3f7; --teal: #0d5c4a;
+  --tmid: #3a6e5a; --tsoft: #7aafa0; --tdark: #0a2e24;
+  --bg: #e6f4f1; --surface: #edf8f4;
   
-  --bg: #e6f4f1;
-  --surface: #edf8f4;
-  
-  --clay-light: #ffffff;
-  --clay-dark: #c5e3d8;
-  --clay-inset-light: rgba(255,255,255,0.9);
-  --clay-inset-dark: rgba(13, 92, 74, 0.15);
-
-  --glass-bg: rgba(255, 255, 255, 0.45);
-  --glass-blur: blur(12px);
-  --glass-border-light: rgba(255, 255, 255, 0.8);
-  --glass-border-dark: rgba(255, 255, 255, 0.2);
+  --clay-light: #ffffff; --clay-dark: #c5e3d8;
+  --clay-inset-light: rgba(255,255,255,0.9); --clay-inset-dark: rgba(13, 92, 74, 0.15);
+  --glass-bg: rgba(255, 255, 255, 0.45); --glass-blur: blur(16px);
+  --glass-border-light: rgba(255, 255, 255, 0.8); --glass-border-dark: rgba(255, 255, 255, 0.2);
   --glass-shadow: 0 20px 40px rgba(13, 92, 74, 0.1);
 
   --font-d: 'Playfair Display', Georgia, serif;
@@ -38,36 +27,55 @@
   --font-m: 'Space Mono', monospace;
 }
 
-body.dark-mode {
-  --g: #3de8b1;
-  --leaf: #2dbd8e;
-  --sky: #24719c;
-  --teal: #a9dfcd; 
-  --tmid: #9dc4b7;
-  --tsoft: #689484;
-  --tdark: #f4fbf8; 
-  
-  --bg: #040f0c;
-  --surface: #071511;
-
-  --clay-light: #0a1f18;
-  --clay-dark: #010504;
-  --clay-inset-light: rgba(61, 232, 177, 0.1);
-  --clay-inset-dark: rgba(0, 0, 0, 0.8);
-
-  --glass-bg: rgba(10, 30, 24, 0.45);
-  --glass-border-light: rgba(61, 232, 177, 0.2);
-  --glass-border-dark: rgba(0, 0, 0, 0.4);
-  --glass-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+/* THEME: OCEAN (Blue/Cyan) */
+:root[data-theme="ocean"] {
+  --g: #0077b6; --leaf: #00b4d8; --sky: #90e0ef; --teal: #003249;
+  --tmid: #005f73; --tsoft: #48cae4; --tdark: #001a26;
+  --bg: #e0fbfc; --surface: #caf0f8;
+  --clay-dark: #aed9e0; --clay-inset-dark: rgba(0, 119, 182, 0.15);
+  --glass-shadow: 0 20px 40px rgba(0, 119, 182, 0.1);
 }
 
-/* ── 2. BASE SETUP ───────────────────────── */
+/* THEME: SUNSET (Orange/Magenta) */
+:root[data-theme="sunset"] {
+  --g: #e76f51; --leaf: #f4a261; --sky: #e9c46a; --teal: #702613;
+  --tmid: #a83e25; --tsoft: #e28e79; --tdark: #3b1005;
+  --bg: #ffedd8; --surface: #ffe1c2;
+  --clay-dark: #e8c4a6; --clay-inset-dark: rgba(231, 111, 81, 0.15);
+  --glass-shadow: 0 20px 40px rgba(231, 111, 81, 0.1);
+}
+
+/* DARK MODES */
+body.dark-mode {
+  --bg: #040f0c; --surface: #071511;
+  --clay-light: #0a1f18; --clay-dark: #010504;
+  --clay-inset-light: rgba(61, 232, 177, 0.1); --clay-inset-dark: rgba(0, 0, 0, 0.8);
+  --glass-bg: rgba(10, 30, 24, 0.55);
+  --glass-border-light: rgba(255, 255, 255, 0.1); --glass-border-dark: rgba(0, 0, 0, 0.6);
+  --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+  
+  --g: #3de8b1; --leaf: #2dbd8e; --sky: #24719c; --teal: #a9dfcd; 
+  --tmid: #9dc4b7; --tsoft: #689484; --tdark: #f4fbf8; 
+}
+body.dark-mode[data-theme="ocean"] {
+  --bg: #001219; --surface: #001a26;
+  --clay-light: #002333; --clay-dark: #00080d;
+  --clay-inset-light: rgba(0, 180, 216, 0.1);
+  --g: #00b4d8; --leaf: #48cae4; --sky: #0077b6; --teal: #90e0ef; 
+  --tmid: #48cae4; --tsoft: #0077b6; --tdark: #e0fbfc; 
+}
+body.dark-mode[data-theme="sunset"] {
+  --bg: #1f0b06; --surface: #2b110a;
+  --clay-light: #3d1b11; --clay-dark: #120502;
+  --clay-inset-light: rgba(244, 162, 97, 0.1);
+  --g: #f4a261; --leaf: #e76f51; --sky: #e9c46a; --teal: #ffc9b9; 
+  --tmid: #f4a261; --tsoft: #e76f51; --tdark: #ffedd8; 
+}
+
+/* ── 2. BASE SETUP & HARDWARE CURSOR ───────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{
-  font-family:var(--font-b); color:var(--tdark); background:var(--bg); overflow-x:hidden;
-  transition: background-color 0.6s cubic-bezier(0.16, 1, 0.3, 1), color 0.6s;
-}
+body{ font-family:var(--font-b); color:var(--tdark); background:var(--bg); overflow-x:hidden; transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1), color 0.8s; }
 body.modal-open{overflow:hidden}
 a{text-decoration:none;color:inherit}
 img{display:block;max-width:100%; border-radius: inherit;}
@@ -78,63 +86,75 @@ html, body, a, button, input, textarea, .modal-close-btn, .filter-pill {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%232dbd8e' stroke='%23ffffff' stroke-width='1.5'%3E%3Cpath d='M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z'/%3E%3C/svg%3E") 3 3, auto !important;
 }
 
-/* ── SCROLL REVEAL ANIMATIONS ── */
-.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform; }
-.reveal.active { opacity: 1; transform: translateY(0); }
+/* ── AWWWARDS SCROLL REVEALS ── */
+.reveal { opacity: 0; transform: translateY(60px) scale(0.96); filter: blur(8px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); will-change: opacity, transform, filter; }
+.reveal.active { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+.delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; } .delay-3 { transition-delay: 0.3s; }
+
+/* ── LIQUID PAGE TRANSITION ── */
+.page-transition {
+  position: fixed; top: 0; left: -100%; width: 100vw; height: 100vh; z-index: 9999; pointer-events: none;
+  background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+  border-right: 2px solid var(--glass-border-light);
+  box-shadow: 20px 0 50px rgba(0,0,0,0.2);
+  transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1); will-change: transform;
+}
+.page-transition.active { transform: translateX(200%); }
 
 /* ── 3. SKEUOMORPHIC NAVIGATION ────────────────────────────── */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200; 
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 5vw; 
+  display: flex; align-items: center; justify-content: space-between; padding: 16px 5vw; 
   background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-  border-bottom: 1px solid var(--glass-border-light);
-  box-shadow: var(--glass-shadow);
-  transition: all 0.5s;
+  border-bottom: 1px solid var(--glass-border-light); box-shadow: var(--glass-shadow); transition: all 0.5s;
 }
 .nav-logo { display: flex; align-items: center; gap: 12px; font-family: var(--font-d); font-weight: 900; font-size: 1.2rem; color: var(--teal); transition: color 0.5s; }
 .nav-icon {
-  width: 40px; height: 40px; border-radius: 12px;
-  background: linear-gradient(135deg, var(--sky), var(--leaf));
+  width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--sky), var(--leaf));
   display: flex; align-items: center; justify-content: center;
-  box-shadow: inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.2), 0 5px 15px rgba(26,140,106,0.3);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: inset 2px 2px 4px rgba(255,255,255,0.6), inset -2px -2px 4px rgba(0,0,0,0.2), 0 5px 15px rgba(0,0,0,0.2);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-.nav-logo:hover .nav-icon { transform: scale(1.1) rotate(10deg); }
 .nav-icon svg { width: 20px; height: 20px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
 
-.nav-links { display: flex; gap: 3vw; align-items: center; }
+.nav-links { display: flex; gap: 2.5vw; align-items: center; }
 .nav-links a { font-size: 0.9rem; font-weight: 600; color: var(--tmid); position: relative; padding: 5px 10px; transition: color 0.3s; }
 .nav-links a:hover, .nav-links a.active { color: var(--teal); }
-.nav-links a.active::after {
-  content:''; position:absolute; bottom: -2px; left: 10px; right: 10px; height: 3px; 
-  background: var(--leaf); border-radius: 3px; box-shadow: 0 2px 8px var(--leaf);
+.nav-links a.active::after { content:''; position:absolute; bottom: -2px; left: 10px; right: 10px; height: 3px; background: var(--leaf); border-radius: 3px; box-shadow: 0 2px 8px var(--leaf); }
+
+/* Utility Nav Panel */
+.nav-utilities { display: flex; align-items: center; gap: 15px; border-left: 2px solid var(--clay-dark); padding-left: 20px; margin-left: 10px; }
+
+/* Micro-Audio & Palette Buttons (Magnetic) */
+.icon-btn {
+  width: 36px; height: 36px; border-radius: 50%; cursor: pointer; border: none; outline: none;
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+  box-shadow: 4px 4px 8px var(--clay-dark), -4px -4px 8px var(--clay-light);
+  transition: box-shadow 0.3s, background 0.5s; position: relative;
 }
+.icon-btn svg { width: 16px; height: 16px; stroke: var(--tmid); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; pointer-events: none; }
+.icon-btn:hover { box-shadow: 6px 6px 12px var(--clay-dark), -6px -6px 12px var(--clay-light); }
+.icon-btn:hover svg { stroke: var(--leaf); }
+.icon-btn.off svg { opacity: 0.4; stroke: var(--tsoft); }
 
 /* Skeuomorphic Toggle Switch */
-.theme-switch-wrapper { margin-left: 20px; border-left: 2px solid var(--clay-dark); padding-left: 20px; }
-.theme-switch { position: relative; display: inline-block; width: 64px; height: 32px; }
+.theme-switch { position: relative; display: inline-block; width: 60px; height: 30px; }
 .theme-switch input { opacity: 0; width: 0; height: 0; }
 .slider {
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: var(--surface); border-radius: 32px;
-  box-shadow: inset 4px 4px 8px var(--clay-dark), inset -4px -4px 8px var(--clay-light);
-  cursor: pointer; transition: 0.4s;
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: 32px;
+  box-shadow: inset 4px 4px 8px var(--clay-dark), inset -4px -4px 8px var(--clay-light); cursor: pointer; transition: 0.4s;
 }
 .slider:before {
-  position: absolute; content: ""; height: 24px; width: 24px; left: 4px; bottom: 4px;
-  background: linear-gradient(135deg, #f0f0f0, #d4d4d4);
-  border: 1px solid white; border-radius: 50%;
+  position: absolute; content: ""; height: 22px; width: 22px; left: 4px; bottom: 4px;
+  background: linear-gradient(135deg, #f0f0f0, #d4d4d4); border: 1px solid white; border-radius: 50%;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.2), inset -2px -2px 4px rgba(0,0,0,0.1);
-  transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 2;
+  transition: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 2;
 }
-body.dark-mode .slider:before { background: linear-gradient(135deg, #2dbd8e, #1a8c6a); border-color: #5be0b3; }
-input:checked + .slider:before { transform: translateX(32px); }
-.icon-sun, .icon-moon {
-  position: absolute; top: 8px; width: 16px; height: 16px; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; z-index: 1; transition: 0.4s;
-}
+body.dark-mode .slider:before { background: linear-gradient(135deg, var(--leaf), var(--g)); border-color: var(--sky); }
+input:checked + .slider:before { transform: translateX(30px); }
+.icon-sun, .icon-moon { position: absolute; top: 7px; width: 16px; height: 16px; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; z-index: 1; transition: 0.4s; }
 .icon-sun { left: 8px; stroke: #e6b800; }
-.icon-moon { right: 8px; stroke: #3de8b1; opacity: 0; }
+.icon-moon { right: 8px; stroke: var(--sky); opacity: 0; }
 input:checked + .slider .icon-sun { opacity: 0; transform: scale(0.5); }
 input:checked + .slider .icon-moon { opacity: 1; transform: scale(1); }
 
@@ -143,186 +163,112 @@ input:checked + .slider .icon-moon { opacity: 1; transform: scale(1); }
 .bg-layer { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 
 /* Home: Fluid Blobs */
-.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.4; animation: drift 20s ease-in-out infinite alternate; }
+.blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.4; animation: drift 20s ease-in-out infinite alternate; transition: background 0.8s; }
 .b1 { width: 45vw; height: 45vw; background: var(--sky); top: -10%; left: -10%; }
 .b2 { width: 40vw; height: 40vw; background: var(--leaf); bottom: -10%; right: -10%; animation-delay: -5s; }
 @keyframes drift { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(8vw, 8vh) scale(1.1); } }
 
 /* Archive: Panning Grid */
-.neo-grid-bg {
-  background-image: 
-    linear-gradient(var(--clay-dark) 1px, transparent 1px),
-    linear-gradient(90deg, var(--clay-dark) 1px, transparent 1px);
-  background-size: 50px 50px; opacity: 0.4;
-  transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
-  animation: gridMove 15s linear infinite;
-}
+.neo-grid-bg { background-image: linear-gradient(var(--clay-dark) 1px, transparent 1px), linear-gradient(90deg, var(--clay-dark) 1px, transparent 1px); background-size: 50px 50px; opacity: 0.4; transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px); animation: gridMove 15s linear infinite; }
 @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 50px; } }
 
 /* About: Rotating Mesh */
-.mesh-bg {
-  background: radial-gradient(circle at center, transparent 0%, var(--bg) 100%),
-              repeating-conic-gradient(from 0deg, var(--clay-dark) 0deg 10deg, transparent 10deg 20deg);
-  opacity: 0.15;
-  animation: rotateMesh 60s linear infinite;
-}
+.mesh-bg { background: radial-gradient(circle at center, transparent 0%, var(--bg) 100%), repeating-conic-gradient(from 0deg, var(--clay-dark) 0deg 10deg, transparent 10deg 20deg); opacity: 0.15; animation: rotateMesh 60s linear infinite; }
 @keyframes rotateMesh { 100% { transform: rotate(360deg) scale(1.5); } }
 
 /* Contact: Signal Rings */
-.signal-ring {
-  position: absolute; border-radius: 50%; border: 2px solid var(--sky);
-  box-shadow: 0 0 30px rgba(79,195,247,0.3), inset 0 0 30px rgba(79,195,247,0.3);
-  top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; 
-  animation: signal 8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
-}
-.sr2 { animation-delay: 2.6s; }
-.sr3 { animation-delay: 5.2s; }
+.signal-ring { position: absolute; border-radius: 50%; border: 2px solid var(--sky); box-shadow: 0 0 30px rgba(79,195,247,0.3), inset 0 0 30px rgba(79,195,247,0.3); top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; animation: signal 8s cubic-bezier(0.16, 1, 0.3, 1) infinite; transition: border-color 0.5s; }
+.sr2 { animation-delay: 2.6s; } .sr3 { animation-delay: 5.2s; }
 @keyframes signal { 0% { width: 0; height: 0; opacity: 1; } 100% { width: 100vw; height: 100vw; opacity: 0; border-width: 0; } }
 
-/* ── 5. HERO SECTION: PURE FRUTIGER AERO LIFE ───────────────── */
+/* ── 5. HERO SECTION ───────────────────────── */
 .hero { position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; overflow: hidden; }
 
 /* Dynamic 3D Glass Orbs */
-.glass-orb {
-  position: absolute; border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 100%);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.5);
-  box-shadow: inset -5px -5px 15px rgba(0,0,0,0.1), inset 5px 5px 15px rgba(255,255,255,0.8), 0 10px 30px rgba(0,0,0,0.1);
-  animation: floatOrb 12s ease-in-out infinite alternate; z-index: 1;
-}
-body.dark-mode .glass-orb { background: linear-gradient(135deg, rgba(61,232,177,0.3) 0%, rgba(0,0,0,0.2) 100%); border-color: rgba(61,232,177,0.4); box-shadow: inset -5px -5px 15px rgba(0,0,0,0.5), inset 5px 5px 15px rgba(61,232,177,0.5); }
+.glass-orb { position: absolute; border-radius: 50%; background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.1) 100%); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.5); box-shadow: inset -5px -5px 15px rgba(0,0,0,0.1), inset 5px 5px 15px rgba(255,255,255,0.8), 0 10px 30px rgba(0,0,0,0.1); animation: floatOrb 12s ease-in-out infinite alternate; z-index: 1; }
+body.dark-mode .glass-orb { background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.4) 100%); border-color: rgba(255,255,255,0.15); box-shadow: inset -5px -5px 15px rgba(0,0,0,0.5), inset 5px 5px 15px rgba(255,255,255,0.2); }
 .orb1 { width: 120px; height: 120px; top: 15%; left: 15%; animation-duration: 14s; }
 .orb2 { width: 80px; height: 80px; bottom: 20%; right: 20%; animation-duration: 10s; animation-delay: -3s; }
 .orb3 { width: 40px; height: 40px; top: 30%; right: 10%; animation-duration: 8s; animation-delay: -5s; }
 @keyframes floatOrb { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-40px) rotate(15deg); } }
 
 /* Animated Swaying Flora */
-.leaf-d{position:absolute;opacity:0.3;pointer-events:none; transform-origin: bottom center; z-index: 1; filter: drop-shadow(0 10px 10px rgba(13,92,74,0.2));}
-body.dark-mode .leaf-d { opacity: 0.15; }
+.leaf-d{position:absolute;opacity:0.3;pointer-events:none; transform-origin: bottom center; z-index: 1; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); transition: opacity 0.5s; }
+body.dark-mode .leaf-d { opacity: 0.15; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));}
 .ld1{width:350px;top:2%;right:5%; animation: sway1 8s ease-in-out infinite alternate;}
 .ld2{width:220px;bottom:5%;left:2%; animation: sway2 7s ease-in-out infinite alternate 1s;}
 @keyframes sway1 { 0% { transform: rotate(15deg); } 100% { transform: rotate(25deg); } }
 @keyframes sway2 { 0% { transform: rotate(-10deg); } 100% { transform: rotate(-20deg); } }
+.leaf-path { fill: var(--g); transition: fill 0.8s; }
+.leaf-stem { stroke: var(--teal); transition: stroke 0.8s; }
 
-/* Interactive Tech Bubbles (Clay + Glass) */
-.icon-bubble {
-  position: absolute; width: 100px; height: 100px; border-radius: 30px;
-  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border-light);
-  box-shadow: 8px 8px 16px var(--clay-dark), -8px -8px 16px var(--clay-light), inset 2px 2px 4px var(--clay-inset-light);
-  display: flex; align-items: center; justify-content: center; z-index: 3;
-  animation: floatOrb 8s ease-in-out infinite alternate; transition: transform 0.3s, box-shadow 0.3s;
-}
-.icon-bubble:hover { transform: scale(1.1) translateY(-10px) !important; box-shadow: 12px 12px 24px var(--clay-dark), -12px -12px 24px var(--clay-light); }
-.icon-bubble svg { width: 45px; height: 45px; stroke: var(--g); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.4s, transform 0.4s; }
-.icon-bubble:hover svg { transform: scale(1.1); stroke: var(--leaf); }
-.ib1 { top: 20%; left: 8%; animation-delay: -1s; }
-.ib2 { top: 15%; right: 10%; animation-delay: -3s; }
-.ib3 { bottom: 25%; left: 12%; animation-delay: -5s; }
-.ib4 { bottom: 20%; right: 8%; animation-delay: -2s; }
+/* Interactive Tech Bubbles (Clay + Glass + Magnetic) */
+.icon-bubble { position: absolute; width: 100px; height: 100px; border-radius: 30px; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border-light); box-shadow: 8px 8px 16px var(--clay-dark), -8px -8px 16px var(--clay-light), inset 2px 2px 4px var(--clay-inset-light); display: flex; align-items: center; justify-content: center; z-index: 3; animation: floatOrb 8s ease-in-out infinite alternate; transition: box-shadow 0.3s; }
+.icon-bubble svg { width: 45px; height: 45px; stroke: var(--g); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.4s; pointer-events: none;}
+.ib1 { top: 20%; left: 8%; animation-delay: -1s; } .ib2 { top: 15%; right: 10%; animation-delay: -3s; } .ib3 { bottom: 25%; left: 12%; animation-delay: -5s; } .ib4 { bottom: 20%; right: 8%; animation-delay: -2s; }
 
 /* Main Hero Content */
 .hero-content { position: relative; z-index: 10; text-align: center; max-width: 800px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-.hero-card {
-  padding: 50px 40px; border-radius: 40px; position: relative; overflow: hidden;
-  background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-  border-top: 1px solid var(--glass-border-light); border-left: 1px solid var(--glass-border-light);
-  border-bottom: 1px solid var(--glass-border-dark); border-right: 1px solid var(--glass-border-dark);
-  box-shadow: var(--glass-shadow), inset 0 0 30px rgba(255,255,255,0.3);
-  animation: fadeUp 1s ease-out both;
-}
-body.dark-mode .hero-card { box-shadow: var(--glass-shadow), inset 0 0 30px rgba(61,232,177,0.1); }
+.hero-card { padding: 50px 40px; border-radius: 40px; position: relative; overflow: hidden; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); border-top: 1px solid var(--glass-border-light); border-left: 1px solid var(--glass-border-light); border-bottom: 1px solid var(--glass-border-dark); border-right: 1px solid var(--glass-border-dark); box-shadow: var(--glass-shadow), inset 0 0 30px rgba(255,255,255,0.3); }
+body.dark-mode .hero-card { box-shadow: var(--glass-shadow), inset 0 0 30px rgba(255,255,255,0.05); }
 
-/* Shimmer Highlight on Card */
-.hero-card::after {
-  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
-  transform: rotate(30deg) translateY(-50%);
-  animation: sweep 8s linear infinite; pointer-events: none;
-}
+.hero-card::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent); transform: rotate(30deg) translateY(-50%); animation: sweep 8s linear infinite; pointer-events: none; }
 @keyframes sweep { 0% { transform: rotate(30deg) translateY(-50%) translateX(-100%); } 20%, 100% { transform: rotate(30deg) translateY(-50%) translateX(100%); } }
 
 /* Liquid Shimmer Text */
-.hero-title {
-  font-family: var(--font-d); font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 900; line-height: 1.1;
-  background: linear-gradient(to right, var(--teal) 20%, var(--sky) 40%, var(--teal) 60%);
-  background-size: 200% auto;
-  color: transparent; -webkit-background-clip: text; background-clip: text;
-  animation: liquidShimmer 5s linear infinite;
-}
-body.dark-mode .hero-title { background: linear-gradient(to right, var(--g) 20%, #ffffff 40%, var(--g) 60%); background-size: 200% auto; color: transparent; -webkit-background-clip: text; }
+.hero-title { font-family: var(--font-d); font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 900; line-height: 1.1; background: linear-gradient(to right, var(--teal) 20%, var(--sky) 40%, var(--teal) 60%); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: liquidShimmer 5s linear infinite; transition: background 0.8s; }
+body.dark-mode .hero-title { background: linear-gradient(to right, var(--g) 20%, #ffffff 40%, var(--g) 60%); background-size: 200% auto; -webkit-background-clip: text; }
 @keyframes liquidShimmer { to { background-position: 200% center; } }
-.hero-title em { font-style: italic; color: var(--leaf); display: block; text-shadow: 0 4px 15px rgba(45,189,142,0.3); }
+.hero-title em { font-style: italic; color: var(--leaf); display: block; text-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: color 0.8s; }
 
-/* Claymorphic Animated CTA Button */
-.clay-btn {
-  position: relative; overflow: hidden;
-  display: inline-flex; align-items: center; gap: 10px; padding: 18px 45px; border-radius: 999px;
-  font-family: var(--font-b); font-size: 1.05rem; font-weight: 700; letter-spacing: 0.05em;
-  background: var(--surface); color: var(--teal); border: none; cursor: none;
-  box-shadow: 8px 8px 16px var(--clay-dark), -8px -8px 16px var(--clay-light), inset -2px -2px 6px rgba(0,0,0,0.05), inset 2px 2px 6px var(--clay-inset-light);
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.clay-btn::after {
-  content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
-  transform: skewX(-20deg); animation: glare 4s infinite;
-}
-body.dark-mode .clay-btn::after { background: linear-gradient(to right, transparent, rgba(61,232,177,0.4), transparent); }
+/* Claymorphic Magnetic Button */
+.clay-btn { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 10px; padding: 18px 45px; border-radius: 999px; font-family: var(--font-b); font-size: 1.05rem; font-weight: 700; letter-spacing: 0.05em; background: var(--surface); color: var(--teal); border: none; box-shadow: 8px 8px 16px var(--clay-dark), -8px -8px 16px var(--clay-light), inset -2px -2px 6px rgba(0,0,0,0.05), inset 2px 2px 6px var(--clay-inset-light); transition: box-shadow 0.3s, color 0.3s; cursor: pointer; }
+.clay-btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent); transform: skewX(-20deg); animation: glare 4s infinite; pointer-events: none; }
+body.dark-mode .clay-btn::after { background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); }
 @keyframes glare { 0% { left: -100%; } 20%, 100% { left: 200%; } }
-
-.clay-btn:hover {
-  transform: translateY(-4px) scale(1.02); color: var(--g);
-  box-shadow: 12px 12px 20px var(--clay-dark), -12px -12px 20px var(--clay-light), inset -2px -2px 6px rgba(0,0,0,0.05), inset 2px 2px 6px var(--clay-inset-light);
-}
-.clay-btn:active { transform: translateY(2px); box-shadow: inset 6px 6px 10px var(--clay-dark), inset -6px -6px 10px var(--clay-light); }
-.clay-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.clay-btn:hover { color: var(--g); box-shadow: 12px 12px 20px var(--clay-dark), -12px -12px 20px var(--clay-light), inset -2px -2px 6px rgba(0,0,0,0.05), inset 2px 2px 6px var(--clay-inset-light); }
+.clay-btn:active { box-shadow: inset 6px 6px 10px var(--clay-dark), inset -6px -6px 10px var(--clay-light); }
+.clay-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
 
 /* Pulse Scroll Arrow */
-.scroll-hint { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 10; }
+.scroll-hint { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 10; pointer-events: none;}
 .scroll-hint span { font-family: var(--font-m); font-size: 0.65rem; letter-spacing: 0.2em; color: var(--tsoft); }
-.scroll-arrow {
-  width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--leaf); display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 15px rgba(45,189,142,0.4); animation: bouncePulse 2s infinite;
-}
-.scroll-arrow svg { width: 14px; height: 14px; stroke: var(--leaf); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-@keyframes bouncePulse { 0%, 100% { transform: translateY(0); box-shadow: 0 0 15px rgba(45,189,142,0.4); } 50% { transform: translateY(8px); box-shadow: 0 0 25px rgba(45,189,142,0.8); } }
+.scroll-arrow { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--leaf); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(0,0,0,0.1); animation: bouncePulse 2s infinite; transition: border-color 0.8s; }
+.scroll-arrow svg { width: 14px; height: 14px; stroke: var(--leaf); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.8s; }
+@keyframes bouncePulse { 0%, 100% { transform: translateY(0); box-shadow: 0 0 15px rgba(0,0,0,0.1); } 50% { transform: translateY(8px); box-shadow: 0 0 25px rgba(0,0,0,0.2); } }
 
-/* ── 6. RESPONSIVE GRID & MAGNETIC GLASS CARDS ───────────────── */
+/* ── 6. RESPONSIVE GRID & 3D PARALLAX GLASS CARDS ───────────────── */
 .section-wrapper { padding: 80px 5vw; max-width: 1400px; margin: 0 auto; position: relative; z-index: 2; }
 .sec-hd { margin-bottom: 40px; text-align: center; }
-.sec-label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-m); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--g); text-transform: uppercase; margin-bottom: 15px; }
+.sec-label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-m); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--g); text-transform: uppercase; margin-bottom: 15px; transition: color 0.8s; }
 .sec-title { font-family: var(--font-d); font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: var(--teal); transition: color 0.5s; }
 
-/* Auto-Wrapping Smart Grid */
-.smart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 35px; }
+.smart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 35px; perspective: 1000px; }
 
-/* Liquid Glass Cards with Magnetic Hover */
+/* True 3D Parallax Glass Cards */
 .glass-card {
   border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; position: relative;
   background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
   border-top: 1px solid var(--glass-border-light); border-left: 1px solid var(--glass-border-light);
   border-bottom: 1px solid var(--glass-border-dark); border-right: 1px solid var(--glass-border-dark);
-  box-shadow: var(--glass-shadow);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s;
+  box-shadow: var(--glass-shadow); transform-style: preserve-3d;
+  /* Spring physics for reset */
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.8s;
 }
-.glass-card::after {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 50%, rgba(0,0,0,0.1) 100%);
-  opacity: 0.5; transition: opacity 0.5s;
-}
-.glass-card:hover { transform: translateY(-15px) scale(1.03); box-shadow: 0 40px 80px rgba(13,92,74,0.2); z-index: 5; }
-body.dark-mode .glass-card:hover { box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 30px rgba(61,232,177,0.1); }
-.glass-card:hover::after { opacity: 1; }
+.glass-card:hover { z-index: 5; box-shadow: 0 40px 80px rgba(0,0,0,0.15); }
+body.dark-mode .glass-card:hover { box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 30px rgba(255,255,255,0.05); }
 
-.cmedia { position: relative; height: 260px; overflow: hidden; }
-/* SMOOTH IMAGE HOVER FIX */
-.cmedia img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform; }
-.glass-card:hover .cmedia img { transform: scale(1.08) rotate(1deg); }
-.cmedia::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--glass-bg), transparent); transition: background 0.5s; }
+/* Dynamic Glare Layer inside the card */
+.glass-card .glare { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4), transparent 60%); opacity: 0; pointer-events: none; mix-blend-mode: overlay; transition: opacity 0.3s; z-index: 10; }
+body.dark-mode .glass-card .glare { background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), transparent 60%); mix-blend-mode: screen; }
+.glass-card:hover .glare { opacity: 1; }
 
-.cbody { padding: 25px 30px; display: flex; flex-direction: column; gap: 12px; flex: 1; z-index: 2; position: relative; }
+.cmedia { position: relative; height: 260px; overflow: hidden; transform: translateZ(20px); }
+.cmedia img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); will-change: transform; pointer-events: none; }
+.glass-card:hover .cmedia img { transform: scale(1.1); }
+.cmedia::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--glass-bg), transparent); transition: background 0.5s; pointer-events: none; }
+
+.cbody { padding: 25px 30px; display: flex; flex-direction: column; gap: 12px; flex: 1; z-index: 2; position: relative; transform: translateZ(30px); pointer-events: none;}
 .ctitle { font-family: var(--font-d); font-size: 1.25rem; font-weight: 700; color: var(--teal); line-height: 1.3; transition: color 0.3s; }
 .glass-card:hover .ctitle { color: var(--g); }
 .cexcerpt { font-size: 0.95rem; line-height: 1.6; color: var(--tmid); flex: 1; transition: color 0.5s; }
@@ -334,60 +280,60 @@ body.dark-mode .glass-card:hover { box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 
 .filter-pill {
   padding: 12px 28px; border-radius: 999px; cursor: pointer; position: relative; overflow: hidden;
   font-family: var(--font-b); font-size: 0.95rem; font-weight: 600; color: var(--tmid);
-  background: var(--surface); border: none;
+  background: var(--surface); border: none; outline: none;
   box-shadow: 6px 6px 12px var(--clay-dark), -6px -6px 12px var(--clay-light);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .filter-pill:hover { color: var(--teal); transform: translateY(-3px) scale(1.05); box-shadow: 8px 8px 16px var(--clay-dark), -8px -8px 16px var(--clay-light); }
-.filter-pill.active {
-  background: var(--leaf); color: white; transform: translateY(2px);
-  box-shadow: inset 4px 4px 10px rgba(0,0,0,0.2), inset -4px -4px 10px rgba(255,255,255,0.3);
-}
+.filter-pill.active { background: var(--leaf); color: white; transform: translateY(2px); box-shadow: inset 4px 4px 10px rgba(0,0,0,0.2), inset -4px -4px 10px rgba(255,255,255,0.2); }
 
-/* ── 8. ABOUT: NEOMORPHIC TECH MATRIX ──────────────────────── */
+/* ── 8. ABOUT: NEOMORPHIC TECH MATRIX & CARDS ──────────────────────── */
 .neo-card {
   padding: 50px; border-radius: 40px; position: relative; overflow: hidden;
   background: var(--surface); transition: background 0.5s, box-shadow 0.5s;
   box-shadow: 15px 15px 30px var(--clay-dark), -15px -15px 30px var(--clay-light);
   margin-bottom: 40px; border: 1px solid var(--clay-inset-light);
 }
-.neo-card::before {
-  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%);
-  opacity: 0.5; pointer-events: none;
-}
-body.dark-mode .neo-card::before { background: radial-gradient(circle, rgba(61,232,177,0.1) 0%, transparent 60%); }
-
+.neo-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%); opacity: 0.5; pointer-events: none; transition: background 0.8s; }
+body.dark-mode .neo-card::before { background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%); }
 .neo-card h2 { font-family: var(--font-d); font-size: 2.5rem; color: var(--teal); margin-bottom: 20px; position: relative; z-index: 2; transition: color 0.5s; }
 .neo-card p { font-size: 1.1rem; line-height: 1.8; color: var(--tdark); margin-bottom: 15px; position: relative; z-index: 2; transition: color 0.5s; }
 
+/* Restored About Cards */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px; }
+.inner-card {
+  border-radius: 24px; padding: 35px 40px; background: var(--glass-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border-light); box-shadow: var(--glass-shadow); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.inner-card:hover { transform: translateY(-8px) scale(1.02); }
+.inner-h { font-size: 1.05rem; font-weight: 700; color: var(--teal); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; transition: color 0.5s; }
+.tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.tag { padding: 6px 18px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; background: rgba(255,255,255,0.5); border: 1px solid var(--glass-border-light); color: var(--teal); transition: all 0.3s; }
+body.dark-mode .tag { background: rgba(0,0,0,0.3); color: var(--g); }
+.tag:hover { background: var(--leaf); color: white; transform: scale(1.05); }
+.gear-list { display: flex; flex-direction: column; gap: 14px; }
+.gear-item { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; color: var(--tmid); transition: color 0.5s; }
+.gear-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--g); flex-shrink: 0; box-shadow: 0 0 10px var(--g); transition: background 0.8s; }
+
 /* Tech Matrix Grid */
 .matrix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-.matrix-node {
-  padding: 35px; border-radius: 24px; background: var(--surface); transition: all 0.4s ease;
-  box-shadow: inset 6px 6px 12px var(--clay-dark), inset -6px -6px 12px var(--clay-light);
-}
-.matrix-node:hover { transform: translateY(-5px); box-shadow: inset 8px 8px 16px var(--clay-dark), inset -8px -8px 16px var(--clay-light), 0 10px 20px rgba(13,92,74,0.1); }
-.matrix-node .node-id { font-family: var(--font-m); color: var(--g); font-size: 0.85rem; letter-spacing: 0.15em; margin-bottom: 15px; display: block; }
+.matrix-node { padding: 35px; border-radius: 24px; background: var(--surface); transition: all 0.4s ease; box-shadow: inset 6px 6px 12px var(--clay-dark), inset -6px -6px 12px var(--clay-light); }
+.matrix-node:hover { transform: translateY(-5px); box-shadow: inset 8px 8px 16px var(--clay-dark), inset -8px -8px 16px var(--clay-light), 0 10px 20px rgba(0,0,0,0.1); }
+.matrix-node .node-id { font-family: var(--font-m); color: var(--g); font-size: 0.85rem; letter-spacing: 0.15em; margin-bottom: 15px; display: block; transition: color 0.8s; }
 .matrix-node p { font-size: 0.95rem; line-height: 1.7; color: var(--tmid); margin: 0; transition: color 0.5s; }
 
-/* ── 9. CONTACT: FLOATING ANIMATIONS & CLAY INPUTS ─────────── */
+/* ── 9. CONTACT: NORMALIZED LANGUAGE & CLAY INPUTS ─────────── */
 .contact-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: 60px; align-items: start; }
 
 .floating-card {
   display: flex; align-items: center; gap: 25px; padding: 30px; border-radius: 28px;
-  background: var(--glass-bg); backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border-light); box-shadow: var(--glass-shadow);
-  animation: float 6s ease-in-out infinite alternate; transition: transform 0.3s;
+  background: var(--glass-bg); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border-light); box-shadow: var(--glass-shadow);
+  animation: float 6s ease-in-out infinite alternate; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .floating-card:hover { transform: scale(1.05) !important; animation-play-state: paused; }
 .floating-card:nth-child(2) { animation-delay: -3s; }
 
-.fc-icon {
-  width: 60px; height: 60px; border-radius: 20px; background: var(--surface);
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 6px 6px 12px var(--clay-dark), -6px -6px 12px var(--clay-light); transition: background 0.5s, box-shadow 0.5s;
-}
+.fc-icon { width: 60px; height: 60px; border-radius: 20px; background: var(--surface); display: flex; align-items: center; justify-content: center; box-shadow: 6px 6px 12px var(--clay-dark), -6px -6px 12px var(--clay-light); transition: background 0.5s, box-shadow 0.5s; }
 .fc-icon svg { width: 28px; height: 28px; stroke: var(--g); fill: none; stroke-width: 2; transition: stroke 0.5s; }
 .fc-text h4 { font-family: var(--font-m); font-size: 0.85rem; color: var(--tsoft); margin-bottom: 5px; text-transform: uppercase; transition: color 0.5s; }
 .fc-text p { font-size: 1.2rem; font-weight: 700; color: var(--teal); transition: color 0.5s; }
@@ -399,8 +345,7 @@ body.dark-mode .neo-card::before { background: radial-gradient(circle, rgba(61,2
 .neo-input {
   width: 100%; padding: 18px 24px; border-radius: 20px; font-family: var(--font-b); font-size: 1.05rem; color: var(--tdark);
   background: var(--surface); border: none; outline: none;
-  box-shadow: inset 5px 5px 10px var(--clay-dark), inset -5px -5px 10px var(--clay-light);
-  transition: box-shadow 0.3s, background 0.5s, color 0.5s;
+  box-shadow: inset 5px 5px 10px var(--clay-dark), inset -5px -5px 10px var(--clay-light); transition: box-shadow 0.3s, background 0.5s, color 0.5s;
 }
 .neo-input:focus { box-shadow: inset 8px 8px 16px var(--clay-dark), inset -8px -8px 16px var(--clay-light), 0 0 0 2px var(--leaf); }
 
@@ -408,53 +353,56 @@ body.dark-mode .neo-card::before { background: radial-gradient(circle, rgba(61,2
 .modal-overlay {
   position: fixed; inset: 0; z-index: 999; display: flex; align-items: center; justify-content: center; padding: 2vw;
   background: rgba(0,0,0,0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  opacity: 0; pointer-events: none; transition: opacity 0.4s ease; cursor: pointer;
 }
 .modal-overlay.active { opacity: 1; pointer-events: auto; }
 .modal-window {
-  width: 100%; max-width: 1200px; max-height: 90vh; border-radius: 36px; overflow: hidden; display: flex; flex-wrap: wrap;
+  width: 100%; max-width: 1200px; max-height: 90vh; border-radius: 36px; overflow: hidden; display: flex; flex-wrap: wrap; cursor: auto;
   background: var(--glass-bg); border: 1px solid var(--glass-border-light); box-shadow: 0 50px 120px rgba(0,0,0,0.6);
-  /* BUTTERY SMOOTH MODAL PHYSICS */
   transform: translateY(40px) scale(0.95); transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); will-change: transform;
 }
 .modal-overlay.active .modal-window { transform: translateY(0) scale(1); }
-.modal-media { flex: 1.5; min-width: 300px; background: #000; position: relative; }
-.modal-media img { width: 100%; height: 100%; object-fit: contain; }
+.modal-media { flex: 1.5; min-width: 300px; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden;}
+.modal-media img { width: 100%; height: 100%; object-fit: contain; transform: scale(1.05); transition: transform 6s ease-out; }
+.modal-overlay.active .modal-media img { transform: scale(1); }
 .modal-panel { flex: 1; min-width: 350px; padding: 50px; background: var(--surface); overflow-y: auto; max-height: 90vh; transition: background 0.5s; }
 .m-title { font-family: var(--font-d); font-size: 2.5rem; color: var(--teal); margin: 10px 0 25px; line-height: 1.1; transition: color 0.5s; }
 
 .modal-close {
-  position: absolute; top: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; cursor: pointer;
+  position: absolute; top: 25px; right: 25px; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; outline: none;
   background: var(--surface); display: flex; align-items: center; justify-content: center;
   box-shadow: 5px 5px 12px var(--clay-dark), -5px -5px 12px var(--clay-light); z-index: 10;
-  transition: transform 0.3s, background 0.5s, box-shadow 0.5s; border: none;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.5s, box-shadow 0.5s; border: none;
 }
-.modal-close:hover { transform: scale(1.15) rotate(90deg); }
-.modal-close svg { width: 24px; height: 24px; stroke: var(--tdark); fill: none; stroke-width: 2.5; transition: stroke 0.5s; }
+.modal-close:hover { transform: scale(1.15) rotate(90deg); box-shadow: 8px 8px 16px var(--clay-dark), -8px -8px 16px var(--clay-light); }
+.modal-close svg { width: 24px; height: 24px; stroke: var(--tdark); fill: none; stroke-width: 2.5; transition: stroke 0.5s; pointer-events: none;}
 
 /* ── 11. PAGE ROUTING & RESPONSIVE ─────────────────────────── */
-.page { display: none; animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.page { display: none; }
 .page.active { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-
 footer { text-align: center; padding: 50px; font-family: var(--font-m); font-size: 0.85rem; color: var(--tsoft); border-top: 1px solid var(--glass-border-dark); transition: color 0.5s, border-color 0.5s; }
 
-/* Mobile Menu & Animation Adjustments */
+@media(max-width: 980px) { .two-col { grid-template-columns: 1fr; } .modal-window { max-height: 95vh; } }
 @media(max-width: 768px) {
   .nav { padding: 15px; flex-wrap: wrap; gap: 15px; justify-content: center; }
-  .nav-links { gap: 15px; }
+  .nav-links { gap: 15px; flex-wrap: wrap; justify-content: center;}
   .theme-switch-wrapper { margin-left: 5px; padding-left: 10px; }
   .glass-orb, .icon-bubble, .leaf-d { display: none; } 
   .hero-card { padding: 40px 25px; }
+  .modal-panel { padding: 30px; }
 }
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <a class="nav-logo" href="#" onclick="go('home')">
+<!-- ── PAGE TRANSITION LAYER ── -->
+<div class="page-transition" id="page-transition"></div>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav class="nav reveal">
+  <a class="nav-logo magnetic" href="#" onclick="go('home')">
     <div class="nav-icon">
+      <!-- Fixed Logo Color -->
       <svg viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2z"/></svg>
     </div>
     Alfaaz.
@@ -465,51 +413,53 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     <a href="#" id="nl-about" onclick="go('about')">About</a>
     <a href="#" id="nl-contact" onclick="go('contact')">Contact</a>
     
-    <div class="theme-switch-wrapper">
-      <label class="theme-switch" for="theme-checkbox">
-        <input type="checkbox" id="theme-checkbox" onchange="toggleTheme(this.checked)" />
-        <div class="slider">
-          <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-          <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </div>
-      </label>
+    <div class="nav-utilities">
+      <!-- Theme Switcher (Aero -> Ocean -> Sunset) -->
+      <button class="icon-btn magnetic" id="theme-cycle-btn" onclick="cycleTheme()" title="Change Color Palette">
+        <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 4.2c3.11 2.31 4.34 5.96 3.1 9.47-1.25 3.51-4.7 5.64-8.76 5.64s-7.51-2.13-8.76-5.64c-1.24-3.51-.01-7.16 3.1-9.47L12 2.69z"/></svg>
+      </button>
+
+      <!-- Micro-Audio Toggle -->
+      <button class="icon-btn magnetic off" id="sound-toggle-btn" onclick="toggleSound()" title="Toggle UI Sounds">
+        <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      </button>
+
+      <!-- Skeuomorphic Dark Mode -->
+      <div class="theme-switch-wrapper">
+        <label class="theme-switch magnetic" for="theme-checkbox">
+          <input type="checkbox" id="theme-checkbox" onchange="toggleDarkMode(this.checked)" />
+          <div class="slider">
+            <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </div>
+        </label>
+      </div>
     </div>
   </div>
 </nav>
 
+<!-- ═══ HOME PAGE ═══ -->
 <div class="page active" id="page-home">
   <section class="hero">
-    <div class="bg-layer">
-      <div class="blob b1"></div>
-      <div class="blob b2"></div>
-    </div>
-    
-    <div class="glass-orb orb1"></div>
-    <div class="glass-orb orb2"></div>
-    <div class="glass-orb orb3"></div>
+    <!-- Fluid Blobs -->
+    <div class="bg-layer"><div class="blob b1"></div><div class="blob b2"></div></div>
+    <div class="glass-orb orb1 magnetic"></div>
+    <div class="glass-orb orb2 magnetic"></div>
+    <div class="glass-orb orb3 magnetic"></div>
 
     <div class="leaf-d ld1">
-      <svg viewBox="0 0 200 310" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 8C162 8 195 82 184 165 C173 248 122 298 100 298 C78 298 27 248 16 165 C5 82 38 8 100 8Z" fill="#1a8c6a"/>
-        <line x1="100" y1="8" x2="100" y2="298" stroke="#0d5c4a" stroke-width="1.8"/>
-        <path d="M100 65 C78 96 52 107 42 134" stroke="#0d5c4a" stroke-width="1.4"/>
-        <path d="M100 65 C122 96 148 107 158 134" stroke="#0d5c4a" stroke-width="1.4"/>
-      </svg>
+      <svg viewBox="0 0 200 310" fill="none"><path class="leaf-path" d="M100 8C162 8 195 82 184 165 C173 248 122 298 100 298 C78 298 27 248 16 165 C5 82 38 8 100 8Z"/><line class="leaf-stem" x1="100" y1="8" x2="100" y2="298" stroke-width="1.8"/><path class="leaf-stem" d="M100 65 C78 96 52 107 42 134" stroke-width="1.4"/><path class="leaf-stem" d="M100 65 C122 96 148 107 158 134" stroke-width="1.4"/></svg>
     </div>
     <div class="leaf-d ld2">
-      <svg viewBox="0 0 180 270" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M90 6C140 6 172 70 162 145 C152 220 112 260 90 260 C68 260 28 220 18 145 C8 70 40 6 90 6Z" fill="#2dbd8e"/>
-        <line x1="90" y1="6" x2="90" y2="260" stroke="#1a8c6a" stroke-width="1.4"/>
-      </svg>
+      <svg viewBox="0 0 180 270" fill="none"><path class="leaf-path" d="M90 6C140 6 172 70 162 145 C152 220 112 260 90 260 C68 260 28 220 18 145 C8 70 40 6 90 6Z"/><line class="leaf-stem" x1="90" y1="6" x2="90" y2="260" stroke-width="1.4"/></svg>
     </div>
 
-    <div class="icon-bubble ib1"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div>
-    <div class="icon-bubble ib2"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7v7z"></path></svg></div>
-    <div class="icon-bubble ib3"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path></svg></div>
-    <div class="icon-bubble ib4"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line></svg></div>
+    <div class="icon-bubble ib1 magnetic"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></div>
+    <div class="icon-bubble ib2 magnetic"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13a7 7 0 0 1 7-7 7 7 0 0 1 7 7v7z"></path></svg></div>
+    <div class="icon-bubble ib3 magnetic"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path></svg></div>
 
     <div class="hero-content">
-      <div class="hero-card">
+      <div class="hero-card reveal delay-1">
         <div class="sec-label" style="justify-content: center; margin-bottom: 20px;">✦ Visual Ecology</div>
         <h1 class="hero-title">
           Light &amp; Life<br>
@@ -518,20 +468,20 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
         <p style="font-size: 1.1rem; line-height: 1.8; color: var(--tmid); margin: 25px 0 35px; max-width: 600px; margin-inline: auto;">
           An open-source exploration of Solarpunk aesthetics, Frutiger Aero design, and the seamless integration of raw natural biology within high-density geometric architecture.
         </p>
-        <button class="clay-btn" onclick="go('blog')">
+        <button class="clay-btn magnetic play-click" onclick="go('blog')">
           Access Archive <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
     </div>
 
-    <div class="scroll-hint">
+    <div class="scroll-hint reveal delay-3">
       <span>SCROLL</span>
       <div class="scroll-arrow"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
     </div>
   </section>
 
-  <section class="section-wrapper reveal">
-    <div class="sec-hd">
+  <section class="section-wrapper">
+    <div class="sec-hd reveal">
       <div class="sec-label">✦ Latest Captures</div>
       <h2 class="sec-title">Recent Architecture</h2>
     </div>
@@ -539,76 +489,96 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
   </section>
 </div>
 
+<!-- ═══ ARCHIVE PAGE ═══ -->
 <div class="page page-sub" id="page-blog">
   <div class="bg-layer neo-grid-bg"></div>
-  
-  <section class="section-wrapper reveal">
-    <div class="sec-hd">
-      <h2 class="sec-title">The Complete Archive</h2>
-    </div>
+  <section class="section-wrapper">
+    <div class="sec-hd reveal"><h2 class="sec-title">The Complete Archive</h2></div>
     
-    <div class="filter-bar">
-      <button class="filter-pill active" onclick="filterGallery('all', this)">All Nodes</button>
-      <button class="filter-pill" onclick="filterGallery('Urban Botany', this)">Urban Botany</button>
-      <button class="filter-pill" onclick="filterGallery('Urban Infrastructure', this)">Infrastructure</button>
-      <button class="filter-pill" onclick="filterGallery('Landscape Log', this)">Landscapes</button>
+    <div class="filter-bar reveal delay-1">
+      <button class="filter-pill magnetic play-click active" onclick="filterGallery('all', this)">All Nodes</button>
+      <button class="filter-pill magnetic play-click" onclick="filterGallery('Urban Botany', this)">Urban Botany</button>
+      <button class="filter-pill magnetic play-click" onclick="filterGallery('Urban Infrastructure', this)">Infrastructure</button>
+      <button class="filter-pill magnetic play-click" onclick="filterGallery('Landscape Log', this)">Landscapes</button>
     </div>
 
     <div class="smart-grid" id="blog-grid"></div>
   </section>
 </div>
 
+<!-- ═══ ABOUT PAGE ═══ -->
 <div class="page page-sub" id="page-about">
   <div class="bg-layer mesh-bg"></div>
-  
-  <section class="section-wrapper reveal">
-    <div class="sec-hd"><h2 class="sec-title">System Architecture</h2></div>
+  <section class="section-wrapper">
+    <div class="sec-hd reveal"><h2 class="sec-title">System Architecture</h2></div>
     
-    <div class="neo-card reveal">
+    <div class="neo-card reveal delay-1">
       <h2>Alfaaz. Photographer &amp; Developer</h2>
-      <p>Based in Abu Dhabi, I explore the spaces where rigid urban transit systems and resilient botanical life intersect. This portfolio serves as an open-source visual log documenting urban ecosystems, engineered using hardware-accelerated frontend architectures (Glassmorphism, Claymorphism, and Neomorphism) to ensure high-fidelity delivery.</p>
+      <p>Based in Abu Dhabi, I explore the spaces where rigid urban transit systems and resilient botanical life intersect. This portfolio serves as an open-source visual log documenting urban ecosystems, engineered using hardware-accelerated frontend architectures to ensure high-fidelity delivery without compromises.</p>
     </div>
 
-    <div class="matrix-grid reveal">
-      <div class="matrix-node">
-        <span class="node-id">[01 / OPTICS]</span>
-        <p>Leveraging high-aperture manual optics (Nikon Z30) to separate crisp foreground botanical textures from dense structural backgrounds.</p>
+    <!-- Restored Content -->
+    <div class="two-col reveal delay-2">
+      <div class="inner-card magnetic-hover">
+        <div class="inner-h">📷 Visual Horizons</div>
+        <div class="tags">
+          <span class="tag">Solarpunk Ecosystems</span>
+          <span class="tag">Urban Nature Coexistence</span>
+          <span class="tag">Transit Geometry</span>
+          <span class="tag">Specular Light</span>
+          <span class="tag">Biological Architecture</span>
+        </div>
       </div>
-      <div class="matrix-node">
+      <div class="inner-card magnetic-hover">
+        <div class="inner-h">✦ Active Tooling</div>
+        <div class="gear-list">
+          <div class="gear-item"><span class="gear-dot"></span>Nikon Z30 Optical Chassis</div>
+          <div class="gear-item"><span class="gear-dot"></span>Samsung S23 Mobile Capture</div>
+          <div class="gear-item"><span class="gear-dot"></span>Sublime Text &amp; Git Versioning</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="matrix-grid reveal delay-3">
+      <div class="matrix-node magnetic-hover">
+        <span class="node-id">[01 / OPTICS]</span>
+        <p>Leveraging high-aperture manual optics to separate crisp foreground botanical textures from dense structural backgrounds.</p>
+      </div>
+      <div class="matrix-node magnetic-hover">
         <span class="node-id">[02 / GRADING]</span>
         <p>Balancing natural sunlight with clean digital contrasts. Every asset undergoes precise geometric perspective mapping.</p>
       </div>
-      <div class="matrix-node">
+      <div class="matrix-node magnetic-hover">
         <span class="node-id">[03 / FRONTEND]</span>
-        <p>Hand-crafted semantic structure deploying non-blocking CSS variables, fluid responsive grids, and native GPU layers.</p>
+        <p>Hand-crafted semantic structure deploying non-blocking CSS variables, 3D parallax physics, and native GPU layers.</p>
       </div>
     </div>
   </section>
 </div>
 
+<!-- ═══ CONTACT PAGE ═══ -->
 <div class="page page-sub" id="page-contact">
   <div class="bg-layer">
-    <div class="signal-ring sr1"></div>
-    <div class="signal-ring sr2"></div>
-    <div class="signal-ring sr3"></div>
+    <div class="signal-ring sr1"></div><div class="signal-ring sr2"></div><div class="signal-ring sr3"></div>
   </div>
   
-  <section class="section-wrapper reveal">
-    <div class="sec-hd"><h2 class="sec-title">Get In Touch</h2></div>
+  <section class="section-wrapper">
+    <div class="sec-hd reveal"><h2 class="sec-title">Get In Touch</h2></div>
     
     <div class="contact-layout">
       <div style="display: flex; flex-direction: column; gap: 30px; padding-top: 20px;">
-        <div class="floating-card reveal">
+        <div class="floating-card reveal delay-1 magnetic-hover">
           <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
           <div class="fc-text"><h4>Email</h4><p>alfaazal2009@gmail.com</p></div>
         </div>
-        <div class="floating-card reveal">
+        <div class="floating-card reveal delay-2 magnetic-hover">
           <div class="fc-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
           <div class="fc-text"><h4>Location</h4><p>Abu Dhabi, UAE</p></div>
         </div>
       </div>
 
-      <form class="neo-form reveal" action="https://api.web3forms.com/submit" method="POST">
+      <form class="neo-form reveal delay-3" action="https://api.web3forms.com/submit" method="POST">
+        <!-- Add your real Web3Forms key here -->
         <input type="hidden" name="access_key" value="PUT_YOUR_ACCESS_KEY_HERE">
         <input type="hidden" name="redirect" value="https://alfaazthecoder.github.io/My-Web-Portfolio/">
         <div class="form-group">
@@ -623,7 +593,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
           <label>Message</label>
           <textarea name="message" class="neo-input" rows="4" required placeholder="How can we collaborate?"></textarea>
         </div>
-        <button type="submit" class="clay-btn" style="width: 100%; justify-content: center; margin-top: 10px;">
+        <button type="submit" class="clay-btn play-click magnetic" style="width: 100%; justify-content: center; margin-top: 10px;">
           Send Message <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </form>
@@ -631,9 +601,10 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
   </section>
 </div>
 
+<!-- ═══ LIGHTBOX MODAL ═══ -->
 <div class="modal-overlay" id="detail-modal" onclick="closeModal(event)">
   <div class="modal-window" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="toggleModal(false)">
+    <button class="modal-close magnetic play-click" onclick="toggleModal(false)">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
     <div class="modal-media">
@@ -651,9 +622,126 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
 
 <footer>© 2026 Alfaaz · Open Source Aesthetic</footer>
 
+<!-- ── SCRIPTS ─────────────────────────────────────────────── -->
 <script>
-  // 1. THEME ENGINE
-  function toggleTheme(isDark) {
+  /* ── 1. CUSTOM WEB AUDIO SYNTHESIZER ── */
+  let soundEnabled = false;
+  let audioCtx = null;
+  
+  function initAudio() {
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+  }
+
+  function toggleSound() {
+    soundEnabled = !soundEnabled;
+    const btn = document.getElementById('sound-toggle-btn');
+    if(soundEnabled) {
+      initAudio();
+      btn.classList.remove('off');
+      playClick(); // Feedback sound
+    } else {
+      btn.classList.add('off');
+    }
+  }
+
+  function playHover() {
+    if(!soundEnabled || !audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.setValueAtTime(1200, audioCtx.currentTime); // High glass tick
+    osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.05);
+    gain.gain.setValueAtTime(0.05, audioCtx.currentTime); // Very quiet
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.05);
+  }
+
+  function playClick() {
+    if(!soundEnabled || !audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle'; osc.frequency.setValueAtTime(150, audioCtx.currentTime); // Soft thump
+    osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
+    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+  }
+
+  function playSwoosh() {
+    if(!soundEnabled || !audioCtx) return;
+    const bufferSize = audioCtx.sampleRate * 0.5; // 0.5 seconds of noise
+    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) { data[i] = Math.random() * 2 - 1; }
+    
+    const noise = audioCtx.createBufferSource();
+    noise.buffer = buffer;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass'; filter.frequency.setValueAtTime(400, audioCtx.currentTime);
+    filter.frequency.exponentialRampToValueAtTime(2000, audioCtx.currentTime + 0.2);
+    filter.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.5);
+    
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.2);
+    gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5);
+
+    noise.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
+    noise.start();
+  }
+
+  // Attach Sounds
+  document.addEventListener('mouseover', e => { if(e.target.closest('.magnetic') || e.target.closest('.glass-card') || e.target.closest('.magnetic-hover')) playHover(); });
+  document.addEventListener('click', e => { if(e.target.closest('.play-click')) playClick(); });
+
+  /* ── 2. MAGNETIC SPRING PHYSICS ── */
+  document.querySelectorAll('.magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = `translate(0, 0)`; });
+  });
+
+  /* ── 3. TRUE 3D PARALLAX FOR GLASS CARDS ── */
+  function attachParallax() {
+    document.querySelectorAll('.glass-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        // Calculate tilt (-10 to 10 degrees)
+        const rotateX = ((y - centerY) / centerY) * -10; 
+        const rotateY = ((x - centerX) / centerX) * 10;
+        
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        const glare = card.querySelector('.glare');
+        if(glare) glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.5), transparent 60%)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+      });
+    });
+  }
+
+  /* ── 4. MULTI-THEME ENGINE ── */
+  const themes = ['aero', 'ocean', 'sunset'];
+  let currentThemeIdx = 0;
+
+  function cycleTheme() {
+    playClick();
+    currentThemeIdx = (currentThemeIdx + 1) % themes.length;
+    document.documentElement.setAttribute('data-theme', themes[currentThemeIdx]);
+  }
+
+  function toggleDarkMode(isDark) {
+    playClick();
     document.body.classList.toggle('dark-mode', isDark);
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
   }
@@ -662,7 +750,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     document.getElementById('theme-checkbox').checked = true;
   }
 
-  // 2. DATABASE
+  /* ── 5. DATABASE & RENDER ── */
   const postDatabase = [
     { id: 1, title: "Bioluminescent Blooms in the Concrete Canvas", excerpt: "Documenting urban plant life scaling the lines of modern cityscapes.", body: "This frame captures a cluster of delicate wild blossoms thriving right against the geometric backdrop of Abu Dhabi's architectural lines. What drew me to this shot was the sharp contrast between the organic, chaotic geometry of the plant stems and the clean, structured curves of the city behind them.", date: "May 18, 2026", img: "20260517_174228.jpg", label: "Urban Botany", featured: true },
     { id: 2, title: "Symmetry of the Streets: Urban Oasis", excerpt: "Analyzing the visual balance between transit systems and resilient flora.", body: "This composition focuses on a central Abu Dhabi thoroughfare, capturing a distinct layer of coastal city design. By framing the clean lines of passing vehicles and geometric towers with palm branches and lush flowerbeds, the shot illustrates how intentional green spaces soften technical rigidity.", date: "May 18, 2026", img: "20260517_174605.jpg", label: "Urban Infrastructure", featured: false },
@@ -675,10 +763,10 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
   ];
 
   function buildCard(post, i) {
-    // Stagger animation delays for grid items
-    const delay = (i * 0.1) + 's';
+    const delay = ((i % 3) * 0.15) + 's';
     return `
-      <div class="glass-card reveal" style="transition-delay: ${delay}" onclick="openPost(${post.id})">
+      <div class="glass-card reveal play-click" style="transition-delay: ${delay}" onclick="openPost(${post.id})">
+        <div class="glare"></div>
         <div class="cmedia"><img src="${post.img}" alt="${post.title}" loading="lazy"/></div>
         <div class="cbody">
           <h3 class="ctitle">${post.title}</h3>
@@ -693,15 +781,12 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     const home = document.getElementById('home-grid');
     const blog = document.getElementById('blog-grid');
     home.innerHTML = ''; blog.innerHTML = '';
-    
     const reversedDB = [...postDatabase].reverse();
-
     reversedDB.forEach((post, i) => {
       if(i < 6) home.innerHTML += buildCard(post, i); 
       blog.innerHTML += buildCard(post, i);
     });
-    
-    // Re-trigger scroll observer for new items
+    attachParallax();
     initScrollReveal();
   }
 
@@ -712,28 +797,45 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
     blog.innerHTML = ''; 
     const filtered = cat === 'all' ? postDatabase : postDatabase.filter(p => p.label === cat);
     [...filtered].reverse().forEach((post, i) => blog.innerHTML += buildCard(post, i));
-    
-    // Slight delay before revealing to allow DOM to paint
+    attachParallax();
     setTimeout(initScrollReveal, 50);
   }
 
-  // 3. SCROLL REVEAL OBSERVER
+  /* ── 6. AWWWARDS SCROLL REVEAL OBSERVER ── */
   function initScrollReveal() {
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if(entry.isIntersecting) {
           entry.target.classList.add('active');
-          // Optional: stop observing once revealed
-          // observer.unobserve(entry.target); 
         }
       });
     }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
     reveals.forEach(el => observer.observe(el));
   }
 
-  // 4. MODAL & ROUTING
+  /* ── 7. LIQUID PAGE TRANSITIONS & MODALS ── */
+  function go(id){
+    if(document.getElementById('page-'+id).classList.contains('active')) return;
+    
+    playSwoosh(); // Audio Engine Swoosh
+    const trans = document.getElementById('page-transition');
+    trans.classList.add('active');
+    
+    setTimeout(() => {
+      document.querySelectorAll('.page').forEach(p => {
+        p.classList.remove('active');
+        p.querySelectorAll('.reveal').forEach(r => r.classList.remove('active')); // Reset reveals
+      });
+      document.getElementById('page-'+id).classList.add('active');
+      window.scrollTo(0,0);
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      document.getElementById('nl-'+id).classList.add('active');
+    }, 450); // Wait for transition glass to cover screen
+
+    setTimeout(() => { trans.classList.remove('active'); initScrollReveal(); }, 900);
+  }
+
   function openPost(id) {
     const post = postDatabase.find(p => p.id === id);
     if(!post) return;
@@ -753,29 +855,7 @@ footer { text-align: center; padding: 50px; font-family: var(--font-m); font-siz
   function closeModal(e) { if(e.target.id === 'detail-modal') toggleModal(false); }
   document.addEventListener('keydown', e => { if(e.key === 'Escape') toggleModal(false); });
 
-  function go(id){
-    document.querySelectorAll('.page').forEach(p => {
-      p.classList.remove('active');
-      // Reset scroll reveals when changing pages
-      p.querySelectorAll('.reveal').forEach(r => r.classList.remove('active'));
-    });
-    
-    const targetPage = document.getElementById('page-'+id);
-    targetPage.classList.add('active');
-    window.scrollTo(0,0);
-    
-    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-    document.getElementById('nl-'+id).classList.add('active');
-    
-    // Re-initialize reveals for the new page
-    setTimeout(initScrollReveal, 100);
-  }
-
-  // Initialize
-  window.onload = () => {
-    renderGrids();
-    initScrollReveal();
-  };
+  window.onload = () => { renderGrids(); initScrollReveal(); };
 </script>
 </body>
 </html>
